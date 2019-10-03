@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@TeleOp(name = "Zoom Zoom Time yet", group = "EAP")
+@TeleOp(name = "Zoom Zoom Time", group = "EAP")
 public class TeleOpSkystone extends LinearOpMode {
 
     private DcMotor LeftA;
@@ -19,15 +19,7 @@ public class TeleOpSkystone extends LinearOpMode {
     private DcMotor RightA;
     private DcMotor RightB;
 
-    private ElapsedTime runtime = new ElapsedTime();
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
-    static final double     WHEEL_DIAMETER_INCHES   = 3.0 ;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.14159265358979);
-    static final double     DRIVE_SPEED             = 0.6;
-    static final double     TURN_SPEED              = 0.5;
     @Override
     public void runOpMode () throws InterruptedException{
 
@@ -41,31 +33,26 @@ public class TeleOpSkystone extends LinearOpMode {
         RightA.setDirection(DcMotorSimple.Direction.REVERSE);
         RightB.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
 
 
         while(opModeIsActive()){
-//front and back
-            LeftA.setPower(gamepad1.left_stick_y);
-            LeftB.setPower(gamepad1.left_stick_y);
-            RightA.setPower(gamepad1.left_stick_y);
-            RightB.setPower(gamepad1.left_stick_y);
+            double r = Math.hypot(-gamepad1.left_stick_x, gamepad1.left_stick_y);
+            double robotAngle = Math.atan2(gamepad1.left_stick_y, -gamepad1.left_stick_x) - Math.PI / 4;
+            double rightX = -gamepad1.right_stick_x;
+            final double v1 = r * Math.cos(robotAngle) + rightX;
+            final double v2 = r * Math.sin(robotAngle) - rightX;
+            final double v3 = r * Math.sin(robotAngle) + rightX;
+            final double v4 = r * Math.cos(robotAngle) - rightX;
 
-//side to side
-            LeftA.setPower(-gamepad1.left_stick_x);
-            LeftB.setPower(gamepad1.left_stick_x);
-            RightA.setPower(gamepad1.left_stick_x);
-            RightB.setPower(-gamepad1.left_stick_x);
+
+
+            LeftA.setPower(v2);
+            LeftB.setPower(v4);
+            RightA.setPower(v1);
+            RightB.setPower(v3);
 //rotation
-            LeftA.setPower(gamepad1.right_stick_x);
-            LeftB.setPower(gamepad1.right_stick_x);
-            RightA.setPower(-gamepad1.right_stick_x);
-            RightB.setPower(-gamepad1.right_stick_x);
 
 
 
@@ -75,3 +62,32 @@ public class TeleOpSkystone extends LinearOpMode {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
