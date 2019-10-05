@@ -1,27 +1,23 @@
-//
-// build.gradle in FtcRobotController
-//
-apply plugin: 'com.android.library'
-
-android {
-
-    defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 19
+/**
+ * Top-level build file for ftc_app project.
+ *
+ * It is extraordinarily rare that you will ever need to edit this file.
+ */
+buildscript {
+    repositories {
+        google()
+        jcenter()
     }
-
-    compileSdkVersion 23
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.0'
     }
 }
 
-repositories {
-    flatDir {
-        dirs '../libs'
+// This is now required because aapt2 has to be downloaded from the
+// google() repository beginning with version 3.2 of the Android Gradle Plugin
+allprojects {
+    repositories {
+        google()
+        jcenter()
     }
 }
-
-apply from: 'build.release.gradle'
