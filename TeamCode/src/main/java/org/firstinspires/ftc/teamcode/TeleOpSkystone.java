@@ -46,7 +46,7 @@ public class TeleOpSkystone extends LinearOpMode {
         Tetrix_ARMSLIDE_Motor = hardwareMap.dcMotor.get("ARMSLIDE");
         Rotating_servo = hardwareMap.servo.get("rotating_servo");
         Up_and_down = hardwareMap.servo.get("Up and down");
-        Latch = hardwareMap.servo.get("Latch");
+        Latch = hardwareMap.servo.get("Latch servo");
 
 
 
