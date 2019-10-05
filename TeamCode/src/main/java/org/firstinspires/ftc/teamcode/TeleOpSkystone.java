@@ -19,6 +19,11 @@ public class TeleOpSkystone extends LinearOpMode {
     private DcMotor RightA;
     private DcMotor RightB;
     private DcMotor AndyMark_motor;
+    private DcMotor Tetrix_ARMSLIDE_Motor;
+    private Servo Rotating_servo;
+    private Servo Latch;
+    private Servo Up_and_down;
+
 
     protected ElapsedTime runtime = new ElapsedTime();
     protected static final int Andmark_MAX_REV = 1120;
@@ -28,17 +33,21 @@ public class TeleOpSkystone extends LinearOpMode {
 
     @Override
     public void runOpMode () throws InterruptedException{
-
+//Drive
         LeftA = hardwareMap.dcMotor.get("LeftA");
         LeftB = hardwareMap.dcMotor.get("LeftB");
         RightA = hardwareMap.dcMotor.get("RightA");
         RightB = hardwareMap.dcMotor.get("RightB");
 
-        AndyMark_motor = hardwareMap.dcMotor.get("AndyMark_Arm_motor");
-
-
         RightA.setDirection(DcMotorSimple.Direction.REVERSE);
         RightB.setDirection(DcMotorSimple.Direction.REVERSE);
+//Arm
+        AndyMark_motor = hardwareMap.dcMotor.get("AndyMark_Arm_motor");
+        Tetrix_ARMSLIDE_Motor = hardwareMap.dcMotor.get("ARMSLIDE");
+        Rotating_servo = hardwareMap.servo.get("rotating_servo");
+        Up_and_down = hardwareMap.servo.get("Up and down");
+        Latch = hardwareMap.servo.get("Latch");
+
 
 
         waitForStart();
