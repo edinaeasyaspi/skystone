@@ -398,9 +398,7 @@ public class OpModeIMU extends LinearOpMode {
     }
 
 
-    public void encoderDrive(double speed,
-                             double leftInches, double rightInches,
-                             double timeoutS) {
+    public void encoderDrive(double speed,double leftInches, double rightInches, double timeoutS) {
         int newLeftTarget;
         int newRightTarget;
 

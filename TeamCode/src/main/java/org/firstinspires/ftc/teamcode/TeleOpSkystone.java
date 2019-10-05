@@ -18,7 +18,13 @@ public class TeleOpSkystone extends LinearOpMode {
     private DcMotor LeftB;
     private DcMotor RightA;
     private DcMotor RightB;
+    private DcMotor AndyMark_motor;
 
+    protected ElapsedTime runtime = new ElapsedTime();
+    protected static final int Andmark_MAX_REV = 1120;
+    protected static final double COUNTS_PER_MOTOR_REV = 56;
+    protected static final int ARM_MAX = 1900;
+    protected static final int ARM_SLIDE_MAX = 600;
 
     @Override
     public void runOpMode () throws InterruptedException{
@@ -28,6 +34,7 @@ public class TeleOpSkystone extends LinearOpMode {
         RightA = hardwareMap.dcMotor.get("RightA");
         RightB = hardwareMap.dcMotor.get("RightB");
 
+        AndyMark_motor = hardwareMap.dcMotor.get("AndyMark_Arm_motor");
 
 
         RightA.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -52,15 +59,35 @@ public class TeleOpSkystone extends LinearOpMode {
             LeftB.setPower(v4);
             RightA.setPower(v1);
             RightB.setPower(v3);
-//rotation
+            AndyMark_motor.setPower(gamepad2.right_stick_y);
+            if (gamepad1.a == true) {
+                Extender();
 
+            }
+            if  (gamepad1.b)  {
+                Retract();
+
+            }
 
 
             idle();
         }
 
+
+
+
+
     }
 
+    public void Extender(){
+        AndyMark_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        AndyMark_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        AndyMark_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        AndyMark_motor.setTargetPosition(300);
+    }
+    public void Retract(){
+        AndyMark_motor.setTargetPosition(-300);
+    }
 }
 
 
