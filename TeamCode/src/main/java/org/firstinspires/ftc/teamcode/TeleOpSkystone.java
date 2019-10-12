@@ -11,20 +11,25 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name = "Zoom Zoom Time", group = "EAP")
 public class TeleOpSkystone extends LinearOpMode {
-
+    //DRIVE
     private DcMotor LeftA;
     private DcMotor LeftB;
     private DcMotor RightA;
     private DcMotor RightB;
-    private DcMotor armMotor;
+    //ARM
+    private DcMotor AndyMark_motor_elbow;
+    private DcMotor AndyMark_motor;
     private DcMotor Tetrix_ARMSLIDE_Motor;
+    //end effector
     private Servo Rotating_servo;
     private Servo Latch;
     private Servo Up_and_down;
-    private DigitalChannel armSwitch1;
-    private DigitalChannel armSwitch2;
-
-
+    boolean bool = false;
+    // reed switch
+    private DigitalChannel Up_and_down_check;
+    private DigitalChannel elbow_check;
+    private DigitalChannel Arm_Check;
+    //encoders
     protected ElapsedTime runtime = new ElapsedTime();
     protected static final int Andmark_MAX_REV = 1120;
     protected static final double COUNTS_PER_MOTOR_REV = 56;
@@ -44,27 +49,20 @@ public class TeleOpSkystone extends LinearOpMode {
         RightA.setDirection(DcMotorSimple.Direction.REVERSE);
         RightB.setDirection(DcMotorSimple.Direction.REVERSE);
 //Arm
-        armMotor = hardwareMap.dcMotor.get("AndyMark_Arm_motor");
+        AndyMark_motor = hardwareMap.dcMotor.get("AndyMark_Arm_motor");
         Tetrix_ARMSLIDE_Motor = hardwareMap.dcMotor.get("ARMSLIDE");
         Rotating_servo = hardwareMap.servo.get("rotating_servo");
         Up_and_down = hardwareMap.servo.get("Up and down");
         Latch = hardwareMap.servo.get("Latch servo");
-        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //Reed switches code we can use
-        armSwitch1 = hardwareMap.get(DigitalChannel.class, "armSwitch1");
-        armSwitch2 = hardwareMap.get(DigitalChannel.class, "armSwitch2");
-
-        armSwitch1.setMode(DigitalChannel.Mode.INPUT);
-        armSwitch2.setMode(DigitalChannel.Mode.INPUT);
-
-
+        while (!opModeIsActive() && !isStopRequested()){
+            telemetry.addData("caption",bool);
+            telemetry.update();
+        }
 
         waitForStart();
 
-
+//Drive chain
         while(opModeIsActive()){
             double r = Math.hypot(-gamepad1.left_stick_x, gamepad1.left_stick_y);
             double robotAngle = Math.atan2(gamepad1.left_stick_y, -gamepad1.left_stick_x) - Math.PI / 4;
@@ -80,22 +78,15 @@ public class TeleOpSkystone extends LinearOpMode {
             LeftB.setPower(v4);
             RightA.setPower(v1);
             RightB.setPower(v3);
+
             //Arm
 
-
-
-
-
-
-
-
-
-            armMotor.setPower(gamepad2.right_stick_y);
-            if (gamepad1.a == true) {
+            Tetrix_ARMSLIDE_Motor.setPower(gamepad2.right_stick_y);
+            if (gamepad2.a == true) {
                 Extender();
 
             }
-            if  (gamepad1.b)  {
+            if  (gamepad2.b == true)  {
                 Retract();
 
             }
@@ -107,21 +98,43 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
 
+
     }
 
+    //extends arm
     public void Extender(){
-        while ((opModeIsActive()) && (armSwitch2.getState() == true)) {
-            armMotor.setPower(3);}
+        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Tetrix_ARMSLIDE_Motor.setTargetPosition(300);
     }
-    public void Retract(){
-        armMotor.setTargetPosition(0);
+    //retract arm
+    public void Retract() {
+        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Tetrix_ARMSLIDE_Motor.setTargetPosition(-300);
+    }
+    //Raise arm
+    public void Raise_ARM(){
+        AndyMark_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        AndyMark_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        AndyMark_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        AndyMark_motor.setTargetPosition(300);
+    }
+    public void elbow () {
+        AndyMark_motor_elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        AndyMark_motor_elbow.setTargetPosition(300);
+    }
+    public void Reset_Arm (){
+
+
+
     }
 
 }
-
-
-
-
 
 
 
