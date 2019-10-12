@@ -16,7 +16,7 @@ public class AutonomousSkystone extends OpModeIMU {
         boolean park = true;
         String parkLocation = "Red";
         int sleepTimer = 0;
-        String endlocation = "righttape";
+        String endlocation = "Righttape";
         boolean dpad_down = false;
         boolean dpad_up = false;
         boolean dpad_left = false;
@@ -55,10 +55,10 @@ public class AutonomousSkystone extends OpModeIMU {
                     parkLocation = "Blue";
                 }
              else if (gamepad1.y) {
-                 endlocation = "righttape";
+                 endlocation = "Righttape";
             }
              else if (gamepad1.a) {
-                 endlocation = "lefttape";
+                 endlocation = "Lefttape";
             }
             }
 
