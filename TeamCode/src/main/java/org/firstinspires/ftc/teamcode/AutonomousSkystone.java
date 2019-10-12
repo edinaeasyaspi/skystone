@@ -10,13 +10,13 @@ public class AutonomousSkystone extends OpModeIMU {
 
     @Override
     public void runOpMode() {
-        String dockLocation = "Crater";
+        String dockLocation = "Skystone";
         boolean sample = true;
         boolean claim = true;
         boolean park = true;
-        String parkLocation = "Alliance";
+        String parkLocation = "Red";
         int sleepTimer = 0;
-
+        String endlocation = "Righttape";
         boolean dpad_down = false;
         boolean dpad_up = false;
         boolean dpad_left = false;
@@ -45,30 +45,21 @@ public class AutonomousSkystone extends OpModeIMU {
 
         while ((!opModeIsActive()) & (!isStopRequested())) {
             if (gamepad1.x) {
-                dockLocation = "Crater";
-                parkLocation = "Alliance";
+                dockLocation = "Skystone";
             } else if (gamepad1.b) {
-                dockLocation = "Depo";
-            } else if (gamepad1.y) {
-                sample = true;
-            } else if (gamepad1.a) {
-                sample = false;
-            } else if (gamepad1.left_bumper) {
-                claim = false;
-            } else if (gamepad1.right_bumper) {
-                claim = true;
-            } else if (gamepad1.dpad_down) {
-                park = false;
-            } else if (gamepad1.dpad_up) {
-                park = true;
-            } else if (gamepad1.dpad_left) {
-                parkLocation = "Alliance";
+                dockLocation = "buildingsite";
+            }
+             else if (gamepad1.dpad_left) {
+                parkLocation = "Red";
             } else if (gamepad1.dpad_right) {
-                if (dockLocation == "Depo") {
-                    parkLocation = "Opponent";
-                } else {
-                    parkLocation = "Alliance";
+                    parkLocation = "Blue";
                 }
+             else if (gamepad1.y) {
+                 endlocation = "Righttape";
+            }
+             else if (gamepad1.a) {
+                 endlocation = "Lefttape";
+            }
             }
 
 
@@ -87,4 +78,4 @@ public class AutonomousSkystone extends OpModeIMU {
 
     }
 
-}
+
