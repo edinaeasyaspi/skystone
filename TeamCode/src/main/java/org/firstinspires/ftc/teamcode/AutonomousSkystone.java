@@ -49,33 +49,31 @@ public class AutonomousSkystone extends OpModeIMU {
             } else if (gamepad1.b) {
                 dockLocation = "buildingsite";
             }
-             else if (gamepad1.dpad_left) {
+            else if (gamepad1.dpad_left) {
                 parkLocation = "Red";
             } else if (gamepad1.dpad_right) {
-                    parkLocation = "Blue";
-                }
-             else if (gamepad1.y) {
-                 endlocation = "Righttape";
+                parkLocation = "Blue";
             }
-             else if (gamepad1.a) {
-                 endlocation = "Lefttape";
+            else if (gamepad1.y) {
+                endlocation = "Righttape";
             }
+            else if (gamepad1.a) {
+                endlocation = "Lefttape";
             }
+        }
 
 
-            if ((gamepad2.dpad_left == true) && (dpad_left == false)) {
+        if ((gamepad2.dpad_left == true) && (dpad_left == false)) {
 
-                if (sleepTimer > 0) {
-                    sleepTimer = sleepTimer - 1000;
-                }
-            } else if ((gamepad2.dpad_right == true) && (dpad_right == false)) {
-
-
-                sleepTimer = sleepTimer + 1000;
+            if (sleepTimer > 0) {
+                sleepTimer = sleepTimer - 1000;
             }
+        } else if ((gamepad2.dpad_right == true) && (dpad_right == false)) {
 
+
+            sleepTimer = sleepTimer + 1000;
         }
 
     }
 
-
+}
