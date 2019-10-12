@@ -58,7 +58,7 @@ public class AutonomousSkystone extends OpModeIMU {
                 endlocation = "Righttape";
             }
             else if (gamepad1.a) {
-                endlocation = "Lefttape";
+                endlocation = "lefttape";
             }
         }
 
