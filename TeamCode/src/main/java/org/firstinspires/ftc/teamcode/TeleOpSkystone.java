@@ -85,15 +85,15 @@ public class TeleOpSkystone extends LinearOpMode {
         Up_and_down = hardwareMap.servo.get("Up and down");
         Latch = hardwareMap.servo.get("Latch servo");
 //Arm reed switches
-        ARM_SLID_CHECK= hardwareMap.get(DigitalChannel.class, "liftBottomLimit"); // 0 is bottom switch, Blue wire
-        elbow_check = hardwareMap.get(DigitalChannel.class, "armStartLimit"); // 0 is bottom switch, Blue wire
+        ARM_SLID_CHECK= hardwareMap.get(DigitalChannel.class, "ARM_SlID_CHECK");
+        elbow_check = hardwareMap.get(DigitalChannel.class, "ELBOW CHECK");
 
         UnLatch();
 
 
 
     }
-    private void Reset_Arm () {
+    public void Reset_Arm () {
         AndyMark_motor_elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
