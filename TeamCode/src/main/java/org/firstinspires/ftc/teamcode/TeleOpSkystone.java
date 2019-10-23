@@ -22,6 +22,7 @@ public class TeleOpSkystone extends LinearOpMode {
     private DcMotor AndyMark_motor_elbow;
     private DcMotor AndyMark_motor;
     private DcMotor Tetrix_ARMSLIDE_Motor;
+
     //end effector
     private Servo Rotating_servo;
     private Servo Latch;
@@ -42,6 +43,24 @@ public class TeleOpSkystone extends LinearOpMode {
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+    //Extends Motor
+    private void Motor(){
+        AndyMark_motor.setTargetPosition(300);
+    }
+    //extends elbow
+    private void ExtendElbow(){
+        Tetrix_ARMSLIDE_Motor.setTargetPosition(300);
+    }
+    //retracts Motor
+    public void RetractMotor() {
+        AndyMark_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        AndyMark_motor.setTargetPosition(0);
+    }
+    //retracts elbow
+    public void RetractElbow() {
+        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        AndyMark_motor_elbow.setTargetPosition(0);
     }
 
     //extends arm
@@ -80,7 +99,7 @@ public class TeleOpSkystone extends LinearOpMode {
         RightB.setDirection(DcMotorSimple.Direction.REVERSE);
 //Arm
         AndyMark_motor = hardwareMap.dcMotor.get("AndyMark_Arm_motor");
-        Tetrix_ARMSLIDE_Motor = hardwareMap.dcMotor.get("ARMSLIDE");
+        Tetrix_ARMSLIDE_Motor = hardwareMap.dcMotor.get ("ARMSLIDE");
         Rotating_servo = hardwareMap.servo.get("rotating_servo");
         Up_and_down = hardwareMap.servo.get("Up and down");
         Latch = hardwareMap.servo.get("Latch servo");
@@ -133,6 +152,9 @@ public class TeleOpSkystone extends LinearOpMode {
             RightA.setPower(v1);
             RightB.setPower(v3);
 
+           //Arm Elbow
+
+
             //Arm
 
             while (ARM_SLID_CHECK.getState() == true){
@@ -157,6 +179,19 @@ public class TeleOpSkystone extends LinearOpMode {
             if (gamepad2.start){
 
             }
+            if (gamepad2.x){
+                ExtendElbow();
+            }
+            if (gamepad2.y){
+                RetractElbow();
+            }
+            if (gamepad2.dpad_down){
+                RetractMotor();
+            }
+            if (gamepad2.dpad_up){
+                Motor();
+            }
+
 
 
 
