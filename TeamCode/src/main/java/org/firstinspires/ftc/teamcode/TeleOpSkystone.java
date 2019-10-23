@@ -10,6 +10,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
 
 @TeleOp(name = "Zoom Zoom Time", group = "EAP")
 public class TeleOpSkystone extends LinearOpMode {
@@ -29,8 +32,10 @@ public class TeleOpSkystone extends LinearOpMode {
     private Servo Up_and_down;
     boolean bool = false;
     // reed switch
-    private DigitalChannel ARM_SLID_CHECK;
-    private DigitalChannel elbow_check;
+    private DigitalChannel ARM_SLID_CHECK_Front;
+    private DigitalChannel ARM_SLID_CHECK_Back;
+    private DigitalChannel Elbow_Check_Up;
+    private DigitalChannel Elbow_check_Down;
     //encoders
     protected ElapsedTime runtime = new ElapsedTime();
     protected static final int Andmark_MAX_REV = 1120;
@@ -38,6 +43,21 @@ public class TeleOpSkystone extends LinearOpMode {
     protected static final int ARM_MAX = 1900;
     protected static final int ARM_SLIDE_MAX = 600;
     protected static final double ARM_SLIDE_SPEED = 1;
+
+    private void IMU () {
+
+        Orientation angles;
+        Acceleration gravity;
+
+        double currentTilt;
+        boolean tilted;
+
+        Orientation lastAngles = new Orientation();
+        double globalAngle, power = .30, correction;
+
+
+    }
+
     // Reset Encoders
     private void Reset_Arm_Slide(){
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -90,22 +110,29 @@ public class TeleOpSkystone extends LinearOpMode {
 
     public void Init_Juan () {
         //Drive
-        LeftA = hardwareMap.dcMotor.get("LeftA");
-        LeftB = hardwareMap.dcMotor.get("LeftB");
-        RightA = hardwareMap.dcMotor.get("RightA");
-        RightB = hardwareMap.dcMotor.get("RightB");
+        LeftA = hardwareMap.get(DcMotor.class,"LA");
+        LeftB =  hardwareMap.get(DcMotor.class,"LB");
+        RightA = hardwareMap.get(DcMotor.class,"RA");
+        RightB =  hardwareMap.get(DcMotor.class,"RB");
 
         RightA.setDirection(DcMotorSimple.Direction.REVERSE);
         RightB.setDirection(DcMotorSimple.Direction.REVERSE);
 //Arm
-        AndyMark_motor = hardwareMap.dcMotor.get("AndyMark_Arm_motor");
-        Tetrix_ARMSLIDE_Motor = hardwareMap.dcMotor.get ("ARMSLIDE");
-        Rotating_servo = hardwareMap.servo.get("rotating_servo");
-        Up_and_down = hardwareMap.servo.get("Up and down");
-        Latch = hardwareMap.servo.get("Latch servo");
+        AndyMark_motor = hardwareMap.get(DcMotor.class,"AndyMark_Arm_motor");
+        Tetrix_ARMSLIDE_Motor = hardwareMap.get(DcMotor.class,"ARMSLIDE");
+        Rotating_servo = hardwareMap.get(Servo.class , "RS");
+        Up_and_down =  hardwareMap.get(Servo.class , "U-D");
+        Latch =  hardwareMap.get(Servo.class , "L");
 //Arm reed switches
-        ARM_SLID_CHECK= hardwareMap.get(DigitalChannel.class, "ARM_SlID_CHECK");
-        elbow_check = hardwareMap.get(DigitalChannel.class, "ELBOW CHECK");
+        ARM_SLID_CHECK_Front= hardwareMap.get(DigitalChannel.class, "ASC-F");
+        ARM_SLID_CHECK_Back = hardwareMap.get(DigitalChannel.class, "ASC-B");
+        Elbow_Check_Up = hardwareMap.get(DigitalChannel.class, "EBC-U");
+        Elbow_check_Down = hardwareMap.get(DigitalChannel.class, "EBC-U");
+
+        ARM_SLID_CHECK_Front.setMode(DigitalChannel.Mode.INPUT);
+        ARM_SLID_CHECK_Back.setMode(DigitalChannel.Mode.INPUT);
+        Elbow_Check_Up.setMode(DigitalChannel.Mode.INPUT);
+        Elbow_check_Down.setMode(DigitalChannel.Mode.INPUT);
 
         UnLatch();
 
@@ -157,9 +184,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
             //Arm
 
-            while (ARM_SLID_CHECK.getState() == true){
-                Tetrix_ARMSLIDE_Motor.setPower(0);
-            }
+
 
             Tetrix_ARMSLIDE_Motor.setPower(gamepad2.right_stick_y);
             if (gamepad2.a ) {
