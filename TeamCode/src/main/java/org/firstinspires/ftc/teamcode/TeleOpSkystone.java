@@ -14,19 +14,19 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "Zoom Zoom Time", group = "EAP")
 public class TeleOpSkystone extends LinearOpMode {
     //DRIVE
-    private DcMotor LeftA;
-    private DcMotor LeftB;
-    private DcMotor RightA;
-    private DcMotor RightB;
+    private DcMotor LeftA ,LeftB ,RightA ,RightB ;
     //ARM
+<<<<<<< HEAD
     private DcMotor AndyMark_motor_elbow;
     private DcMotor AndyMark_motor;
     private DcMotor Tetrix_ARMSLIDE_Motor;
 
+=======
+    private DcMotor AndyMark_motor_elbow , AndyMark_motor ,  Tetrix_ARMSLIDE_Motor;
+>>>>>>> 535ad5024c167bca25c0a678f3af89ce9b37757b
     //end effector
-    private Servo Rotating_servo;
-    private Servo Latch;
-    private Servo Up_and_down;
+    private Servo Rotating_servo, Latch , Up_and_down ;
+
     boolean bool = false;
     // reed switch
     private DigitalChannel ARM_SLID_CHECK;
