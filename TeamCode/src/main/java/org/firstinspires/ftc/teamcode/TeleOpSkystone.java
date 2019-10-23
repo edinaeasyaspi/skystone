@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
@@ -17,25 +16,25 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 @TeleOp(name = "Zoom Zoom Time", group = "EAP")
 public class TeleOpSkystone extends LinearOpMode {
     //DRIVE
-    private DcMotor LeftA;
-    private DcMotor LeftB;
-    private DcMotor RightA;
-    private DcMotor RightB;
+    public DcMotor LeftA;
+    public DcMotor LeftB;
+    public DcMotor RightA;
+    public DcMotor RightB;
     //ARM
-    private DcMotor AndyMark_motor_elbow;
-    private DcMotor AndyMark_motor;
-    private DcMotor Tetrix_ARMSLIDE_Motor;
+    public DcMotor AndyMark_motor_elbow;
+    public DcMotor AndyMark_motor;
+    public DcMotor Tetrix_ARMSLIDE_Motor;
 
     //end effector
-    private Servo Rotating_servo;
-    private Servo Latch;
-    private Servo Up_and_down;
+    public Servo Rotating_servo;
+    public Servo Latch;
+    public Servo Up_and_down;
     boolean bool = false;
     // reed switch
-    private DigitalChannel ARM_SLID_CHECK_Front;
-    private DigitalChannel ARM_SLID_CHECK_Back;
-    private DigitalChannel Elbow_Check_Up;
-    private DigitalChannel Elbow_check_Down;
+    public DigitalChannel ARM_SLID_CHECK_Front;
+    public DigitalChannel ARM_SLID_CHECK_Back;
+    public DigitalChannel Elbow_Check_Up;
+    public DigitalChannel Elbow_check_Down;
     //encoders
     protected ElapsedTime runtime = new ElapsedTime();
     protected static final int Andmark_MAX_REV = 1120;
@@ -43,17 +42,22 @@ public class TeleOpSkystone extends LinearOpMode {
     protected static final int ARM_MAX = 1900;
     protected static final int ARM_SLIDE_MAX = 600;
     protected static final double ARM_SLIDE_SPEED = 1;
+    protected  static final byte MAX_Power = 1 ;
 
-    private void IMU () {
 
-        Orientation angles;
-        Acceleration gravity;
 
-        double currentTilt;
-        boolean tilted;
 
-        Orientation lastAngles = new Orientation();
-        double globalAngle, power = .30, correction;
+    Orientation angles;
+    Acceleration gravity;
+
+    double currentTilt;
+    boolean tilted;
+
+    Orientation lastAngles = new Orientation();
+    double globalAngle, power = .30, correction;
+
+    private class AntiTiltIMU extends Thread {
+
 
 
     }
