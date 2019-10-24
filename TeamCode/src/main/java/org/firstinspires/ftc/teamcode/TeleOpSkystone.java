@@ -63,7 +63,7 @@ public class TeleOpSkystone extends LinearOpMode {
     }
 
     // Reset Encoders
-    private void Reset_Arm_Slide(){
+    public void Reset_Arm_Slide(){
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -88,7 +88,7 @@ public class TeleOpSkystone extends LinearOpMode {
     }
 
     //extends arm
-    private void Extender(){
+    public void Extender(){
 
         Tetrix_ARMSLIDE_Motor.setTargetPosition(300);
     }
