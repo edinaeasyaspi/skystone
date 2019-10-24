@@ -18,10 +18,68 @@ public class EasyaspiAutonomous extends AutoPaths {
     public void runOpMode () throws InterruptedException {
 
 
+        if( ) {
 
+        }
 
+        if () {
 
+        }
 
+        if() {
+
+        }
+        if( ) {
+
+        }
+
+        if () {
+
+        }
+
+        if() {
+
+        }if( ) {
+
+        }
+
+        if () {
+
+        }
+
+        if() {
+
+        }if( ) {
+
+        }
+
+        if () {
+
+        }
+
+        if() {
+
+        }if( ) {
+
+        }
+
+        if () {
+
+        }
+
+        if() {
+
+        }if( ) {
+
+        }
+
+        if () {
+
+        }
+
+        if() {
+
+        }
 
 
     }

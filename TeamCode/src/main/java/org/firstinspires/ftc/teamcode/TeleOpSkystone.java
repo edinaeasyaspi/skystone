@@ -172,8 +172,7 @@ public class TeleOpSkystone extends LinearOpMode {
             this.setName("Anti Tilt Thread");
         }
 
-        // called when tread.start is called. thread stays in loop to do what it does until exit is
-        // signaled by main code calling thread.interrupt.
+
         @Override
         public void run() {
             double lastTilt = 0;
