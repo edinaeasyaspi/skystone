@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,6 +11,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
@@ -44,8 +48,11 @@ public class TeleOpSkystone extends LinearOpMode {
     protected static final double ARM_SLIDE_SPEED = 1;
     protected  static final byte MAX_Power = 1 ;
 
+    protected static final double DRIVE_SPEED_PRECISE = 0.6;
+    protected static final double TURN_SPEED_PRECISE = 0.4;
 
 
+    BNO055IMU imu;
 
     Orientation angles;
     Acceleration gravity;
@@ -106,7 +113,7 @@ public class TeleOpSkystone extends LinearOpMode {
         AndyMark_motor_elbow.setTargetPosition(300);
     }
     public void Latch (){
-        Latch.setPosition(90);
+        Latch.setPosition(.5);
     }
     public void UnLatch () {
         Latch.setPosition(0);
@@ -152,6 +159,56 @@ public class TeleOpSkystone extends LinearOpMode {
         AndyMark_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         AndyMark_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
+    public void Magnetic_Limitswtiches () {
+
+        while (ARM_SLID_CHECK_Front.getState() == true){
+            Tetrix_ARMSLIDE_Motor.setPower(-0.3);
+        }
+        while (ARM_SLID_CHECK_Back.getState() == true){
+            Tetrix_ARMSLIDE_Motor.setPower(0.3);
+        }
+        while (Elbow_check_Down.getState() == true) {
+
+        }
+    }
+    private class AntiTiltThread extends Thread {
+        public AntiTiltThread() {
+            this.setName("Anti Tilt Thread");
+        }
+
+        // called when tread.start is called. thread stays in loop to do what it does until exit is
+        // signaled by main code calling thread.interrupt.
+        @Override
+        public void run() {
+            double lastTilt = 0;
+            while (!isInterrupted()) {
+                currentTilt = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).thirdAngle;
+
+                if ((lastTilt <= -7) & (currentTilt > -7)) {
+                    tilted = false;
+                    LeftA.setPower(0);
+                    LeftB.setPower(0);
+                    RightA.setPower(0);
+                    RightB.setPower(0);
+                }
+                if (currentTilt <= -7) {
+                    tilted = true;
+                    LeftB.setPower(0.5);
+                    RightB.setPower(0.5);
+                }
+
+                lastTilt = currentTilt;
+
+                idle();
+            }
+
+        }
+    }
+
+
+
+
 
     @Override
     public void runOpMode () throws InterruptedException{

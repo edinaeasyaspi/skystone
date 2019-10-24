@@ -33,21 +33,8 @@ public class EasyaspiAutonomous extends TeleOpSkystone {
     }
 
 
-    private void Blue_Builder () {
+    
 
-    BlueBuilderD1();
-
-    BlueBuilderD2();
-
-    BlueBuilderD3();
-
-    BlueBuilderD4();
-
-    BlueBuilderD5();
-
-    BlueBuilderD6();
-
-    }
     @Override
     public void runOpMode () throws InterruptedException {
 
