@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous
 public class EasyaspiAutonomous extends AutoPaths {
-    AntiTiltThread Antitilt = new AntiTiltThread();
+    Thread Antitilt = new AntiTiltThread();
 
 
 
@@ -16,7 +16,7 @@ public class EasyaspiAutonomous extends AutoPaths {
 
     @Override
     public void runOpMode () throws InterruptedException {
-
+    Antitilt.start();
 
         if( ) {
 
@@ -39,7 +39,8 @@ public class EasyaspiAutonomous extends AutoPaths {
 
         if() {
 
-        }if( ) {
+        }
+        if( ) {
 
         }
 
@@ -49,7 +50,8 @@ public class EasyaspiAutonomous extends AutoPaths {
 
         if() {
 
-        }if( ) {
+        }
+        if( ) {
 
         }
 
@@ -59,7 +61,8 @@ public class EasyaspiAutonomous extends AutoPaths {
 
         if() {
 
-        }if( ) {
+        }
+        if( ) {
 
         }
 
@@ -69,7 +72,8 @@ public class EasyaspiAutonomous extends AutoPaths {
 
         if() {
 
-        }if( ) {
+        }
+        if( ) {
 
         }
 
