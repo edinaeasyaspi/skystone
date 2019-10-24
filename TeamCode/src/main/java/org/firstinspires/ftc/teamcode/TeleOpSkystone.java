@@ -32,7 +32,7 @@ public class TeleOpSkystone extends LinearOpMode {
     //end effector
     public Servo Rotating_servo;
     public Servo Latch;
-    public Servo Up_and_down;
+    private Servo Up_and_down;
     boolean bool = false;
     // reed switch
     public DigitalChannel ARM_SLID_CHECK_Front;
@@ -63,11 +63,6 @@ public class TeleOpSkystone extends LinearOpMode {
     Orientation lastAngles = new Orientation();
     double globalAngle, power = .30, correction;
 
-    private class AntiTiltIMU extends Thread {
-
-
-
-    }
 
     // Reset Encoders
     public void Reset_Arm_Slide(){
@@ -172,7 +167,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
         }
     }
-    private class AntiTiltThread extends Thread {
+    public class AntiTiltThread extends Thread {
         public AntiTiltThread() {
             this.setName("Anti Tilt Thread");
         }
