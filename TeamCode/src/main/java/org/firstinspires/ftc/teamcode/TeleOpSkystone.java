@@ -1,5 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorControllerEx;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -51,6 +57,10 @@ public class TeleOpSkystone extends LinearOpMode {
     protected static final double DRIVE_SPEED_PRECISE = 0.6;
     protected static final double TURN_SPEED_PRECISE = 0.4;
 
+    public static final double NEW_P = 2.5;
+    public static final double NEW_I = 0.1;
+    public static final double NEW_D = 0.2;
+
 
     BNO055IMU imu;
 
@@ -62,6 +72,12 @@ public class TeleOpSkystone extends LinearOpMode {
 
     Orientation lastAngles = new Orientation();
     double globalAngle, power = .30, correction;
+
+    //PID
+    public void PID () {
+
+    }
+
 
 
     // Reset Encoders
@@ -217,6 +233,34 @@ public class TeleOpSkystone extends LinearOpMode {
         telemetry.addLine("Awaiting start");
         waitForStart();
 
+        DcMotorControllerEx motorController0 = (DcMotorControllerEx)LeftA.getController();
+        DcMotorControllerEx motorController1 = (DcMotorControllerEx)LeftB.getController();
+        DcMotorControllerEx motorController2 = (DcMotorControllerEx)RightA.getController();
+        DcMotorControllerEx motorController3 = (DcMotorControllerEx)RightB.getController();
+
+        int motorIndex0 = ((DcMotorEx)LeftA).getPortNumber();
+        int motorIndex1 = ((DcMotorEx)LeftB).getPortNumber();
+        int motorIndex2 = ((DcMotorEx)RightA).getPortNumber();
+        int motorIndex3 = ((DcMotorEx)RightB).getPortNumber();
+
+        // get the PID coefficients for the RUN_USING_ENCODER  modes.
+        PIDCoefficients pidOrig = motorController0.getPIDCoefficients(motorIndex0, DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // change coefficients.
+        PIDCoefficients pidNew = new PIDCoefficients(NEW_P, NEW_I, NEW_D);
+        motorController0.setPIDCoefficients(motorIndex0, DcMotor.RunMode.RUN_USING_ENCODER, pidNew);
+        motorController1.setPIDCoefficients(motorIndex1, DcMotor.RunMode.RUN_USING_ENCODER, pidNew);
+        motorController2.setPIDCoefficients(motorIndex2, DcMotor.RunMode.RUN_USING_ENCODER, pidNew);
+        motorController3.setPIDCoefficients(motorIndex3, DcMotor.RunMode.RUN_USING_ENCODER, pidNew);
+
+        // re-read coefficients and verify change.
+        PIDCoefficients pidModified0 = motorController0.getPIDCoefficients(motorIndex0, DcMotor.RunMode.RUN_USING_ENCODER);
+        PIDCoefficients pidModified1 = motorController1.getPIDCoefficients(motorIndex1, DcMotor.RunMode.RUN_USING_ENCODER);
+        PIDCoefficients pidModified2 = motorController2.getPIDCoefficients(motorIndex2, DcMotor.RunMode.RUN_USING_ENCODER);
+        PIDCoefficients pidModified3 = motorController3.getPIDCoefficients(motorIndex3, DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+
 //Drive chain
         while(opModeIsActive()){
             double r = Math.hypot(-gamepad1.left_stick_x, gamepad1.left_stick_y);
@@ -236,7 +280,18 @@ public class TeleOpSkystone extends LinearOpMode {
 
             //Arm Elbow
 
+            telemetry.addData("Runtime", "%.03f", getRuntime());
 
+            telemetry.addData("P,I,D (orig)", "%.04f, %.04f, %.0f",
+                    pidOrig.p, pidOrig.i, pidOrig.d);
+            telemetry.addData("P,I,D (modified)", "%.04f, %.04f, %.04f",
+                    pidModified0.p, pidModified0.i, pidModified0.d);
+            telemetry.addData("P,I,D (modified)", "%.04f, %.04f, %.04f",
+                    pidModified1.p, pidModified1.i, pidModified1.d);
+            telemetry.addData("P,I,D (modified)", "%.04f, %.04f, %.04f",
+                    pidModified2.p, pidModified2.i, pidModified2.d);
+            telemetry.addData("P,I,D (modified)", "%.04f, %.04f, %.04f",
+                    pidModified3.p, pidModified3.i, pidModified3.d);
             //Arm
 
 
@@ -273,6 +328,8 @@ public class TeleOpSkystone extends LinearOpMode {
             }
 
 
+
+            telemetry.update();
 
 
 
