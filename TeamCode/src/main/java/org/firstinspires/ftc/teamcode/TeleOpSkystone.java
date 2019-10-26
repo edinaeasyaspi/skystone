@@ -38,8 +38,8 @@ public class TeleOpSkystone extends LinearOpMode {
 
     //end effector
     public CRServo Rotating_servo;
-    public Servo Latch;
-    private CRServo Up_and_down;
+    public CRServo Latch;
+    public CRServo Up_and_down;
     boolean bool = false;
     // reed switch
     public DigitalChannel ARM_SLID_CHECK_Front;
@@ -121,10 +121,10 @@ public class TeleOpSkystone extends LinearOpMode {
         AndyMark_motor_elbow.setTargetPosition(300);
     }
     public void Latch (){
-        Latch.setPosition(.5);
+        Latch.setPower(-0.5);
     }
     public void UnLatch () {
-        Latch.setPosition(0);
+        Latch.setPower(.5);
     }
 
     public void Init_Juan () {
@@ -142,7 +142,7 @@ public class TeleOpSkystone extends LinearOpMode {
         Tetrix_ARMSLIDE_Motor = hardwareMap.get(DcMotor.class,"AS");
         Rotating_servo = hardwareMap.get(CRServo.class , "RS");
         Up_and_down =  hardwareMap.get(CRServo.class , "U-D");
-        Latch =  hardwareMap.get(Servo.class , "L");
+        Latch =  hardwareMap.get(CRServo.class , "L");
 //Arm reed switches
         ARM_SLID_CHECK_Front= hardwareMap.get(DigitalChannel.class, "ASC-F");
         ARM_SLID_CHECK_Back = hardwareMap.get(DigitalChannel.class, "ASC-B");
@@ -167,6 +167,8 @@ public class TeleOpSkystone extends LinearOpMode {
         AndyMark_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         AndyMark_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         AndyMark_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
     }
 
     public void Magnetic_Limitswtiches () {
