@@ -277,8 +277,11 @@ public class TeleOpSkystone extends LinearOpMode {
             LeftB.setPower(v4);
             RightA.setPower(v1);
             RightB.setPower(v3);
+
+            AndyMark_motor_elbow.setPower(gamepad2.left_stick_y);
             AndyMark_motor.setPower(gamepad2.right_stick_y);
-            Tetrix_ARMSLIDE_Motor.setPower(gamepad2.left_stick_x);
+            Tetrix_ARMSLIDE_Motor.setPower(gamepad2.right_trigger);
+            Tetrix_ARMSLIDE_Motor.setPower(-gamepad2.left_trigger);
             //Arm Elbow
 
             telemetry.addData("Runtime", "%.03f", getRuntime());
