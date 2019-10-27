@@ -35,7 +35,6 @@ public class TeleOpSkystone extends LinearOpMode {
     public DcMotor AndyMark_motor_elbow;
     public DcMotor AndyMark_motor;
     public DcMotor Tetrix_ARMSLIDE_Motor;
-
     //end effector
     public CRServo Rotating_servo;
     public CRServo Latch;
@@ -62,8 +61,7 @@ public class TeleOpSkystone extends LinearOpMode {
     public static final float NEW_I = 0.1F;
     public static final float NEW_D = 0.2F;
 
-
-    BNO055IMU imu;
+            BNO055IMU imu;
 
     Orientation angles;
     Acceleration gravity;
@@ -76,6 +74,27 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
 
+    //Mecanum Wheels
+    public void Rotation (double LeftPower  , double RightPower) {
+        LeftA.setPower(LeftPower);
+        LeftB.setPower(LeftPower);
+        RightA.setPower(RightPower);
+        RightB.setPower(RightPower);
+    }
+
+    public void Strafe (double LeftPw, double RightPw) {
+        LeftA.setPower(LeftPw);
+        LeftB.setPower(-LeftPw);
+        RightA.setPower(-RightPw);
+        RightB.setPower(RightPw);
+    }
+    public void Forward_and_Backwards (double LeftPw, double RightPw) {
+        LeftA.setPower(LeftPw);
+        LeftB.setPower(LeftPw);
+        RightA.setPower(RightPw);
+        RightB.setPower(RightPw);
+
+    }
 
     // Reset Encoders
     public void Reset_Arm_Slide(){
@@ -263,20 +282,11 @@ public class TeleOpSkystone extends LinearOpMode {
 
 //Drive chain
         while(opModeIsActive()){
-            double r = Math.hypot(-gamepad1.left_stick_x, gamepad1.left_stick_y);
-            double robotAngle = Math.atan2(gamepad1.left_stick_y, -gamepad1.left_stick_x) - Math.PI / 4;
-            double rightX = -gamepad1.right_stick_x;
-            final double v1 = r * Math.cos(robotAngle) + rightX;
-            final double v2 = r * Math.sin(robotAngle) - rightX;
-            final double v3 = r * Math.sin(robotAngle) + rightX;
-            final double v4 = r * Math.cos(robotAngle) - rightX;
 
 
-
-            LeftA.setPower(v2);
-            LeftB.setPower(v4);
-            RightA.setPower(v1);
-            RightB.setPower(v3);
+            Rotation(-gamepad1.right_stick_x,gamepad1.right_stick_x);
+            Strafe(-gamepad1.left_stick_x,-gamepad1.left_stick_x);
+            Forward_and_Backwards(-gamepad1.left_stick_y,-gamepad1.left_stick_y);
 
             AndyMark_motor_elbow.setPower(gamepad2.left_stick_y);
             AndyMark_motor.setPower(gamepad2.right_stick_y);
