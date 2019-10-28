@@ -54,16 +54,21 @@ public class TeleOpSkystone extends LinearOpMode {
     protected static final int ARM_SLIDE_MAX = 600;
     protected static final byte ARM_SLIDE_SPEED = 1;
     protected  static final byte MAX_Power = 1 ;
-
+    protected static final int Tetrix_MAX =1440;
     public static final int WHEEL_DIAMETER_INCHES = 3;
     public static final double DRIVE_GEAR_REDUCTION = 0.5;
 
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
-
+    public double driveStarted;
+    public double lastSpeed;
     protected static final double DRIVE_SPEED_PRECISE = 0.6;
     protected static final double TURN_SPEED_PRECISE = 0.4;
+    double RA; double LA; double RB; double LB;
+    double X1; double Y1; double X2; double Y2;
+    double joyScale = 0.5;
+    double motorMax = 0.6;
 
     public static final float NEW_P = 2.5F;
     public static final float NEW_I = 0.1F;
@@ -80,7 +85,40 @@ public class TeleOpSkystone extends LinearOpMode {
     Orientation lastAngles = new Orientation();
     double globalAngle, power = .30, correction;
 
-    public void Murphy () {
+
+
+
+    public void Brake () {
+        float x = -gamepad1.right_stick_x;
+        float y = gamepad1.left_stick_y;
+        boolean preciseDrive = false;
+
+        if ((gamepad2.left_stick_x != 0) || (gamepad2.left_stick_y != 0)) {
+            x = -gamepad2.left_stick_x;
+            y = gamepad2.left_stick_y;
+            preciseDrive = true;
+        }
+
+        if (y == 0) {
+            if (lastSpeed != 0) {
+                LeftA.setPower(0);
+               LeftB.setPower(0);
+               RightA.setPower(0);
+               RightB.setPower(0);
+                sleep(300);
+            }
+            driveStarted = 0;
+        } else if (((lastSpeed > 0) && (y < 0)) || ((lastSpeed < 0) && (y > 0))) {
+            LeftA.setPower(0);
+            RightA.setPower(0);
+            LeftB.setPower(0);
+            RightB.setPower(0);
+            sleep(300);
+            driveStarted = 0;
+        } else {
+            driveStarted++;
+        }
+
     }
 
 
@@ -103,8 +141,8 @@ public class TeleOpSkystone extends LinearOpMode {
             newRightATarget =RightB.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
 
             LeftA.setTargetPosition(newLeftATarget);
-            LeftB.setTargetPosition(newLeftBTarget);
-            RightA.setTargetPosition(newRightATarget);
+            LeftB.setTargetPosition(-newLeftBTarget);
+            RightA.setTargetPosition(-newRightATarget);
             RightB.setTargetPosition(newRightBTarget);
 
             // Turn On RUN_TO_POSITION
@@ -116,8 +154,8 @@ public class TeleOpSkystone extends LinearOpMode {
             // reset the timeout time and start motion.
             runtime.reset();
             LeftA.setPower(Math.abs(speed));
-            LeftB.setPower(Math.abs(speed));
-            RightA.setPower(Math.abs(speed));
+            LeftB.setPower(Math.abs(-speed));
+            RightA.setPower(Math.abs(-speed));
             RightB.setPower(Math.abs(speed));
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -125,19 +163,7 @@ public class TeleOpSkystone extends LinearOpMode {
             // always end the motion as soon as possible.
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (LeftA.isBusy() && LeftB.isBusy() && RightA.isBusy()   && RightB.isBusy())) {
 
-                // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d :%7d :%7d :%7d", newLeftATarget, newRightATarget);
-                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
-                       LeftA.getCurrentPosition(),
-                       LeftB.getCurrentPosition(),
-                       RightA.getCurrentPosition(),
-                       RightB.getCurrentPosition());
-
-                telemetry.update();
             }
 
             // Stop all motion;
@@ -153,25 +179,101 @@ public class TeleOpSkystone extends LinearOpMode {
             RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         }
+    public void Mecanum_encoderDrive () {
+        float x = -gamepad1.left_stick_x;
+        float y = -gamepad1.left_stick_y;
+
+
+        LeftA.setTargetPosition();
+        LeftB.setTargetPosition();
+        RightA.setTargetPosition();
+        RightB.setTargetPosition();
+
+
+
+
     }
     public void Rotation (double LeftPower  , double RightPower) {
-        LeftA.setPower(LeftPower);
-        LeftB.setPower(LeftPower);
-        RightA.setPower(RightPower);
-        RightB.setPower(RightPower);
+
+
+
     }
 
-    public void Strafe (double LeftPw, double RightPw) {
-        LeftA.setPower(LeftPw);
-        LeftB.setPower(-LeftPw);
-        RightA.setPower(-RightPw);
-        RightB.setPower(RightPw);
+    public void Strafe (double LeftPw) {
+        double LPw = LeftPw*Tetrix_MAX;
+
+
+        int Pw1 = (int)LPw;
+
+
+        double x = gamepad1.left_stick_x;
+        double y = gamepad1.left_stick_y;
+
+        if ( x > 0 && y == 0  ) {
+            LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            RightB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            LeftA.setDirection(DcMotorSimple.Direction.FORWARD);
+            LeftB.setDirection(DcMotorSimple.Direction.REVERSE);
+            RightA.setDirection(DcMotorSimple.Direction.FORWARD);
+            RightB.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
+            LeftA.setTargetPosition(Pw1);
+            LeftB.setTargetPosition(Pw1);
+            RightA.setTargetPosition(Pw1);
+            RightB.setTargetPosition(Pw1);
+
+            LeftA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            LeftB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            RightA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            RightB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        }
+        else (x < 0 && y == 0){
+            LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            RightB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            LeftA.setDirection(DcMotorSimple.Direction.REVERSE);
+            LeftB.setDirection(DcMotorSimple.Direction.FORWARD);
+            RightA.setDirection(DcMotorSimple.Direction.REVERSE);
+            RightB.setDirection(DcMotorSimple.Direction.FORWARD);
+
+
+            LeftA.setTargetPosition(Pw1);
+            LeftB.setTargetPosition(Pw1);
+            RightA.setTargetPosition(Pw1);
+            RightB.setTargetPosition(Pw1);
+
+            LeftA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            LeftB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            RightA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            RightB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        }
     }
     public void Forward_and_Backwards (double LeftPw, double RightPw) {
-        LeftA.setPower(LeftPw-.1);
-        LeftB.setPower(LeftPw+.1);
-        RightA.setPower(RightPw-.1);
-        RightB.setPower(RightPw+.1);
+
+
+        LeftA.setTargetPosition();
+        LeftB.setTargetPosition();
+        RightA.setTargetPosition();
+        RightB.setTargetPosition();
 
     }
 
@@ -232,8 +334,7 @@ public class TeleOpSkystone extends LinearOpMode {
         RightA = hardwareMap.get(DcMotor.class,"RA");
         RightB =  hardwareMap.get(DcMotor.class,"RB");
 
-        RightA.setDirection(DcMotorSimple.Direction.REVERSE);
-        RightB.setDirection(DcMotorSimple.Direction.REVERSE);
+
 //Arm
         AndyMark_motor_elbow = hardwareMap.get(DcMotor.class,"AME");
         AndyMark_motor = hardwareMap.get(DcMotor.class,"AAM");
@@ -278,7 +379,7 @@ public class TeleOpSkystone extends LinearOpMode {
             Tetrix_ARMSLIDE_Motor.setPower(0.3);
         }
         while (Elbow_check_Down.getState() == true) {
-
+            AndyMark_motor_elbow.setPower(0);
         }
     }
     public class AntiTiltThread extends Thread {
@@ -331,31 +432,7 @@ public class TeleOpSkystone extends LinearOpMode {
         telemetry.addLine("Awaiting start");
         waitForStart();
 
-        DcMotorControllerEx motorController0 = (DcMotorControllerEx)LeftA.getController();
-        DcMotorControllerEx motorController1 = (DcMotorControllerEx)LeftB.getController();
-        DcMotorControllerEx motorController2 = (DcMotorControllerEx)RightA.getController();
-        DcMotorControllerEx motorController3 = (DcMotorControllerEx)RightB.getController();
 
-        int motorIndex0 = ((DcMotorEx)LeftA).getPortNumber();
-        int motorIndex1 = ((DcMotorEx)LeftB).getPortNumber();
-        int motorIndex2 = ((DcMotorEx)RightA).getPortNumber();
-        int motorIndex3 = ((DcMotorEx)RightB).getPortNumber();
-
-        // get the PID coefficients for the RUN_USING_ENCODER  modes.
-        PIDCoefficients pidOrig = motorController0.getPIDCoefficients(motorIndex0, DcMotor.RunMode.RUN_USING_ENCODER);
-
-        // change coefficients.
-        PIDCoefficients pidNew = new PIDCoefficients(NEW_P, NEW_I, NEW_D);
-        motorController0.setPIDCoefficients(motorIndex0, DcMotor.RunMode.RUN_USING_ENCODER, pidNew);
-        motorController1.setPIDCoefficients(motorIndex1, DcMotor.RunMode.RUN_USING_ENCODER, pidNew);
-        motorController2.setPIDCoefficients(motorIndex2, DcMotor.RunMode.RUN_USING_ENCODER, pidNew);
-        motorController3.setPIDCoefficients(motorIndex3, DcMotor.RunMode.RUN_USING_ENCODER, pidNew);
-
-        // re-read coefficients and verify change.
-        PIDCoefficients pidModified0 = motorController0.getPIDCoefficients(motorIndex0, DcMotor.RunMode.RUN_USING_ENCODER);
-        PIDCoefficients pidModified1 = motorController1.getPIDCoefficients(motorIndex1, DcMotor.RunMode.RUN_USING_ENCODER);
-        PIDCoefficients pidModified2 = motorController2.getPIDCoefficients(motorIndex2, DcMotor.RunMode.RUN_USING_ENCODER);
-        PIDCoefficients pidModified3 = motorController3.getPIDCoefficients(motorIndex3, DcMotor.RunMode.RUN_USING_ENCODER);
 
 
 
@@ -364,7 +441,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
             Rotation(-gamepad1.right_stick_x,gamepad1.right_stick_x);
-            Strafe(-gamepad1.left_stick_x,-gamepad1.left_stick_x);
+            Strafe(-gamepad1.left_stick_x);
             Forward_and_Backwards(-gamepad1.left_stick_y ,-gamepad1.left_stick_y);
 
             AndyMark_motor_elbow.setPower(gamepad2.left_stick_y);
@@ -373,18 +450,7 @@ public class TeleOpSkystone extends LinearOpMode {
             Tetrix_ARMSLIDE_Motor.setPower(-gamepad2.left_trigger);
             //Arm Elbow
 
-            telemetry.addData("Runtime", "%.03f", getRuntime());
 
-            telemetry.addData("P,I,D (orig)", "%.04f, %.04f, %.0f",
-                    pidOrig.p, pidOrig.i, pidOrig.d);
-            telemetry.addData("P,I,D (modified)", "%.04f, %.04f, %.04f",
-                    pidModified0.p, pidModified0.i, pidModified0.d);
-            telemetry.addData("P,I,D (modified)", "%.04f, %.04f, %.04f",
-                    pidModified1.p, pidModified1.i, pidModified1.d);
-            telemetry.addData("P,I,D (modified)", "%.04f, %.04f, %.04f",
-                    pidModified2.p, pidModified2.i, pidModified2.d);
-            telemetry.addData("P,I,D (modified)", "%.04f, %.04f, %.04f",
-                    pidModified3.p, pidModified3.i, pidModified3.d);
             //Arm
 
 
@@ -421,7 +487,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
 
-            telemetry.update();
+
 
 
 
