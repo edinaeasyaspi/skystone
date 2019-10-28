@@ -74,6 +74,7 @@ public class TeleOpSkystone extends LinearOpMode {
     public static final float NEW_I = 0.1F;
     public static final float NEW_D = 0.2F;
 
+    int n = 0;
             BNO055IMU imu;
 
     Orientation angles;
@@ -85,7 +86,27 @@ public class TeleOpSkystone extends LinearOpMode {
     Orientation lastAngles = new Orientation();
     double globalAngle, power = .30, correction;
 
+    public void Arm_Height (int n){
 
+        switch (n) {
+            case 1:
+
+            case 2:
+
+            case 3:
+
+            case 4:
+
+            case 5:
+
+            case 6:
+
+            case 7:
+
+            case 8:
+
+        }
+    }
 
 
     public void Brake () {
@@ -398,8 +419,13 @@ public class TeleOpSkystone extends LinearOpMode {
             Strafe(-gamepad1.left_stick_x);
             Forward_and_Backwards(-gamepad1.left_stick_y );
 
-            AndyMark_motor_elbow.setPower(gamepad2.left_stick_y);
-            AndyMark_motor.setPower(gamepad2.right_stick_y);
+            if (gamepad2.dpad_down == true) {
+                Rotation(-gamepad2.right_stick_x);
+                Strafe(-gamepad2.left_stick_x);
+                Forward_and_Backwards(-gamepad2.left_stick_y );
+
+            }
+
             Tetrix_ARMSLIDE_Motor.setPower(gamepad2.right_trigger);
             Tetrix_ARMSLIDE_Motor.setPower(-gamepad2.left_trigger);
             //Arm Elbow
@@ -438,7 +464,9 @@ public class TeleOpSkystone extends LinearOpMode {
             if (gamepad2.dpad_up){
                 Motor();
             }
-
+            if (gamepad2.x){
+                n++;
+                }
 
 
 
