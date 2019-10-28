@@ -136,9 +136,9 @@ public class TeleOpSkystone extends LinearOpMode {
 
             // Determine new target position, and pass to motor controller
             newLeftATarget = LeftA.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
-            newRightBTarget =LeftB.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            newRightBTarget = LeftB.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
             newLeftBTarget = RightA.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
-            newRightATarget =RightB.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            newRightATarget = RightB.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
 
             LeftA.setTargetPosition(newLeftATarget);
             LeftB.setTargetPosition(-newLeftBTarget);
@@ -163,9 +163,22 @@ public class TeleOpSkystone extends LinearOpMode {
             // always end the motion as soon as possible.
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (LeftA.isBusy() && LeftB.isBusy() && RightA.isBusy() && RightB.isBusy())) {
+
+                // Display it for the driver.
+                telemetry.addData("Path1", "Running to %7d :%7d :%7d :%7d ", newLeftATarget,newLeftBTarget,newRightATarget, newRightBTarget);
+                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
+                        LeftA.getCurrentPosition(),
+                        LeftB.getCurrentPosition(),
+                        RightA.getCurrentPosition(),
+                        RightB.getCurrentPosition());
+
+                telemetry.update();
 
             }
-
+        }
             // Stop all motion;
             LeftA.setPower(0);
             LeftB.setPower(0);
@@ -179,101 +192,42 @@ public class TeleOpSkystone extends LinearOpMode {
             RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         }
-    public void Mecanum_encoderDrive () {
-        float x = -gamepad1.left_stick_x;
-        float y = -gamepad1.left_stick_y;
 
+    public void Rotation (double LeftPw ) {
 
-        LeftA.setTargetPosition();
-        LeftB.setTargetPosition();
-        RightA.setTargetPosition();
-        RightB.setTargetPosition();
-
-
-
-
-    }
-    public void Rotation (double LeftPower  , double RightPower) {
+        LeftA.setPower(LeftPw);
+        LeftB.setPower(LeftPw*1.5);
+        RightA.setPower(-LeftPw);
+        RightB.setPower(-LeftPw*1.5);
 
 
 
     }
 
     public void Strafe (double LeftPw) {
-        double LPw = LeftPw*Tetrix_MAX;
 
+        LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        int Pw1 = (int)LPw;
-
-
-        double x = gamepad1.left_stick_x;
-        double y = gamepad1.left_stick_y;
-
-        if ( x > 0 && y == 0  ) {
-            LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            RightB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            LeftA.setDirection(DcMotorSimple.Direction.FORWARD);
-            LeftB.setDirection(DcMotorSimple.Direction.REVERSE);
-            RightA.setDirection(DcMotorSimple.Direction.FORWARD);
-            RightB.setDirection(DcMotorSimple.Direction.REVERSE);
-
-
-            LeftA.setTargetPosition(Pw1);
-            LeftB.setTargetPosition(Pw1);
-            RightA.setTargetPosition(Pw1);
-            RightB.setTargetPosition(Pw1);
-
-            LeftA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            LeftB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            RightA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            RightB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+        LeftA.setPower(LeftPw);
+        LeftB.setPower(-LeftPw*1.5);
+        RightA.setPower(-LeftPw);
+        RightB.setPower(LeftPw*1.5);
 
         }
-        else (x < 0 && y == 0){
-            LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    public void Forward_and_Backwards (double LeftPw ) {
 
-            LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            RightB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            LeftA.setDirection(DcMotorSimple.Direction.REVERSE);
-            LeftB.setDirection(DcMotorSimple.Direction.FORWARD);
-            RightA.setDirection(DcMotorSimple.Direction.REVERSE);
-            RightB.setDirection(DcMotorSimple.Direction.FORWARD);
-
-
-            LeftA.setTargetPosition(Pw1);
-            LeftB.setTargetPosition(Pw1);
-            RightA.setTargetPosition(Pw1);
-            RightB.setTargetPosition(Pw1);
-
-            LeftA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            LeftB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            RightA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            RightB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        }
-    }
-    public void Forward_and_Backwards (double LeftPw, double RightPw) {
-
-
-        LeftA.setTargetPosition();
-        LeftB.setTargetPosition();
-        RightA.setTargetPosition();
-        RightB.setTargetPosition();
+        LeftA.setPower(LeftPw);
+        LeftB.setPower(LeftPw*1.5);
+        RightA.setPower(LeftPw);
+        RightB.setPower(LeftPw*1.5);
 
     }
 
@@ -440,9 +394,9 @@ public class TeleOpSkystone extends LinearOpMode {
         while(opModeIsActive()){
 
 
-            Rotation(-gamepad1.right_stick_x,gamepad1.right_stick_x);
+            Rotation(-gamepad1.right_stick_x);
             Strafe(-gamepad1.left_stick_x);
-            Forward_and_Backwards(-gamepad1.left_stick_y ,-gamepad1.left_stick_y);
+            Forward_and_Backwards(-gamepad1.left_stick_y );
 
             AndyMark_motor_elbow.setPower(gamepad2.left_stick_y);
             AndyMark_motor.setPower(gamepad2.right_stick_y);
@@ -450,7 +404,7 @@ public class TeleOpSkystone extends LinearOpMode {
             Tetrix_ARMSLIDE_Motor.setPower(-gamepad2.left_trigger);
             //Arm Elbow
 
-
+            Brake();
             //Arm
 
 
