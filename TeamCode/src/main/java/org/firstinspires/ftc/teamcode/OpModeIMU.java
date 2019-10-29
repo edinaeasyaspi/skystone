@@ -46,7 +46,7 @@ import java.util.Locale;
  * 12. GamePad 2, b,x positions the arm for ball pickup and drop off
  * 13. GamePad 2, left joystick controls drive and turns
  */
-@TeleOp(name = "JTH OpMode IMU", group = "JTH")
+@TeleOp
 @Disabled
 public class OpModeIMU extends LinearOpMode {
 
