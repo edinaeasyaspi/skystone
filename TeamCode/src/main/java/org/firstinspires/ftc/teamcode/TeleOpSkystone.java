@@ -215,11 +215,15 @@ public class TeleOpSkystone extends LinearOpMode {
         }
 
     public void Rotation (double LeftPw ) {
+        LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         LeftA.setPower(LeftPw);
-        LeftB.setPower(LeftPw*1.5);
+        LeftB.setPower(LeftPw);
         RightA.setPower(-LeftPw);
-        RightB.setPower(-LeftPw*1.5);
+        RightB.setPower(-LeftPw);
 
 
 
@@ -233,9 +237,9 @@ public class TeleOpSkystone extends LinearOpMode {
         RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         LeftA.setPower(LeftPw);
-        LeftB.setPower(-LeftPw*1.5);
+        LeftB.setPower(-LeftPw);
         RightA.setPower(-LeftPw);
-        RightB.setPower(LeftPw*1.5);
+        RightB.setPower(LeftPw);
 
         }
     public void Forward_and_Backwards (double LeftPw ) {
@@ -246,9 +250,9 @@ public class TeleOpSkystone extends LinearOpMode {
         RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         LeftA.setPower(LeftPw);
-        LeftB.setPower(LeftPw*1.5);
+        LeftB.setPower(LeftPw);
         RightA.setPower(LeftPw);
-        RightB.setPower(LeftPw*1.5);
+        RightB.setPower(LeftPw);
 
     }
 
@@ -272,15 +276,17 @@ public class TeleOpSkystone extends LinearOpMode {
         AndyMark_motor.setTargetPosition(0);
     }
     //retracts elbow
-    public void RetractElbow() {
-        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        AndyMark_motor_elbow.setTargetPosition(0);
+    public void Grabskystone () {
+        AndyMark_motor_elbow.setTargetPosition(750);
+
+
     }
 
     //extends arm
     public void Extender(){
 
         Tetrix_ARMSLIDE_Motor.setTargetPosition(300);
+
     }
     //retract arm
     public void Retract() {
@@ -328,6 +334,14 @@ public class TeleOpSkystone extends LinearOpMode {
         Elbow_Check_Up.setMode(DigitalChannel.Mode.INPUT);
         Elbow_check_Down.setMode(DigitalChannel.Mode.INPUT);
 
+        LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+        RightA.setDirection(DcMotor.Direction.REVERSE);
+        RightB.setDirection(DcMotor.Direction.REVERSE);
         UnLatch();
 
 
@@ -414,17 +428,22 @@ public class TeleOpSkystone extends LinearOpMode {
 //Drive chain
         while(opModeIsActive()){
 
+            double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
+            double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+            double rightX =  gamepad1.right_stick_x;
+            final double v1 = r * Math.cos(robotAngle) + rightX;
+            final double v2 = r * Math.sin(robotAngle) - rightX;
+            final double v3 = r * Math.sin(robotAngle) + rightX;
+            final double v4 = r * Math.cos(robotAngle) - rightX;
 
-            Rotation(-gamepad1.right_stick_x);
-            Strafe(-gamepad1.left_stick_x);
-            Forward_and_Backwards(-gamepad1.left_stick_y );
+            LeftA.setPower(v2);
+            RightA.setPower(v1);
+            LeftB.setPower(v3);
+            RightB.setPower(v4);
 
-            if (gamepad2.dpad_down == true) {
-                Rotation(-gamepad2.right_stick_x);
-                Strafe(-gamepad2.left_stick_x);
-                Forward_and_Backwards(-gamepad2.left_stick_y );
 
-            }
+
+
 
             Tetrix_ARMSLIDE_Motor.setPower(gamepad2.right_trigger);
             Tetrix_ARMSLIDE_Motor.setPower(-gamepad2.left_trigger);
@@ -456,7 +475,7 @@ public class TeleOpSkystone extends LinearOpMode {
                 ExtendElbow();
             }
             if (gamepad2.y){
-                RetractElbow();
+                Grabskystone();
             }
             if (gamepad2.dpad_down){
                 RetractMotor();
