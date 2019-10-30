@@ -215,10 +215,6 @@ public class TeleOpSkystone extends LinearOpMode {
         }
 
     public void Rotation (double LeftPw ) {
-        LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         LeftA.setPower(LeftPw);
         LeftB.setPower(LeftPw);
@@ -230,11 +226,7 @@ public class TeleOpSkystone extends LinearOpMode {
     }
 
     public void Strafe (double LeftPw) {
-
-        LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+;
 
         LeftA.setPower(LeftPw);
         LeftB.setPower(-LeftPw);
@@ -243,11 +235,6 @@ public class TeleOpSkystone extends LinearOpMode {
 
         }
     public void Forward_and_Backwards (double LeftPw ) {
-
-        LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         LeftA.setPower(LeftPw);
         LeftB.setPower(LeftPw);
@@ -449,7 +436,7 @@ public class TeleOpSkystone extends LinearOpMode {
 //Drive chain
         while(opModeIsActive()){
 
-            Drive(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x);
+
 
 
 
