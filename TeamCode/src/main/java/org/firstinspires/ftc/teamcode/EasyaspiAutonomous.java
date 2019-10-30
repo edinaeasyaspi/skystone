@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import android.os.Bundle;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous
@@ -20,5 +22,6 @@ public class EasyaspiAutonomous extends AutoPaths {
 
 
     }
-
+    InternalCameraExample Camera = new InternalCameraExample();
 }
+
