@@ -350,10 +350,10 @@ public class TeleOpSkystone extends LinearOpMode {
         final double bl = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
         final double br = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
 
-        LeftA.setPower(-fl);
-        RightA.setPower(-fr);
-        LeftB.setPower(-br);
-        RightB.setPower(-bl);
+        LeftA.setPower(fl);
+        RightA.setPower(fr);
+        LeftB.setPower(br);
+        RightB.setPower(bl);
     }
     public void Reset_Arm () {
         AndyMark_motor_elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -363,6 +363,10 @@ public class TeleOpSkystone extends LinearOpMode {
         AndyMark_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         AndyMark_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         AndyMark_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
     }
@@ -437,7 +441,11 @@ public class TeleOpSkystone extends LinearOpMode {
         while(opModeIsActive()){
 
 
-
+            Drive(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x);
+         //   LeftA.setPower(gamepad1.left_stick_y);
+         //   LeftB.setPower(gamepad1.right_stick_y);
+         //   RightA.setPower(gamepad2.right_stick_y);
+         //   RightB.setPower(gamepad2.left_stick_y);
 
 
 
