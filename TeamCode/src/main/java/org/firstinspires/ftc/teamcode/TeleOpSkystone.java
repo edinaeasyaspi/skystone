@@ -37,9 +37,9 @@ public class TeleOpSkystone extends LinearOpMode {
     public DcMotor AndyMark_motor;
     public DcMotor Tetrix_ARMSLIDE_Motor;
     //end effector
-    public CRServo Rotating_servo;
-    public CRServo Latch;
-    public CRServo Up_and_down;
+    public Servo Rotating_servo;
+    public Servo Latch;
+    public Servo Up_and_down;
     boolean bool = false;
     // reed switch
     public DigitalChannel ARM_SLID_CHECK_Front;
@@ -302,10 +302,10 @@ public class TeleOpSkystone extends LinearOpMode {
         AndyMark_motor_elbow.setTargetPosition(300);
     }
     public void Latch (){
-        Latch.setPower(-0.5);
+        Latch.setPosition(.5);
     }
     public void UnLatch () {
-        Latch.setPower(.5);
+        Latch.setPosition(.5);
     }
 
     public void Init_Juan () {
@@ -320,9 +320,9 @@ public class TeleOpSkystone extends LinearOpMode {
         AndyMark_motor_elbow = hardwareMap.get(DcMotor.class,"AME");
         AndyMark_motor = hardwareMap.get(DcMotor.class,"AAM");
         Tetrix_ARMSLIDE_Motor = hardwareMap.get(DcMotor.class,"AS");
-        Rotating_servo = hardwareMap.get(CRServo.class , "RS");
-        Up_and_down =  hardwareMap.get(CRServo.class , "U-D");
-        Latch =  hardwareMap.get(CRServo.class , "L");
+        Rotating_servo = hardwareMap.get(Servo.class , "RS");
+        Up_and_down =  hardwareMap.get(Servo.class , "U-D");
+        Latch =  hardwareMap.get(Servo.class , "L");
 //Arm reed switches
         ARM_SLID_CHECK_Front= hardwareMap.get(DigitalChannel.class, "ASC-F");
         ARM_SLID_CHECK_Back = hardwareMap.get(DigitalChannel.class, "ASC-B");
@@ -334,18 +334,39 @@ public class TeleOpSkystone extends LinearOpMode {
         Elbow_Check_Up.setMode(DigitalChannel.Mode.INPUT);
         Elbow_check_Down.setMode(DigitalChannel.Mode.INPUT);
 
-        LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LeftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RightA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RightB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        LeftA.setDirection(DcMotor.Direction.REVERSE);
+        LeftB.setDirection(DcMotor.Direction.REVERSE);
 
 
-        RightA.setDirection(DcMotor.Direction.REVERSE);
-        RightB.setDirection(DcMotor.Direction.REVERSE);
+
+
         UnLatch();
 
 
 
+    }
+    public void Drive(double leftStickX, double leftStickY, double rightStickY) {
+        final double x = Math.pow(-leftStickX, 3.0);
+        final double y = Math.pow(leftStickY, 3.0);
+
+        final double rotation = Math.pow(-rightStickY, 3.0);
+        final double direction = Math.atan2(x, y);
+        final double speed = Math.min(1.0, Math.sqrt(x * x + y * y));
+
+        final double fl = speed * Math.sin(direction + Math.PI / 4.0) + rotation;
+        final double fr = speed * Math.cos(direction + Math.PI / 4.0) - rotation;
+        final double bl = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
+        final double br = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
+
+        LeftA.setPower(-fl);
+        RightA.setPower(-fr);
+        LeftB.setPower(-br);
+        RightB.setPower(-bl);
     }
     public void Reset_Arm () {
         AndyMark_motor_elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -428,18 +449,7 @@ public class TeleOpSkystone extends LinearOpMode {
 //Drive chain
         while(opModeIsActive()){
 
-            double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-            double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-            double rightX =  gamepad1.right_stick_x;
-            final double v1 = r * Math.cos(robotAngle) + rightX;
-            final double v2 = r * Math.sin(robotAngle) - rightX;
-            final double v3 = r * Math.sin(robotAngle) + rightX;
-            final double v4 = r * Math.cos(robotAngle) - rightX;
-
-            LeftA.setPower(v2);
-            RightA.setPower(v1);
-            LeftB.setPower(v3);
-            RightB.setPower(v4);
+            Drive(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x);
 
 
 
