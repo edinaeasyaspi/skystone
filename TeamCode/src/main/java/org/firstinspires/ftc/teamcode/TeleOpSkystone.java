@@ -350,10 +350,10 @@ public class TeleOpSkystone extends LinearOpMode {
         final double bl = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
         final double br = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
 
-        LeftA.setPower(-fl);
-        RightA.setPower(-fr);
-        LeftB.setPower(-br);
-        RightB.setPower(-bl);
+        LeftA.setPower(fl);
+        RightA.setPower(fr);
+        LeftB.setPower(br);
+        RightB.setPower(bl);
     }
     public void Reset_Arm () {
         AndyMark_motor_elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
