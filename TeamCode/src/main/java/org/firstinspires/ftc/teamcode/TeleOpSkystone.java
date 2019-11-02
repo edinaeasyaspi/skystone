@@ -87,27 +87,7 @@ public class TeleOpSkystone extends LinearOpMode {
     Orientation lastAngles = new Orientation();
     double globalAngle, power = .30, correction;
 
-    public void Arm_Height (int n){
 
-        switch (n) {
-            case 1:
-                Grabskystone();
-            case 2:
-
-            case 3:
-
-            case 4:
-
-            case 5:
-
-            case 6:
-
-            case 7:
-
-            case 8:
-
-        }
-    }
 
 
     public void Brake () {
@@ -236,13 +216,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
     }
     //retracts elbow
-    public void Grabskystone () {
 
-        AndyMark_motor_elbow.setTargetPosition(750);
-        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        AndyMark_motor_elbow.setPower(1);
-
-    }
 
     //extends arm
     public void Extender(double setPos) {
@@ -375,14 +349,14 @@ public class TeleOpSkystone extends LinearOpMode {
             }
 
         }
+
+
     }
 
 
 
-
-
     @Override
-    public void runOpMode () throws InterruptedException{
+    public void runOpMode () throws InterruptedException {
 
         Init_Juan();
         telemetry.addLine("Hardware Mapped");
@@ -395,20 +369,15 @@ public class TeleOpSkystone extends LinearOpMode {
         waitForStart();
 
 
-
-
-
 //Drive chain
-        while(opModeIsActive()){
+        while (opModeIsActive()) {
 
 
-            Drive(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x);
-         //   LeftA.setPower(gamepad1.left_stick_y);
-         //   LeftB.setPower(gamepad1.right_stick_y);
-         //   RightA.setPower(gamepad2.right_stick_y);
-         //   RightB.setPower(gamepad2.left_stick_y);
-
-
+            Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            //   LeftA.setPower(gamepad1.left_stick_y);
+            //   LeftB.setPower(gamepad1.right_stick_y);
+            //   RightA.setPower(gamepad2.right_stick_y);
+            //   RightB.setPower(gamepad2.left_stick_y);
 
 
             Extender(gamepad2.left_stick_x);
@@ -419,33 +388,30 @@ public class TeleOpSkystone extends LinearOpMode {
             //Arm
 
 
-
             if (gamepad2.right_bumper) {
                 Latch();
             }
             if (gamepad2.left_bumper) {
                 UnLatch();
             }
-            if (gamepad2.start){
+            if (gamepad2.start) {
 
             }
 
-            if (gamepad2.dpad_down){
+            if (gamepad2.dpad_down) {
                 RetractMotor();
             }
 
-            if (gamepad2.x){
+            if (gamepad2.x) {
                 Arm_Height(n);
                 n++;
-                }
-            if (gamepad2.a){
+
+            }
+            if (gamepad2.a) {
                 n = 1;
                 Arm_Height(n);
 
             }
-
-
-
 
 
             idle();
@@ -453,17 +419,42 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
 
-
-
-
     }
 
 
 
+    public void Grabskystone () {
+        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        AndyMark_motor_elbow.setTargetPosition(560);
+        AndyMark_motor_elbow.setPower(.1);
+
+    }
 
 
+    public void Arm_Height (int n){
 
+        switch (n) {
+            case 1:
+                Grabskystone();
+                break;
+            case 2:
 
+            case 3:
+
+            case 4:
+
+            case 5:
+
+            case 6:
+
+            case 7:
+
+            case 8:
+
+            default:
+            n = 0;
+        }
+    }
 
 
 }//Class
