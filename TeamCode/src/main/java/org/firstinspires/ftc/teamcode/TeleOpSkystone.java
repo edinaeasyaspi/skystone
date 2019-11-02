@@ -125,75 +125,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
 
-    //Mecanum Wheels
-/*    public void encoderDrive(double speed,
-                             double leftInches, double rightInches,
-                             double timeoutS) {
-        int newLeftATarget;
-        int newRightATarget;
-        int newLeftBTarget;
-        int newRightBTarget;
-        // Ensure that the opmode is still active
-        if (opModeIsActive()) {
 
-            // Determine new target position, and pass to motor controller
-            newLeftATarget = LeftA.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
-            newRightBTarget = LeftB.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
-            newLeftBTarget = RightA.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
-            newRightATarget = RightB.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
-
-            LeftA.setTargetPosition(newLeftATarget);
-            LeftB.setTargetPosition(-newLeftBTarget);
-            RightA.setTargetPosition(-newRightATarget);
-            RightB.setTargetPosition(newRightBTarget);
-
-            // Turn On RUN_TO_POSITION
-            LeftA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            LeftB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            RightA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            RightB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // reset the timeout time and start motion.
-            runtime.reset();
-            LeftA.setPower(Math.abs(speed));
-            LeftB.setPower(Math.abs(-speed));
-            RightA.setPower(Math.abs(-speed));
-            RightB.setPower(Math.abs(speed));
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
-            // its target position, the motion will stop.  This is "safer" in the event that the robot will
-            // always end the motion as soon as possible.
-            // However, if you require that BOTH motors have finished their moves before the robot continues
-            // onto the next step, use (isBusy() || isBusy()) in the loop test.
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (LeftA.isBusy() && LeftB.isBusy() && RightA.isBusy() && RightB.isBusy())) {
-
-                // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d :%7d :%7d :%7d ", newLeftATarget,newLeftBTarget,newRightATarget, newRightBTarget);
-                telemetry.addData("Path2", "Running at %7d :%7d :%7d :%7d",
-                        LeftA.getCurrentPosition(),
-                        LeftB.getCurrentPosition(),
-                        RightA.getCurrentPosition(),
-                        RightB.getCurrentPosition());
-
-                telemetry.update();
-
-            }
-        }
-           // Stop all motion;
-            LeftA.setPower(0);
-            LeftB.setPower(0);
-            RightA.setPower(0);
-            RightB.setPower(0);
-
-            // Turn off RUN_TO_POSITION
-            LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        }*/
 
 
         // Reset Encoders
@@ -202,28 +134,7 @@ public class TeleOpSkystone extends LinearOpMode {
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    //Extends Motor
-  /*  private void Motor(){
-        AndyMark_motor.setTargetPosition(300);
-   *///}
-    //extends elbow
-  /*  private void ExtendElbow(){
-        Tetrix_ARMSLIDE_Motor.setTargetPosition(300);
-    }*/
-    //retracts Motor
-    public void RetractMotor() {
 
-
-    }
-    //retracts elbow
-
-
-    //extends arm
-    public void Extender(double setPos) {
-        Tetrix_ARMSLIDE_Motor.setPower(setPos);
-
-    }
-    //retract arm
 
     public void Latch (){
         Latch.setPosition(.5);
@@ -380,7 +291,7 @@ public class TeleOpSkystone extends LinearOpMode {
             //   RightB.setPower(gamepad2.left_stick_y);
 
 
-            Extender(gamepad2.left_stick_x);
+            Tetrix_ARMSLIDE_Motor.setPower(gamepad2.left_stick_x);
             AndyMark_motor.setPower(gamepad2.right_stick_x);
             //Arm Elbow
 
@@ -398,9 +309,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
             }
 
-            if (gamepad2.dpad_down) {
-                RetractMotor();
-            }
+
 
             if (gamepad2.x) {
                 Arm_Height(n);
@@ -424,8 +333,8 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
     public void Grabskystone () {
-        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         AndyMark_motor_elbow.setTargetPosition(560);
+        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         AndyMark_motor_elbow.setPower(.1);
 
     }
