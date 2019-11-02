@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorControllerEx;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
@@ -52,7 +53,7 @@ public class TeleOpSkystone extends LinearOpMode {
     protected static final float COUNTS_PER_MOTOR_REV = 56F;
     protected static final int ARM_MAX = 1900;
     protected static final int ARM_SLIDE_MAX = 600;
-    protected static final byte ARM_SLIDE_SPEED = 1;
+    protected static final byte MAX_SPEED = 1;
     protected  static final byte MAX_Power = 1 ;
     protected static final int Tetrix_MAX =1440;
     public static final int WHEEL_DIAMETER_INCHES = 3;
@@ -74,7 +75,7 @@ public class TeleOpSkystone extends LinearOpMode {
     public static final float NEW_I = 0.1F;
     public static final float NEW_D = 0.2F;
 
-    int n = 0;
+    int n = 1 ;
             BNO055IMU imu;
 
     Orientation angles;
@@ -90,7 +91,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
         switch (n) {
             case 1:
-
+                Grabskystone();
             case 2:
 
             case 3:
@@ -145,7 +146,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
     //Mecanum Wheels
-    public void encoderDrive(double speed,
+/*    public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
         int newLeftATarget;
@@ -200,7 +201,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
             }
         }
-            // Stop all motion;
+           // Stop all motion;
             LeftA.setPower(0);
             LeftB.setPower(0);
             RightA.setPower(0);
@@ -212,82 +213,44 @@ public class TeleOpSkystone extends LinearOpMode {
             RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        }
-
-    public void Rotation (double LeftPw ) {
-
-        LeftA.setPower(LeftPw);
-        LeftB.setPower(LeftPw);
-        RightA.setPower(-LeftPw);
-        RightB.setPower(-LeftPw);
+        }*/
 
 
-
-    }
-
-    public void Strafe (double LeftPw) {
-;
-
-        LeftA.setPower(LeftPw);
-        LeftB.setPower(-LeftPw);
-        RightA.setPower(-LeftPw);
-        RightB.setPower(LeftPw);
-
-        }
-    public void Forward_and_Backwards (double LeftPw ) {
-
-        LeftA.setPower(LeftPw);
-        LeftB.setPower(LeftPw);
-        RightA.setPower(LeftPw);
-        RightB.setPower(LeftPw);
-
-    }
-
-    // Reset Encoders
+        // Reset Encoders
     public void Reset_Arm_Slide(){
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     //Extends Motor
-    private void Motor(){
+  /*  private void Motor(){
         AndyMark_motor.setTargetPosition(300);
-    }
+   *///}
     //extends elbow
-    private void ExtendElbow(){
+  /*  private void ExtendElbow(){
         Tetrix_ARMSLIDE_Motor.setTargetPosition(300);
-    }
+    }*/
     //retracts Motor
     public void RetractMotor() {
-        AndyMark_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        AndyMark_motor.setTargetPosition(0);
+
+
     }
     //retracts elbow
     public void Grabskystone () {
-        AndyMark_motor_elbow.setTargetPosition(750);
 
+        AndyMark_motor_elbow.setTargetPosition(750);
+        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        AndyMark_motor_elbow.setPower(1);
 
     }
 
     //extends arm
-    public void Extender(){
-
-        Tetrix_ARMSLIDE_Motor.setTargetPosition(300);
+    public void Extender(double setPos) {
+        Tetrix_ARMSLIDE_Motor.setPower(setPos);
 
     }
     //retract arm
-    public void Retract() {
-        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Tetrix_ARMSLIDE_Motor.setTargetPosition(0);
-    }
-    //Raise arm
-    public void Raise_ARM(){
-        AndyMark_motor.setTargetPosition(300);
-    }
-    public void elbow () {
 
-        AndyMark_motor_elbow.setTargetPosition(300);
-    }
     public void Latch (){
         Latch.setPosition(.5);
     }
@@ -321,10 +284,10 @@ public class TeleOpSkystone extends LinearOpMode {
         Elbow_Check_Up.setMode(DigitalChannel.Mode.INPUT);
         Elbow_check_Down.setMode(DigitalChannel.Mode.INPUT);
 
-        LeftA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        LeftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        RightA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        RightB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         LeftA.setDirection(DcMotor.Direction.REVERSE);
         LeftB.setDirection(DcMotor.Direction.REVERSE);
@@ -364,9 +327,7 @@ public class TeleOpSkystone extends LinearOpMode {
         AndyMark_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         AndyMark_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
 
     }
@@ -450,8 +411,8 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
 
-            Tetrix_ARMSLIDE_Motor.setPower(gamepad2.right_trigger);
-            Tetrix_ARMSLIDE_Motor.setPower(-gamepad2.left_trigger);
+            Extender(gamepad2.left_stick_x);
+            AndyMark_motor.setPower(gamepad2.right_stick_x);
             //Arm Elbow
 
             Brake();
@@ -459,14 +420,6 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
 
-            if (gamepad2.a ) {
-                Extender();
-
-            }
-            if  (gamepad2.b)  {
-                Retract();
-
-            }
             if (gamepad2.right_bumper) {
                 Latch();
             }
@@ -476,22 +429,20 @@ public class TeleOpSkystone extends LinearOpMode {
             if (gamepad2.start){
 
             }
-            if (gamepad2.x){
-                ExtendElbow();
-            }
-            if (gamepad2.y){
-                Grabskystone();
-            }
+
             if (gamepad2.dpad_down){
                 RetractMotor();
             }
-            if (gamepad2.dpad_up){
-                Motor();
-            }
+
             if (gamepad2.x){
+                Arm_Height(n);
                 n++;
                 }
+            if (gamepad2.a){
+                n = 1;
+                Arm_Height(n);
 
+            }
 
 
 
