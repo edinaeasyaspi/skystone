@@ -70,7 +70,7 @@ public class TeleOpSkystone extends LinearOpMode {
     double X1; double Y1; double X2; double Y2;
     double joyScale = 0.5;
     double motorMax = 0.6;
-//
+
     public static final float NEW_P = 2.5F;
     public static final float NEW_I = 0.1F;
     public static final float NEW_D = 0.2F;
