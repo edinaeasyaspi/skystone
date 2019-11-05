@@ -87,7 +87,7 @@ public class TeleOpSkystone extends LinearOpMode {
     Orientation lastAngles = new Orientation();
     double globalAngle, power = .30, correction;
 
-
+    Arm_comfig ArmHeight = new Arm_comfig();
 
 
     public void Brake () {
@@ -155,10 +155,10 @@ public class TeleOpSkystone extends LinearOpMode {
     //retract arm
 
     public void Latch (){
-        Latch.setPosition(.5);
+        Latch.setPosition(.69);
     }
     public void UnLatch () {
-        Latch.setPosition(.5);
+        Latch.setPosition(1);
     }
 
     public void Init_Juan () {
@@ -203,24 +203,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
     }
-    public void Drive(double leftStickX, double leftStickY, double rightStickY) {
-        final double x = Math.pow(-leftStickX, 3.0);
-        final double y = Math.pow(leftStickY, 3.0);
 
-        final double rotation = Math.pow(-rightStickY, 3.0);
-        final double direction = Math.atan2(x, y);
-        final double speed = Math.min(1.0, Math.sqrt(x * x + y * y));
-
-        final double fl = speed * Math.sin(direction + Math.PI / 4.0) + rotation;
-        final double fr = speed * Math.cos(direction + Math.PI / 4.0) - rotation;
-        final double bl = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
-        final double br = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
-
-        LeftA.setPower(fl);
-        RightA.setPower(fr);
-        LeftB.setPower(br);
-        RightB.setPower(bl);
-    }
     public void Reset_Arm () {
         AndyMark_motor_elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -281,7 +264,24 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
     }
+    public void Drive(double leftStickX, double leftStickY, double rightStickY) {
+        final double x = Math.pow(-leftStickX, 3.0);
+        final double y = Math.pow(leftStickY, 3.0);
 
+        final double rotation = Math.pow(-rightStickY, 3.0);
+        final double direction = Math.atan2(x, y);
+        final double speed = Math.min(1.0, Math.sqrt(x * x + y * y));
+
+        final double fl = speed * Math.sin(direction + Math.PI / 4.0) + rotation;
+        final double fr = speed * Math.cos(direction + Math.PI / 4.0) - rotation;
+        final double bl = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
+        final double br = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
+
+        LeftA.setPower(fl);
+        RightA.setPower(fr);
+        LeftB.setPower(br);
+        RightB.setPower(bl);
+    }
 
 
     @Override
@@ -364,19 +364,18 @@ public class TeleOpSkystone extends LinearOpMode {
         switch (n) {
             case 1:
                 Grabskystone();
-                break;
             case 2:
-
+                ArmHeight.NUM2_Lift();
             case 3:
-
+                ArmHeight.NUM3_Lift();
             case 4:
-
+                ArmHeight.NUM4_Lift();
             case 5:
-
+                ArmHeight.NUM5_Lift();
             case 6:
-
+                ArmHeight.NUM6_Lift();
             case 7:
-
+                ArmHeight.NUM7_Lift();
             case 8:
 
             default:
