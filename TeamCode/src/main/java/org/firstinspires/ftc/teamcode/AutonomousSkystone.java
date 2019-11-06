@@ -1,39 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.DcMotorControllerEx;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.PIDCoefficients;
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 //test
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "Easy As Pi", group = "EAP")
 
 public class AutonomousSkystone extends OpModeIMU {
     private boolean phoneInLandscape = true;
-    public DcMotor LeftA;
-    public DcMotor LeftB;
-    public DcMotor RightA;
-    public DcMotor RightB;
+
     @Override
     public void runOpMode() {
-        int angle = 90;
         String dockLocation = "Skystone";
         boolean sample = true;
         boolean claim = true;
@@ -81,9 +55,6 @@ public class AutonomousSkystone extends OpModeIMU {
             else if (gamepad1.y) {
                 endlocation = "Righttape";
             }
-            /*else if (gamepad2.x) {
-                slants=true;
-            }*/
             else if (gamepad1.a) {
                 endlocation = "lefttape";
             }
@@ -94,24 +65,13 @@ public class AutonomousSkystone extends OpModeIMU {
 
             if (sleepTimer > 0) {
                 sleepTimer = sleepTimer - 1000;
-            } else if ((gamepad2.dpad_right == true) && (dpad_right == false)) {
-
-
-                sleepTimer = sleepTimer + 1000;
-
             }
-        }
+        } else if ((gamepad2.dpad_right == true) && (dpad_right == false)) {
 
-        }
-    /*public void Init_Juan () {
-        LeftA = hardwareMap.get(DcMotor.class, "LA");
-        LeftB = hardwareMap.get(DcMotor.class, "LB");
-        RightA = hardwareMap.get(DcMotor.class, "RA");
-        RightB = hardwareMap.get(DcMotor.class, "RB");
-    }
-    public void slants(){
 
-    }*/
+            sleepTimer = sleepTimer + 1000;
+        }
 
     }
 
+}
