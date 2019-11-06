@@ -260,7 +260,7 @@ public class InternalCameraExample extends LinearOpMode
              * invocation of this method. That is, if for some reason you'd like to save a copy
              * of this particular frame for later use, you will need to either clone it or copy
              * it to another Mat.
-             */
+             */ //ok
 
             /*
              * Draw a simple box around the middle 1/2 of the entire frame
