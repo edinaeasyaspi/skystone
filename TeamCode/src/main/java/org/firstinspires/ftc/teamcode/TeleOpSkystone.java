@@ -317,16 +317,16 @@ public class TeleOpSkystone extends LinearOpMode {
             //Arm
 
 
+
+            if (gamepad2.start) {
+
+            }
             if (gamepad2.right_bumper) {
                 Latch();
             }
             if (gamepad2.left_bumper) {
                 UnLatch();
             }
-            if (gamepad2.start) {
-
-            }
-
             if (gamepad2.dpad_down) {
                 RetractMotor();
             }
