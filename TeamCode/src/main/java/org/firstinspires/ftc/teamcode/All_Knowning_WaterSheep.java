@@ -149,6 +149,9 @@ public class All_Knowning_WaterSheep extends LinearOpMode {
     }
 
     public void Init_Juan () {
+//Camera
+        Camera = hardwareMap.get(InternalCameraExample.class,"");
+
 //Drive
         LeftA = hardwareMap.get(DcMotor.class,"LA");
         LeftB =  hardwareMap.get(DcMotor.class,"LB");

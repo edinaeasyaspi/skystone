@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+
 @Autonomous
 public class EasyaspiAutonomous extends All_Knowning_WaterSheep {
     Thread Antitilt = new AntiTiltThread();
@@ -24,7 +25,7 @@ public class EasyaspiAutonomous extends All_Knowning_WaterSheep {
     }
     public static void Camera(){
         InternalCameraExample c = new InternalCameraExample();
-        c.processFrame();
+        SkystoneLocation location = c.FindSkyStone();
         if (location == SkystoneLocation.right) {
             s0 = InternalCameraExample.RED;
         } else if (InternalCameraExample.location == SkystoneLocation.left) {
