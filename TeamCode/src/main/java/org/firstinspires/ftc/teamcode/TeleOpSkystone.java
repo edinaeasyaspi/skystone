@@ -162,7 +162,7 @@ public class TeleOpSkystone extends LinearOpMode {
     }
 
     public void Init_Juan () {
-        //Drive
+//Drive
         LeftA = hardwareMap.get(DcMotor.class,"LA");
         LeftB =  hardwareMap.get(DcMotor.class,"LB");
         RightA = hardwareMap.get(DcMotor.class,"RA");
@@ -385,6 +385,5 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
 }//Class
-
 
 
