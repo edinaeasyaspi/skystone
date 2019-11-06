@@ -4,33 +4,33 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class AutoPaths extends TeleOpSkystone  {
+public class AutoPaths extends All_Knowning_WaterSheep  {
 
 
 
     //BlueBuilder
-    public void BlueBuilderD1() {
+    protected void BlueBuilderD1() {
 
 
     }
 
-    public void BlueBuilderD2() {
+    protected void BlueBuilderD2() {
 
     }
 
-    public void BlueBuilderD3() {
+    protected void BlueBuilderD3() {
 
     }
 
-    public void BlueBuilderD4() {
+    protected void BlueBuilderD4() {
 
     }
 
-    public void BlueBuilderD5() {
+    protected void BlueBuilderD5() {
 
 
     }
-    public void BlueBuilderD6() {
+    protected void BlueBuilderD6() {
 
     }
 

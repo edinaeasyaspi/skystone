@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous
-public class EasyaspiAutonomous extends AutoPaths {
+public class EasyaspiAutonomous extends All_Knowning_WaterSheep {
     Thread Antitilt = new AntiTiltThread();
 
 

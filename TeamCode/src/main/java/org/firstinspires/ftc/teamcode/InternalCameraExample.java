@@ -35,7 +35,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @TeleOp
-public class InternalCameraExample extends LinearOpMode
+public class InternalCameraExample extends All_Knowning_WaterSheep
 {
     OpenCvCamera phoneCam;
 

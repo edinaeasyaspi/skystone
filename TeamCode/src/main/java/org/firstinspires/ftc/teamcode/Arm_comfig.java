@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class Arm_comfig extends TeleOpSkystone {
+public class Arm_comfig extends All_Knowning_WaterSheep {
 
     public void NUM2_Lift () {
         if(AndyMark_motor_elbow.getCurrentPosition()==0){
