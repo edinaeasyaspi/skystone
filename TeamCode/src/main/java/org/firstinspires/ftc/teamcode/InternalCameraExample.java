@@ -35,13 +35,11 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @TeleOp
-public class InternalCameraExample extends LinearOpMode
-{
+public class InternalCameraExample extends LinearOpMode {
     OpenCvCamera phoneCam;
 
     @Override
-    public void runOpMode()
-    {
+    public void runOpMode() {
         /*
          * Instantiate an OpenCvCamera object for the camera we'll be using.
          * In this sample, we're using the phone's internal camera. We pass it a
@@ -87,8 +85,7 @@ public class InternalCameraExample extends LinearOpMode
          */
         waitForStart();
 
-        while (opModeIsActive())
-        {
+        while (opModeIsActive()) {
             /*
              * Send some stats to the telemetry
              */
@@ -106,8 +103,7 @@ public class InternalCameraExample extends LinearOpMode
              * when it will be automatically stopped for you) *IS* supported. The "if" statement
              * below will stop streaming from the camera when the "A" button on gamepad 1 is pressed.
              */
-            if(gamepad1.a)
-            {
+            if (gamepad1.a) {
                 /*
                  * IMPORTANT NOTE: calling stopStreaming() will indeed stop the stream of images
                  * from the camera (and, by extension, stop calling your vision pipeline). HOWEVER,
@@ -143,12 +139,9 @@ public class InternalCameraExample extends LinearOpMode
              * The "if" statements below will pause the viewport if the "X" button on gamepad1 is pressed,
              * and resume the viewport if the "Y" button on gamepad1 is pressed.
              */
-            else if(gamepad1.x)
-            {
+            else if (gamepad1.x) {
                 phoneCam.pauseViewport();
-            }
-            else if(gamepad1.y)
-            {
+            } else if (gamepad1.y) {
                 phoneCam.resumeViewport();
             }
 
@@ -176,8 +169,7 @@ public class InternalCameraExample extends LinearOpMode
      * if you're doing something weird where you do need it synchronized with your OpMode thread,
      * then you will need to account for that accordingly.
      */
-    class SamplePipeline extends OpenCvPipeline
-    {
+    class SamplePipeline extends OpenCvPipeline {
         private Mat mat0;
         private Mat mat1;
         private Mat mat2;
@@ -188,8 +180,8 @@ public class InternalCameraExample extends LinearOpMode
 
         private boolean madeMats = false;
 
-        private Scalar BLACK = new Scalar(0,0,0);
-        private Scalar WHITE = new Scalar(255,255,255);
+        private Scalar BLACK = new Scalar(0, 0, 0);
+        private Scalar WHITE = new Scalar(255, 255, 255);
         private Scalar RED = new Scalar(255, 0, 0);
 
         private double cx0 = 125;
@@ -214,8 +206,7 @@ public class InternalCameraExample extends LinearOpMode
          */
 
         @Override
-        public Mat processFrame(Mat frame)
-        {
+        public Mat processFrame(Mat frame) {
             int h = frame.height();
             int w = frame.width();
 
@@ -289,6 +280,49 @@ public class InternalCameraExample extends LinearOpMode
              */
 
             return frame;
+        }
+
+        public SkystoneLocation FindSkyStone(Mat frame) {
+
+            int h = frame.height();
+            int w = frame.width();
+
+            int type = frame.type();
+            if (!madeMats) {
+                mask0 = new Mat(h, w, type);
+                mask1 = new Mat(h, w, type);
+                mask2 = new Mat(h, w, type);
+                mat0 = new Mat();
+                mat1 = new Mat();
+                mat2 = new Mat();
+                madeMats = true;
+            }
+
+            mask0.setTo(BLACK);
+            mask1.setTo(BLACK);
+            mask2.setTo(BLACK);
+
+            Imgproc.circle(mask0, new Point(cx0, cy0), r, WHITE, Core.FILLED);
+            Imgproc.circle(mask1, new Point(cx1, cy1), r, WHITE, Core.FILLED);
+            Imgproc.circle(mask2, new Point(cx2, cy2), r, WHITE, Core.FILLED);
+
+            Core.bitwise_and(mask0, frame, mat0);
+            Core.bitwise_and(mask1, frame, mat1);
+            Core.bitwise_and(mask2, frame, mat2);
+
+            double val0 = Core.sumElems(mat0).val[0] + Core.sumElems(mat0).val[1] + Core.sumElems(mat0).val[2];
+            double val1 = Core.sumElems(mat1).val[0] + Core.sumElems(mat1).val[1] + Core.sumElems(mat1).val[2];
+            double val2 = Core.sumElems(mat2).val[0] + Core.sumElems(mat2).val[1] + Core.sumElems(mat2).val[2];
+
+            if (val0 < val1 && val0 < val2) {
+                location = SkystoneLocation.right;
+            } else if (val1 < val0 && val1 < val2) {
+                location = SkystoneLocation.middle;
+            } else {
+                location = SkystoneLocation.left;
+            }
+
+            return location;
         }
     }
 }
