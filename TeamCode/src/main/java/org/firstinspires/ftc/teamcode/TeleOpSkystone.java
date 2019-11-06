@@ -350,12 +350,15 @@ public class TeleOpSkystone extends LinearOpMode {
 
     }
 
+    public void setHomePosition() {
+
+    }
+
     public void Grabskystone (){
-        if(AndyMark_motor_elbow.getCurrentPosition()==0){
+
             AndyMark_motor_elbow.setTargetPosition(560);
             AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             AndyMark_motor_elbow.setPower(.1);
-        }
     }
 
 
