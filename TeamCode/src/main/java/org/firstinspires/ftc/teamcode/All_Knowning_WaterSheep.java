@@ -16,6 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class All_Knowning_WaterSheep extends LinearOpMode {
 
+    InternalCameraExample Camera = new InternalCameraExample();
     Arm_comfig Armcomfig = new Arm_comfig();
 
     public DcMotor LeftA;
