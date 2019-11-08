@@ -123,49 +123,6 @@ public class SkystoneDetectorPipeline extends OpenCvPipeline {
     }
 
 
-    public SkystoneLocation findSkyStone(Mat frame) {
-
-        int h = frame.height();
-        int w = frame.width();
-
-        int type = frame.type();
-        if (!madeMats) {
-            mask0 = new Mat(h, w, type);
-            mask1 = new Mat(h, w, type);
-            mask2 = new Mat(h, w, type);
-            mat0 = new Mat();
-            mat1 = new Mat();
-            mat2 = new Mat();
-            madeMats = true;
-        }
-
-        mask0.setTo(BLACK);
-        mask1.setTo(BLACK);
-        mask2.setTo(BLACK);
-
-        Imgproc.circle(mask0, new Point(cx0, cy0), r, WHITE, Core.FILLED);
-        Imgproc.circle(mask1, new Point(cx1, cy1), r, WHITE, Core.FILLED);
-        Imgproc.circle(mask2, new Point(cx2, cy2), r, WHITE, Core.FILLED);
-
-        Core.bitwise_and(mask0, frame, mat0);
-        Core.bitwise_and(mask1, frame, mat1);
-        Core.bitwise_and(mask2, frame, mat2);
-
-        double val0 = Core.sumElems(mat0).val[0] + Core.sumElems(mat0).val[1] + Core.sumElems(mat0).val[2];
-        double val1 = Core.sumElems(mat1).val[0] + Core.sumElems(mat1).val[1] + Core.sumElems(mat1).val[2];
-        double val2 = Core.sumElems(mat2).val[0] + Core.sumElems(mat2).val[1] + Core.sumElems(mat2).val[2];
-
-        if (val0 < val1 && val0 < val2) {
-            location = SkystoneLocation.right;
-        } else if (val1 < val0 && val1 < val2) {
-            location = SkystoneLocation.middle;
-        } else {
-            location = SkystoneLocation.left;
-        }
-
-        return location;
-    }
-
     public SkystoneLocation getLocation(){
         return location;
     }
