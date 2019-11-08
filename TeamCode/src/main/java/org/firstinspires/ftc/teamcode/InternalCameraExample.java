@@ -58,6 +58,7 @@ public class InternalCameraExample extends LinearOpMode {
          * Open the connection to the camera device
          */
         phoneCam.openCameraDevice();
+        phoneCam.read
 
         /*
          * Specify the image processing pipeline we wish to invoke upon receipt
