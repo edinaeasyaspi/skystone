@@ -36,6 +36,7 @@ public class SkystoneDetectorPipeline extends OpenCvPipeline {
 
     public SkystoneLocation location = SkystoneLocation.right;
 
+
     /*
      * NOTE: if you wish to use additional Mat objects in your processing pipeline, it is
      * highly recommended to declare them here as instance variables and re-use them for
