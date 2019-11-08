@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
 public class All_Knowning_WaterSheep extends LinearOpMode {
+    int n = 1;
 
     InternalCameraExample Camera = new InternalCameraExample();
     Arm_comfig Armcomfig = new Arm_comfig();
@@ -65,7 +66,7 @@ public class All_Knowning_WaterSheep extends LinearOpMode {
     public static final float NEW_I = 0.1F;
     public static final float NEW_D = 0.2F;
 
-    int n = 1 ;
+
     BNO055IMU imu;
 
     Orientation angles;
@@ -109,6 +110,10 @@ public class All_Knowning_WaterSheep extends LinearOpMode {
             driveStarted = 0;
         } else {
             driveStarted++;
+        }
+
+        while(gamepad2.dpad_down) {
+
         }
 
     }
@@ -272,7 +277,14 @@ public class All_Knowning_WaterSheep extends LinearOpMode {
         LeftB.setPower(br);
         RightB.setPower(bl);
     }
-
+     public void Arm(){
+         final double rotation = Math.pow(+gamepad1.left_stick_y, 3.0);
+        final double rotation2 = Math.pow(-gamepad1.left_stick_y, 3.0);
+        final double fl2 = n + rotation;
+        final double fl1 = n - rotation2;
+         AndyMark_motor.setPower(fl2);
+         AndyMark_motor.setPower(fl1);
+     }
     public void runOpMode() throws InterruptedException
     {
 

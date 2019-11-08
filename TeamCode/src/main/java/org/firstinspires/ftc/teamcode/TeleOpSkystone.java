@@ -28,8 +28,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @TeleOp(name = "Zoom Zoom Time", group = "EAP")
 public class TeleOpSkystone extends All_Knowning_WaterSheep{
-
-
+int n = 0;
     @Override
     public void runOpMode () throws InterruptedException {
 
@@ -58,12 +57,10 @@ public class TeleOpSkystone extends All_Knowning_WaterSheep{
             Extender(gamepad2.left_stick_x);
             AndyMark_motor.setPower(gamepad2.right_stick_x);
             //Arm Elbow
-
             Brake();
+
+
             //Arm
-
-
-
             if (gamepad2.start) {
 
             }
@@ -74,7 +71,7 @@ public class TeleOpSkystone extends All_Knowning_WaterSheep{
                 UnLatch();
             }
             if (gamepad2.dpad_down) {
-                RetractMotor();
+                Arm_Height(n);
             }
 
             if (gamepad2.x) {
@@ -83,11 +80,18 @@ public class TeleOpSkystone extends All_Knowning_WaterSheep{
 
             }
             if (gamepad2.a) {
-                n = 1;
+
                 Arm_Height(n);
 
             }
-
+            while(gamepad2.dpad_down) {
+                Arm_Height(n);
+                n--;
+            }
+            while(gamepad2.dpad_up) {
+                Arm_Height(n);
+                n++;
+            }
 
             idle();
         }
@@ -107,29 +111,10 @@ public class TeleOpSkystone extends All_Knowning_WaterSheep{
 
     public void Arm_Height (int n){
 
-        switch (n) {
-            case 1:
-                Grabskystone();
-            case 2:
-                ArmHeight.NUM2_Lift();
-            case 3:
-                ArmHeight.NUM3_Lift();
-            case 4:
-                ArmHeight.NUM4_Lift();
-            case 5:
-                ArmHeight.NUM5_Lift();
-            case 6:
-                ArmHeight.NUM6_Lift();
-            case 7:
-                ArmHeight.NUM7_Lift();
-            case 8:
-
-            default:
-            n = 0;
         }
     }
 
 
-}//Class
+
 
 
