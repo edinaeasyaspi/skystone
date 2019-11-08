@@ -1,14 +1,34 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotorControllerEx;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
 
 
 @TeleOp(name = "Zoom Zoom Time", group = "EAP")
-public class TeleOpSkystone extends AllKnowing {
-
-
+public class TeleOpSkystone extends All_Knowning_WaterSheep{
+int n = 0;
     @Override
     public void runOpMode () throws InterruptedException {
 
@@ -37,12 +57,10 @@ public class TeleOpSkystone extends AllKnowing {
             Extender(gamepad2.left_stick_x);
             AndyMark_motor.setPower(gamepad2.right_stick_x);
             //Arm Elbow
-
             Brake();
+
+
             //Arm
-
-
-
             if (gamepad2.start) {
 
             }
@@ -53,7 +71,7 @@ public class TeleOpSkystone extends AllKnowing {
                 UnLatch();
             }
             if (gamepad2.dpad_down) {
-                RetractMotor();
+                Arm_Height(n);
             }
 
             if (gamepad2.x) {
@@ -62,11 +80,18 @@ public class TeleOpSkystone extends AllKnowing {
 
             }
             if (gamepad2.a) {
-                n = 1;
+
                 Arm_Height(n);
 
             }
-
+            while(gamepad2.dpad_down) {
+                Arm_Height(n);
+                n--;
+            }
+            while(gamepad2.dpad_up) {
+                Arm_Height(n);
+                n++;
+            }
 
             idle();
         }
@@ -86,29 +111,10 @@ public class TeleOpSkystone extends AllKnowing {
 
     public void Arm_Height (int n){
 
-        switch (n) {
-            case 1:
-                Grabskystone();
-            case 2:
-                ArmHeight.NUM2_Lift();
-            case 3:
-                ArmHeight.NUM3_Lift();
-            case 4:
-                ArmHeight.NUM4_Lift();
-            case 5:
-                ArmHeight.NUM5_Lift();
-            case 6:
-                ArmHeight.NUM6_Lift();
-            case 7:
-                ArmHeight.NUM7_Lift();
-            case 8:
-
-            default:
-            n = 0;
         }
     }
 
 
-}//Class
+
 
 

@@ -23,7 +23,7 @@ public class EasyaspiAutonomous extends All_Knowning_WaterSheep {
 
 
     }
-    public static void Camera(){
+    /*public static void Camera(){
         InternalCameraExample c = new InternalCameraExample();
         SkystoneLocation location = c.FindSkyStone();
         if (location == SkystoneLocation.right) {
@@ -43,7 +43,7 @@ public class EasyaspiAutonomous extends All_Knowning_WaterSheep {
         else{
 
         }
-    }
+    }*/
     InternalCameraExample Camera = new InternalCameraExample();
 }
 
