@@ -1,28 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.DcMotorControllerEx;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.PIDCoefficients;
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
 
 
 
@@ -71,26 +53,23 @@ int n = 0;
                 UnLatch();
             }
             if (gamepad2.dpad_down) {
-                Arm_Height(n);
+
             }
 
             if (gamepad2.x) {
-                Arm_Height(n);
-                n++;
+               Grabskystone();
 
             }
             if (gamepad2.a) {
 
-                Arm_Height(n);
+
 
             }
             while(gamepad2.dpad_down) {
-                Arm_Height(n);
-                n--;
+
             }
             while(gamepad2.dpad_up) {
-                Arm_Height(n);
-                n++;
+
             }
 
             idle();
@@ -105,11 +84,24 @@ int n = 0;
 
             AndyMark_motor_elbow.setTargetPosition(560);
             AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            AndyMark_motor_elbow.setPower(.1);
+            AndyMark_motor_elbow.setPower(1);
+
+            while (AndyMark_motor_elbow.isBusy()) {
+
+            }
+            AndyMark_motor_elbow.setPower(0);
     }
 
 
-    public void Arm_Height (int n){
+    public void Arm (){
+         final double rotation = Math.pow(+gamepad2.left_stick_y,3.0);
+         final double rotation2 = Math.pow(-gamepad2.left_stick_y,3.0);
+         final double Fl2 = n + rotation;
+         final double Fl1 = n - rotation2;
+         AndyMark_motor.setPower(Fl2);
+         AndyMark_motor.setPower(Fl1);
+
+
 
         }
     }
