@@ -48,10 +48,10 @@ int n = 0;
 
 
             Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-            //   LeftA.setPower(gamepad1.left_stick_y);
-            //   LeftB.setPower(gamepad1.right_stick_y);
-            //   RightA.setPower(gamepad2.right_stick_y);
-            //   RightB.setPower(gamepad2.left_stick_y);
+               LeftA.setPower(gamepad1.left_stick_y);
+               LeftB.setPower(gamepad1.right_stick_y);
+               RightA.setPower(gamepad2.right_stick_y);
+               RightB.setPower(gamepad2.left_stick_y);
 
 
             Extender(gamepad2.left_stick_x);
@@ -112,7 +112,8 @@ int n = 0;
     public void Arm_Height (int n){
 
         }
-    }
+
+}
 
 
 

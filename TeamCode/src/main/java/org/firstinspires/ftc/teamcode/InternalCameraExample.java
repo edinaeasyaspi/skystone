@@ -280,6 +280,7 @@ public class InternalCameraExample extends LinearOpMode {
              * tapped, please see {@link PipelineStageSwitchingExample}
              */
 
+
             return frame;
         }
     }
