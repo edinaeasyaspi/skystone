@@ -51,6 +51,8 @@ public class TeleOpSkystone extends LinearOpMode {
     public static final int WHEEL_DIAMETER_INCHES = 3;
     public static final double DRIVE_GEAR_REDUCTION = 0.5;
 
+    double servo_to_elbow_ratio = 1/Andmark_MAX_REV;
+
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
@@ -129,9 +131,11 @@ public class TeleOpSkystone extends LinearOpMode {
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Tetrix_ARMSLIDE_Motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
     }
-
+    // Claw Angle Changer
+    public void ClawAngle(){
+        Up_and_down.setPosition(AndyMark_motor_elbow.getCurrentPosition()/servo_to_elbow_ratio);
+    }
     //Extends Motor
   /*  private void Motor(){
         AndyMark_motor.setTargetPosition(300);
