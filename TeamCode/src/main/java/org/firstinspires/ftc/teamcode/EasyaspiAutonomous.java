@@ -4,22 +4,15 @@ package org.firstinspires.ftc.teamcode;
 import android.os.Bundle;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 @Autonomous
-public class EasyaspiAutonomous extends All_Knowning_WaterSheep {
-    Thread Antitilt = new AntiTiltThread();
-
-
-
-
-
-
+public class EasyaspiAutonomous extends TeleOpSkystone {
 
 
     @Override
-    public void runOpMode () throws InterruptedException {
-    Antitilt.start();
+    public void runOpMode() throws InterruptedException {
 
 
     }
@@ -44,6 +37,4 @@ public class EasyaspiAutonomous extends All_Knowning_WaterSheep {
 
         }
     }*/
-    InternalCameraExample Camera = new InternalCameraExample();
 }
-
