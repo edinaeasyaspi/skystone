@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
-public class Methoeds_we_use extends JuansBody {
+public class Methoeds_we_use extends JuanBody {
     public void Brake() {
         float x = -gamepad1.right_stick_x;
         float y = gamepad1.left_stick_y;
