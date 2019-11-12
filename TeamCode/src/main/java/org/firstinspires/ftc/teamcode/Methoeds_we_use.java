@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -101,7 +102,76 @@ public class Methoeds_we_use extends JuanBody {
         AndyMark_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
+    protected  void encoderDrive(double speed,
+                            double leftInches, double rightInches,
+                            double timeoutS) {
+        int newLeftBTarget;
+        int newLeftATarget;
+        int  newRightATarget;
+        int  newRightBTarget;
 
+        // Ensure that the opmode is still active
+        if (opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            newLeftATarget = LeftA.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newRightATarget = RightA.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            newLeftBTarget = LeftB.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newRightBTarget = RightB.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            LeftA.setTargetPosition(newLeftATarget);
+            LeftB.setTargetPosition(newLeftBTarget);
+            RightA.setTargetPosition(newRightATarget);
+            RightB.setTargetPosition(newRightBTarget);
+
+            // Turn On RUN_TO_POSITION
+            LeftA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            LeftB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            RightA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            RightB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            LeftA.setPower(Math.abs(speed));
+            LeftB.setPower(Math.abs(speed));
+            RightA.setPower(Math.abs(speed));
+            RightB.setPower(Math.abs(speed));
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
+            // its target position, the motion will stop.  This is "safer" in the event that the robot will
+            // always end the motion as soon as possible.
+            // However, if you require that BOTH motors have finished their moves before the robot continues
+            // onto the next step, use (isBusy() || isBusy()) in the loop test.
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (LeftA.isBusy() && LeftB.isBusy() && RightA.isBusy() && RightB.isBusy())) {
+
+                // Display it for the driver.
+                telemetry.addData("Path1",  "Running to %7d :%7d :%7d :%7d", newLeftATarget, newLeftBTarget,newRightATarget,newRightBTarget);
+                telemetry.addData("Path2",  "Running at %7d :%7d :%7d :%7d",
+                        LeftA.getCurrentPosition(),
+                        LeftB.getCurrentPosition(),
+                        RightA.getCurrentPosition(),
+                        RightB.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop all motion;
+            LeftA.setPower(0);
+            LeftB.setPower(0);
+            RightA.setPower(0);
+            RightB.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+           LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+           LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+           RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+           RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+            //  sleep(250);   // optional pause after each move
+        }
+    }
     public void Magnetic_Limitswtiches() {
 
         while (ARM_SLID_CHECK_Front.getState() == true) {
@@ -218,12 +288,37 @@ public class Methoeds_we_use extends JuanBody {
             AndyMark_motor_elbow.setPower(Power);
 
 
-        while (AndyMark_motor_elbow.getCurrentPosition() == 520){
+        while (AndyMark_motor_elbow.getCurrentPosition() == 520 + 400 ){
             AndyMark_motor.setPower(Power);
 
 
         }
 
+
+    }
+    protected void PickupSkystone (int timeoutS) {
+        AndyMark_motor_elbow.setTargetPosition(400);
+        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        AndyMark_motor_elbow.setPower(MAX_SPEED);
+
+        while ((AndyMark_motor_elbow.isBusy()) && (runtime.seconds() < timeoutS)){
+            telemetry.addData("Arm Pos.", "Postion at %7d",AndyMark_motor_elbow.getCurrentPosition());
+
+        }
+        AndyMark_motor_elbow.setPower(0);
+        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
+    protected void Move_Motor_WithEncoder(DcMotor Motor, int TargetPos , double speed ,int timeout ) {
+        Motor.setTargetPosition(TargetPos);
+        Motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Motor.setPower(speed);
+
+        while((Motor.isBusy())&& (runtime.seconds() < timeout)){
+            telemetry.addData("Motor Postion", "Position at %7d", Motor.getCurrentPosition());
+        }
+        Motor.setPower(0);
+        Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 }
