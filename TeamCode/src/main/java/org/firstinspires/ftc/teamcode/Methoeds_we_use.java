@@ -150,20 +150,6 @@ public class Methoeds_we_use extends JuansBody {
 
     }
 
-    public void Arm() {
-        final double rotation = Math.pow(+gamepad2.left_stick_y, 3.0);
-        final double rotation2 = Math.pow(-gamepad2.left_stick_y, 3.0);
-        final double Fl2 = n + rotation;
-        final double Fl1 = n - rotation2;
-        AndyMark_motor.setPower(Fl2);
-        AndyMark_motor.setPower(Fl1);
-
-
-    }
-    public void Arm2 () {
-
-
-    }
 
     public void Drive(double leftStickX, double leftStickY, double rightStickY) {
         final double x = Math.pow(-leftStickX, 3.0);
@@ -227,22 +213,14 @@ public class Methoeds_we_use extends JuansBody {
 
 
     }
-    public void arm (double Power ){
-        double yeet = Power;
-        while (AndyMark_motor_elbow.getCurrentPosition() > 520){
+    protected void arm (double Power ){
+
             AndyMark_motor_elbow.setPower(Power);
 
-            if (Power == 0){
-                AndyMark_motor_elbow.setTargetPosition(AndyMark_motor_elbow.getCurrentPosition());
 
-            }
-
-        }
         while (AndyMark_motor_elbow.getCurrentPosition() == 520){
             AndyMark_motor.setPower(Power);
-            if (Power ==  0){
-                AndyMark_motor.setTargetPosition(AndyMark_motor_elbow.getCurrentPosition());
-            }
+
 
         }
 

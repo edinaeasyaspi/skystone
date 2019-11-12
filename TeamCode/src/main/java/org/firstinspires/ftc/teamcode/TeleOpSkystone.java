@@ -40,7 +40,7 @@ Methoeds_we_use Methods = new Methoeds_we_use();
             //   LeftB.setPower(gamepad1.right_stick_y);
             //   RightA.setPower(gamepad2.right_stick_y);
             //   RightB.setPower(gamepad2.left_stick_y);
-
+            Methods.arm(gamepad2.left_stick_y);
 
             Methods.Extender(gamepad2.left_stick_x);
 
