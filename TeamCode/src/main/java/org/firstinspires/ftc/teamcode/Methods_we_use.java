@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
-public class Methoeds_we_use extends JuanBody {
+class Methods_we_use extends JuanBody {
 
 
     // Reset Encoders
@@ -257,6 +257,5 @@ public class Methoeds_we_use extends JuanBody {
         }
         Motor.setPower(0);
         Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
     }
 }

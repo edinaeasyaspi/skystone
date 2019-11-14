@@ -19,7 +19,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 @TeleOp(name = "Zoom Zoom Time", group = "EAP")
 public class TeleOpSkystone extends LinearOpMode {
 
-Methoeds_we_use Methods = new Methoeds_we_use();
+Methods_we_use Methods = new Methods_we_use();
 JuanBody Part = new JuanBody();
 
     @Override
@@ -67,7 +67,8 @@ JuanBody Part = new JuanBody();
             }
 
             if (gamepad2.x) {
-                Methods.Move_Motor_WithEncoder(Part.LeftA,400,.25,);
+                Methods.Move_Motor_WithEncoder(Part.LeftA,400,.25,4);
+
 
             }
             if (gamepad2.a) {
