@@ -10,42 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 public class Methoeds_we_use extends JuanBody {
-    public void Brake() {
-        float x = -gamepad1.right_stick_x;
-        float y = gamepad1.left_stick_y;
-        boolean preciseDrive = false;
 
-        if ((gamepad2.left_stick_x != 0) || (gamepad2.left_stick_y != 0)) {
-            x = -gamepad2.left_stick_x;
-            y = gamepad2.left_stick_y;
-            preciseDrive = true;
-        }
-
-        if (y == 0) {
-            if (lastSpeed != 0) {
-                LeftA.setPower(0);
-                LeftB.setPower(0);
-                RightA.setPower(0);
-                RightB.setPower(0);
-                sleep(300);
-            }
-            driveStarted = 0;
-        } else if (((lastSpeed > 0) && (y < 0)) || ((lastSpeed < 0) && (y > 0))) {
-            LeftA.setPower(0);
-            RightA.setPower(0);
-            LeftB.setPower(0);
-            RightB.setPower(0);
-            sleep(300);
-            driveStarted = 0;
-        } else {
-            driveStarted++;
-        }
-
-        while (gamepad2.dpad_down) {
-
-        }
-
-    }
 
     // Reset Encoders
     public void Reset_Arm_Slide() {
@@ -58,21 +23,6 @@ public class Methoeds_we_use extends JuanBody {
     public void ClawAngle(){
         Up_and_down.setPosition(AndyMark_motor_elbow.getCurrentPosition()/servo_to_elbow_ratio);
     }
-    //Extends Motor
-  /*  private void Motor(){
-        AndyMark_motor.setTargetPosition(300);
-   *///}
-    //extends elbow
-  /*  private void ExtendElbow(){
-        Tetrix_ARMSLIDE_Motor.setTargetPosition(300);
-    }*/
-    //retracts Motor
-    public void RetractMotor() {
-
-
-    }
-    //retracts elbow
-
 
     //extends arm
     public void Extender(double setPos) {
@@ -284,31 +234,19 @@ public class Methoeds_we_use extends JuanBody {
 
     }
     protected void arm (double Power ){
-
+        while (AndyMark_motor_elbow.getCurrentPosition() > 320) {
             AndyMark_motor_elbow.setPower(Power);
 
-
-        while (AndyMark_motor_elbow.getCurrentPosition() == 520 + 400 ){
-            AndyMark_motor.setPower(Power);
+        }{
+            AndyMark_motor.setPower(-Power);
 
 
         }
 
 
-    }
-    protected void PickupSkystone (int timeoutS) {
-        AndyMark_motor_elbow.setTargetPosition(400);
-        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        AndyMark_motor_elbow.setPower(MAX_SPEED);
-
-        while ((AndyMark_motor_elbow.isBusy()) && (runtime.seconds() < timeoutS)){
-            telemetry.addData("Arm Pos.", "Postion at %7d",AndyMark_motor_elbow.getCurrentPosition());
-
-        }
-        AndyMark_motor_elbow.setPower(0);
-        AndyMark_motor_elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
+
     protected void Move_Motor_WithEncoder(DcMotor Motor, int TargetPos , double speed ,int timeout ) {
         Motor.setTargetPosition(TargetPos);
         Motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);

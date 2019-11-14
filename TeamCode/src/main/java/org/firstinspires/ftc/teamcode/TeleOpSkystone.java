@@ -20,7 +20,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class TeleOpSkystone extends LinearOpMode {
 
 Methoeds_we_use Methods = new Methoeds_we_use();
-
+JuanBody Part = new JuanBody();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -43,16 +43,13 @@ Methoeds_we_use Methods = new Methoeds_we_use();
 
 
             Methods.Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-            //   LeftA.setPower(gamepad1.left_stick_y);
-            //   LeftB.setPower(gamepad1.right_stick_y);
-            //   RightA.setPower(gamepad2.right_stick_y);
-            //   RightB.setPower(gamepad2.left_stick_y);
+
             Methods.arm(gamepad2.left_stick_y);
 
             Methods.Extender(gamepad2.left_stick_x);
-
+            Methods.Magnetic_Limitswtiches();
             //Arm Elbow
-            Methods.Brake();
+
 
 
             //Arm
@@ -70,7 +67,7 @@ Methoeds_we_use Methods = new Methoeds_we_use();
             }
 
             if (gamepad2.x) {
-                Methods.PickupSkystone(3);
+                Methods.Move_Motor_WithEncoder(Part.LeftA,400,.25,);
 
             }
             if (gamepad2.a) {
