@@ -21,7 +21,7 @@ public class JuanBody extends LinearOpMode {
     protected DcMotor RightA;
     protected DcMotor RightB;
     //ARM
-    protected DcMotor AndyMark_motor_elbow;
+    protected DcMotor AndyMark_motor_Lift;
     protected DcMotor AndyMark_motor;
     protected DcMotor Tetrix_ARMSLIDE_Motor;
     //end effector
