@@ -35,7 +35,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @TeleOp
-public class InternalCameraExample extends TeleOpSkystone
+public class CameraAndAutaunomous extends TeleOpSkystone
 {
     OpenCvCamera phoneCam;
 
@@ -279,11 +279,35 @@ public class InternalCameraExample extends TeleOpSkystone
 
             sleep(1000);
             if (s0 == RED){
-                encoderDrive(1,1,0,1);
-            } if (s2 == RED){
-                encoderDrive(1,0,1,1);
-            } else {
-                encoderDrive(1,0,0,1);
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+                Part.AndyMark_motor_Lift.setTargetPosition(0);
+                Latch();
+                Part.AndyMark_motor_Lift.setTargetPosition(50);
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+                Part.AndyMark_motor_Lift.setTargetPosition(0);
+                UnLatch();
+            }else if (s2 == RED){
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+                Part.AndyMark_motor_Lift.setTargetPosition(0);
+                Latch();
+                Part.AndyMark_motor_Lift.setTargetPosition(50);
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+                Part.AndyMark_motor_Lift.setTargetPosition(0);
+                UnLatch();
+            }else{
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+                Part.AndyMark_motor_Lift.setTargetPosition(0);
+                Latch();
+                Part.AndyMark_motor_Lift.setTargetPosition(50);
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+                Part.AndyMark_motor_Lift.setTargetPosition(0);
+                UnLatch();
             }
 
             Imgproc.line(frame, new Point(0, 275), new Point(300, 275), new Scalar(0, 255, 0));

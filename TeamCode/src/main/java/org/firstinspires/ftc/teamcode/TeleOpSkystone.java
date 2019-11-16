@@ -244,11 +244,7 @@ JuanBody Part = new JuanBody();
 
 
     }
-    protected void arm (double Power ){
-            Part.AndyMark_motor_Lift.setPower(Power*.8);
-            Part.AndyMark_motor.setPower(-Power);
-            Part.Up_and_down.setPosition(Part.AndyMark_motor_Lift.getCurrentPosition()*Part.servo_to_elbow_ratio);
-    }
+
 
     protected void Move_Motor_WithEncoder(DcMotor Motor, int TargetPos , double speed ,int timeout ) {
         Motor.setTargetPosition(TargetPos);
@@ -285,7 +281,6 @@ JuanBody Part = new JuanBody();
 
             Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
-            arm(gamepad2.left_stick_y);
 
 
 
