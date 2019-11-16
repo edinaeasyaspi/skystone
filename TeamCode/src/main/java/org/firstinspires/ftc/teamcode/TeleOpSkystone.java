@@ -24,7 +24,6 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
 JuanBody Part = new JuanBody();
-
     // Reset Encoders
     public void Reset_Arm_Slide() {
        Part.Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -47,9 +46,10 @@ JuanBody Part = new JuanBody();
         Part.Latch.setPosition(1);
     }
 
-    public void ArmCodev2 (double ArmPower, double ElbowPower) {
-        Part.AndyMark_motor.setPower(-ArmPower);
-        Part.AndyMark_motor_Lift.setPower(-ElbowPower);
+    public void ArmCodev2 () {
+
+
+
     }
 
     public void Reset_Arm() {
@@ -244,11 +244,7 @@ JuanBody Part = new JuanBody();
 
 
     }
-    protected void arm (double Power ){
-            Part.AndyMark_motor_Lift.setPower(Power*.8);
-            Part.AndyMark_motor.setPower(-Power);
-            Part.Up_and_down.setPosition(Part.AndyMark_motor_Lift.getCurrentPosition()*Part.servo_to_elbow_ratio);
-    }
+
 
     protected void Move_Motor_WithEncoder(DcMotor Motor, int TargetPos , double speed ,int timeout ) {
         Motor.setTargetPosition(TargetPos);
@@ -260,11 +256,6 @@ JuanBody Part = new JuanBody();
         }
         Motor.setPower(0);
         Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-    }
-    public void Extend (float front, float back){
-        Part.Tetrix_ARMSLIDE_Motor.setPower(front);
-        Part.Tetrix_ARMSLIDE_Motor.setPower(-back);
 
     }
 
@@ -290,9 +281,8 @@ JuanBody Part = new JuanBody();
 
             Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
-            ArmCodev2(gamepad2.left_stick_y,gamepad2.right_stick_y);
 
-            Extend(gamepad2.right_trigger,gamepad2.left_trigger);
+
 
             //Arm Elbow
 
