@@ -56,12 +56,12 @@ JuanBody Part = new JuanBody();
         Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Part.AndyMark_motor_Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
+        Part.AndyMark_motor_Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         Part.AndyMark_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Part.AndyMark_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Part.AndyMark_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Part.AndyMark_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
+        Part.AndyMark_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
     protected  void encoderDrive(double speed,
@@ -212,7 +212,6 @@ JuanBody Part = new JuanBody();
         Part.AndyMark_motor = hardwareMap.get(DcMotor.class, "AAM");
         Part.Tetrix_ARMSLIDE_Motor = hardwareMap.get(DcMotor.class, "AS");
         Part.Rotating_servo = hardwareMap.get(Servo.class, "RS");
-        Part.Up_and_down = hardwareMap.get(Servo.class, "U-D");
         Part.Latch = hardwareMap.get(Servo.class, "L");
 //Arm reed switches
         Part.ARM_SLID_CHECK_Front = hardwareMap.get(DigitalChannel.class, "ASC-F");
@@ -258,6 +257,10 @@ JuanBody Part = new JuanBody();
         Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
+    public void ArmCrap (float ArmPow, float ElPow){
+        Part.AndyMark_motor_Lift.setPower(ElPow * .25);
+        Part.AndyMark_motor.setPower(-ArmPow);
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -282,7 +285,7 @@ JuanBody Part = new JuanBody();
             Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
 
-
+            ArmCrap(gamepad2.left_stick_y,gamepad2.right_stick_y);
 
             //Arm Elbow
 //hell
@@ -298,8 +301,11 @@ JuanBody Part = new JuanBody();
             if (gamepad2.left_bumper) {
                 UnLatch();
             }
-            if (gamepad2.dpad_down) {
-
+            if (gamepad2.dpad_left) {
+                Part.Rotating_servo.setPosition(0);
+            }
+            if (gamepad2.dpad_right){
+            Part.Rotating_servo.setPosition(1);
             }
 
             if (gamepad2.x) {
