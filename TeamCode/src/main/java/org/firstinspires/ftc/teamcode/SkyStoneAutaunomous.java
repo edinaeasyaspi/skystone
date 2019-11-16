@@ -35,7 +35,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @TeleOp
-public class CameraAndAutaunomous extends TeleOpSkystone
+public class SkyStoneAutaunomous extends TeleOpSkystone
 {
     OpenCvCamera phoneCam;
 
@@ -276,7 +276,7 @@ public class CameraAndAutaunomous extends TeleOpSkystone
             } else {
                 s1 = RED;
             }
-
+            //SkyStoneAutonomous
             sleep(1000);
             if (s0 == RED){
                 encoderDrive(0,0,0,0);
