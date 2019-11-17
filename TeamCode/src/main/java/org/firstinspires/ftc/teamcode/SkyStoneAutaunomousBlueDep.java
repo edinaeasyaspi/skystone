@@ -86,6 +86,12 @@ public class SkyStoneAutaunomousBlueDep extends TeleOpSkystone
         /*
          * Wait for the user to press start on the Driver Station
          */
+        Init_Juan();
+
+        Reset_Arm();
+
+        Reset_Arm_Slide();
+
         waitForStart();
 
         while (opModeIsActive())
