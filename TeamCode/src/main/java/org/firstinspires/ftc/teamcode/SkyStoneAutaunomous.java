@@ -38,7 +38,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 public class SkyStoneAutaunomous extends TeleOpSkystone
 {
     OpenCvCamera phoneCam;
-
+    Mecanum Mecanum;
     @Override
     public void runOpMode()
     {

@@ -258,7 +258,8 @@ JuanBody Part = new JuanBody();
 
     }
     public void ArmCrap (float ArmPow, float ElPow){
-        Part.AndyMark_motor_Lift.setPower(ElPow * .25);
+        ElPow = ElPow * 0.1f;
+        Part.AndyMark_motor_Lift.setPower(ElPow);
         Part.AndyMark_motor.setPower(-ArmPow);
     }
 
@@ -282,7 +283,7 @@ JuanBody Part = new JuanBody();
 
 
 
-            Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            Drive(gamepad1.left_stick_x, gamepad1.right_stick_x , gamepad1.left_stick_y);
 
 
             ArmCrap(gamepad2.left_stick_y,gamepad2.right_stick_y);
@@ -305,11 +306,11 @@ JuanBody Part = new JuanBody();
                 Part.Rotating_servo.setPosition(0);
             }
             if (gamepad2.dpad_right){
-            Part.Rotating_servo.setPosition(1);
+            Part.Rotating_servo.setPosition(.5);
             }
 
             if (gamepad2.x) {
-                Move_Motor_WithEncoder(Part.LeftA,400,0.75,3);
+                Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,400,0.75,2);
 
             }
             if (gamepad2.a) {
