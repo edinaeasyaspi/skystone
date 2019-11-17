@@ -21,6 +21,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -34,11 +35,11 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@TeleOp
-public class SkyStoneAutaunomous extends TeleOpSkystone
+@Autonomous(name = "BlueDepo", group = "EAP")
+public class SkyStoneAutaunomousBlueDep extends TeleOpSkystone
 {
-    OpenCvCamera phoneCam;
-    Mecanum Mecanum;
+    protected OpenCvCamera phoneCam;
+    protected Mecanum Mecanum;
     @Override
     public void runOpMode()
     {
