@@ -46,11 +46,6 @@ JuanBody Part = new JuanBody();
         Part.Latch.setPosition(1);
     }
 
-    public void ArmCodev2 () {
-
-
-
-    }
 
     public void Reset_Arm() {
         Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -190,11 +185,15 @@ JuanBody Part = new JuanBody();
         final double direction = Math.atan2(x, y);
         final double speed = Math.min(1.0, Math.sqrt(x * x + y * y));
 
-        final double fl = speed * Math.sin(direction + Math.PI / 4.0) + rotation;
-        final double fr = speed * Math.cos(direction + Math.PI / 4.0) - rotation;
-        final double bl = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
-        final double br = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
+         double fl = speed * Math.sin(direction + Math.PI / 4.0) + rotation;
+         double fr = speed * Math.cos(direction + Math.PI / 4.0) - rotation;
+         double bl = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
+         double br = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
 
+         fl *= .5;
+        fr *= .5;
+        br *= .5;
+        bl *= .5;
         Part.LeftA.setPower(fl);
         Part.RightA.setPower(fr);
         Part.LeftB.setPower(br);
@@ -259,6 +258,10 @@ JuanBody Part = new JuanBody();
     }
     public void ArmCrap (float ArmPow, float ElPow){
         ElPow = ElPow * 0.1f;
+
+        while((Part.AndyMark_motor_Lift.getCurrentPosition()< 1000) &&(ElPow > 0)){
+            Part.AndyMark_motor_Lift.setPower(0);
+        }
         Part.AndyMark_motor_Lift.setPower(ElPow);
         Part.AndyMark_motor.setPower(-ArmPow);
     }
@@ -283,10 +286,10 @@ JuanBody Part = new JuanBody();
 
 
 
-            Drive(gamepad1.left_stick_x, gamepad1.right_stick_x , gamepad1.left_stick_y);
+            Drive(gamepad1.left_stick_x, gamepad1.left_stick_y , gamepad1.right_stick_x);
 
 
-            ArmCrap(gamepad2.left_stick_y,gamepad2.right_stick_y);
+            ArmCrap(gamepad2.left_stick_y,-gamepad2.right_stick_y);
 
             //Arm Elbow
 //hell
@@ -303,19 +306,15 @@ JuanBody Part = new JuanBody();
                 UnLatch();
             }
             if (gamepad2.dpad_left) {
-                Part.Rotating_servo.setPosition(0);
+                Part.Rotating_servo.setPosition(.5);
             }
             if (gamepad2.dpad_right){
-            Part.Rotating_servo.setPosition(.5);
+            Part.Rotating_servo.setPosition(1);
             }
 
-            if (gamepad2.x) {
-                Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,400,0.75,2);
-
-            }
             if (gamepad2.a) {
-               
-
+                Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,500,.1,4);
+                Part.Rotating_servo.setPosition(1);
 
             }
 

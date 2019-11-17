@@ -21,6 +21,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -34,11 +35,11 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@TeleOp
-public class SkyStoneAutaunomous extends TeleOpSkystone
+@Autonomous(name = "BlueDepo", group = "EAP")
+public class SkyStoneAutaunomousBlueDep extends TeleOpSkystone
 {
-    OpenCvCamera phoneCam;
-    Mecanum Mecanum;
+    protected OpenCvCamera phoneCam;
+    protected Mecanum Mecanum;
     @Override
     public void runOpMode()
     {
@@ -85,6 +86,12 @@ public class SkyStoneAutaunomous extends TeleOpSkystone
         /*
          * Wait for the user to press start on the Driver Station
          */
+        Init_Juan();
+
+        Reset_Arm();
+
+        Reset_Arm_Slide();
+
         waitForStart();
 
         while (opModeIsActive())
@@ -288,8 +295,6 @@ public class SkyStoneAutaunomous extends TeleOpSkystone
                 encoderDrive(0,0,0,0);
                 Part.AndyMark_motor_Lift.setTargetPosition(0);
                 UnLatch();
-                encoderDrive(0,0,0,0);
-                encoderDrive(0,0,0,0);
             }else if (s2 == RED){
                 encoderDrive(0,0,0,0);
                 encoderDrive(0,0,0,0);
@@ -300,10 +305,9 @@ public class SkyStoneAutaunomous extends TeleOpSkystone
                 encoderDrive(0,0,0,0);
                 Part.AndyMark_motor_Lift.setTargetPosition(0);
                 UnLatch();
-                encoderDrive(0,0,0,0);
-                encoderDrive(0,0,0,0);
             }else{
                 encoderDrive(0,0,0,0);
+
                 encoderDrive(0,0,0,0);
                 Part.AndyMark_motor_Lift.setTargetPosition(0);
                 Latch();
@@ -312,8 +316,6 @@ public class SkyStoneAutaunomous extends TeleOpSkystone
                 encoderDrive(0,0,0,0);
                 Part.AndyMark_motor_Lift.setTargetPosition(0);
                 UnLatch();
-                encoderDrive(0,0,0,0);
-                encoderDrive(0,0,0,0);
             }
 
             Imgproc.line(frame, new Point(0, 275), new Point(300, 275), new Scalar(0, 255, 0));
