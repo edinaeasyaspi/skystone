@@ -279,6 +279,7 @@ public class PusherAutonomous extends TeleOpSkystone
                 UnLatch();
             }else{
                 encoderDrive(0,0,0,0);
+
                 encoderDrive(0,0,0,0);
                 Part.AndyMark_motor_Lift.setTargetPosition(0);
                 Latch();

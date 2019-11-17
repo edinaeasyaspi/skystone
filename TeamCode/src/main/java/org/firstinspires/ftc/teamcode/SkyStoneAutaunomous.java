@@ -288,6 +288,8 @@ public class SkyStoneAutaunomous extends TeleOpSkystone
                 encoderDrive(0,0,0,0);
                 Part.AndyMark_motor_Lift.setTargetPosition(0);
                 UnLatch();
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
             }else if (s2 == RED){
                 encoderDrive(0,0,0,0);
                 encoderDrive(0,0,0,0);
@@ -298,6 +300,8 @@ public class SkyStoneAutaunomous extends TeleOpSkystone
                 encoderDrive(0,0,0,0);
                 Part.AndyMark_motor_Lift.setTargetPosition(0);
                 UnLatch();
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
             }else{
                 encoderDrive(0,0,0,0);
                 encoderDrive(0,0,0,0);
@@ -308,6 +312,8 @@ public class SkyStoneAutaunomous extends TeleOpSkystone
                 encoderDrive(0,0,0,0);
                 Part.AndyMark_motor_Lift.setTargetPosition(0);
                 UnLatch();
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
             }
 
             Imgproc.line(frame, new Point(0, 275), new Point(300, 275), new Scalar(0, 255, 0));
