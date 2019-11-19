@@ -284,43 +284,20 @@ public class SkyStoneAutaunomousRedDepo extends TeleOpSkystone
             }
             //SkyStoneAutonomous
             sleep(1000);
-            if (s0 == RED){
-                encoderDrive(0,0,0,0);
-                encoderDrive(0,0,0,0);
-                Part.AndyMark_motor_Lift.setTargetPosition(0);
-                Latch();
-                Part.AndyMark_motor_Lift.setTargetPosition(50);
-                encoderDrive(0,0,0,0);
-                encoderDrive(0,0,0,0);
-                Part.AndyMark_motor_Lift.setTargetPosition(0);
-                UnLatch();
-                encoderDrive(0,0,0,0);
-                encoderDrive(0,0,0,0);
-            }else if (s2 == RED){
-                encoderDrive(0,0,0,0);
-                encoderDrive(0,0,0,0);
-                Part.AndyMark_motor_Lift.setTargetPosition(0);
-                Latch();
-                Part.AndyMark_motor_Lift.setTargetPosition(50);
-                encoderDrive(0,0,0,0);
-                encoderDrive(0,0,0,0);
-                Part.AndyMark_motor_Lift.setTargetPosition(0);
-                UnLatch();
-                encoderDrive(0,0,0,0);
-                encoderDrive(0,0,0,0);
-            }else{
-                encoderDrive(0,0,0,0);
-                encoderDrive(0,0,0,0);
-                Part.AndyMark_motor_Lift.setTargetPosition(0);
-                Latch();
-                Part.AndyMark_motor_Lift.setTargetPosition(50);
-                encoderDrive(0,0,0,0);
-                encoderDrive(0,0,0,0);
-                Part.AndyMark_motor_Lift.setTargetPosition(0);
-                UnLatch();
-                encoderDrive(0,0,0,0);
-                encoderDrive(0,0,0,0);
-            }
+            /*switch (location) {
+            case left:
+                Mecanum.MoveForwardRunToPosition(0.5, 1100, this);
+                break;
+
+            case middle:
+                Mecanum.MoveForwardRunToPosition(0.5, 600, this);
+                break;
+
+            case right:
+                Mecanum.MoveForwardRunToPosition(0.5, 150, this);
+                break;
+        }*/
+
 
             Imgproc.line(frame, new Point(0, 275), new Point(300, 275), new Scalar(0, 255, 0));
             Imgproc.circle(frame, new Point(cx0, cy0), r, s0, Core.FILLED);
