@@ -194,7 +194,7 @@ public class SkyStoneAutaunomousRedDepo extends TeleOpSkystone
 
         private boolean madeMats = false;
 
-        private Scalar BLACK = new Scalar(115,140,1013);
+        private Scalar BLACK = new Scalar(0,0,0);
         private Scalar WHITE = new Scalar(255,255,255);
         private Scalar RED = new Scalar(255, 0, 0);
 
@@ -283,7 +283,44 @@ public class SkyStoneAutaunomousRedDepo extends TeleOpSkystone
                 s1 = RED;
             }
             //SkyStoneAutonomous
-
+            sleep(1000);
+            if (s0 == RED){
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+                Part.AndyMark_motor_Lift.setTargetPosition(0);
+                Latch();
+                Part.AndyMark_motor_Lift.setTargetPosition(50);
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+                Part.AndyMark_motor_Lift.setTargetPosition(0);
+                UnLatch();
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+            }else if (s2 == RED){
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+                Part.AndyMark_motor_Lift.setTargetPosition(0);
+                Latch();
+                Part.AndyMark_motor_Lift.setTargetPosition(50);
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+                Part.AndyMark_motor_Lift.setTargetPosition(0);
+                UnLatch();
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+            }else{
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+                Part.AndyMark_motor_Lift.setTargetPosition(0);
+                Latch();
+                Part.AndyMark_motor_Lift.setTargetPosition(50);
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+                Part.AndyMark_motor_Lift.setTargetPosition(0);
+                UnLatch();
+                encoderDrive(0,0,0,0);
+                encoderDrive(0,0,0,0);
+            }
 
             Imgproc.line(frame, new Point(0, 275), new Point(300, 275), new Scalar(0, 255, 0));
             Imgproc.circle(frame, new Point(cx0, cy0), r, s0, Core.FILLED);
