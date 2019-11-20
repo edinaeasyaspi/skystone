@@ -194,10 +194,13 @@ JuanBody Part = new JuanBody();
         fr *= .5;
         br *= .5;
         bl *= .5;
-        Part.LeftA.setPower(fl);
-        Part.RightA.setPower(fr);
-        Part.LeftB.setPower(br);
-        Part.RightB.setPower(bl);
+
+
+            Part.LeftA.setPower(fl);
+            Part.RightA.setPower(fr);
+            Part.LeftB.setPower(br);
+            Part.RightB.setPower(bl);
+
     }
 
     public void Init_Juan() {
@@ -244,7 +247,7 @@ JuanBody Part = new JuanBody();
     }
 
 
-    protected void Move_Motor_WithEncoder(DcMotor Motor, int TargetPos , double speed ,int timeout ) {
+    protected void Move_Motor_WithEncoder(DcMotor Motor, int TargetPos , double speed ,double timeout ) {
         Motor.setTargetPosition(TargetPos);
         Motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Motor.setPower(speed);
@@ -253,15 +256,14 @@ JuanBody Part = new JuanBody();
             telemetry.addData("Motor Postion", "Position at %7d", Motor.getCurrentPosition());
         }
         Motor.setPower(0);
+        Motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
     public void ArmCrap (float ArmPow, float ElPow){
         ElPow = ElPow * 0.1f;
 
-        while((Part.AndyMark_motor_Lift.getCurrentPosition()< 1000) &&(ElPow > 0)){
-            Part.AndyMark_motor_Lift.setPower(0);
-        }
+
         Part.AndyMark_motor_Lift.setPower(ElPow);
         Part.AndyMark_motor.setPower(-ArmPow);
     }

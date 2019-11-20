@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.JuanBody;
 
 public class Mecanum extends JuanBody {
-
+    JuanBody Part = new JuanBody();
     private Telemetry _telemetry;
 
     private double _currentPower = 1.0;
@@ -171,6 +171,8 @@ public class Mecanum extends JuanBody {
 
     public void MoveForwardRunToPosition(double power, int distance, LinearOpMode opMode) {
         // run with simple distance encoders as moving forward or backwards
+         distance *=Part.COUNTS_PER_INCH;
+
         SetDistance(distance, distance, distance, distance);
         StopResetEncodersAndRunToPosition();
 
@@ -189,6 +191,7 @@ public class Mecanum extends JuanBody {
 
     public void MoveBackwardsRunToPosition(double power, int distance, LinearOpMode opMode) {
         // run with simple distance encoders as moving forward or backwards
+        distance *=Part.COUNTS_PER_INCH;
         SetDistance(-distance, -distance, -distance, -distance);
         StopResetEncodersAndRunToPosition();
 
@@ -207,7 +210,9 @@ public class Mecanum extends JuanBody {
 
     public void TurnRightRunToPosition(double power, int distance, LinearOpMode opMode) {
         // run with simple distance encoders as moving forward or backwards
+        distance *=Part.COUNTS_PER_INCH;
         SetDistance(distance, distance, -distance, -distance);
+
         StopResetEncodersAndRunToPosition();
 
         int error = Math.abs((int)(distance * 0.95));

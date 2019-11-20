@@ -48,7 +48,7 @@ public class JuanBody extends LinearOpMode {
 
     double servo_to_elbow_ratio = 1/Andmark_MAX_REV;
 
-    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    protected static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
     public double driveStarted;
