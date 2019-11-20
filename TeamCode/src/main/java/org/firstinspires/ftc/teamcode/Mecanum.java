@@ -170,7 +170,7 @@ public class Mecanum extends JuanBody {
 
     public void MoveForwardRunToPosition(double power, int distance, LinearOpMode opMode) {
         // run with simple distance encoders as moving forward or backwards
-
+        distance *= COUNTS_PER_INCH;
 
         SetDistance(distance, distance, distance, distance);
         StopResetEncodersAndRunToPosition();

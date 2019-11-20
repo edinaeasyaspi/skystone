@@ -38,7 +38,7 @@ public class JuanBody extends LinearOpMode {
     //encoders
     protected ElapsedTime runtime = new ElapsedTime();
     protected static final int Andmark_MAX_REV = 1120;
-    protected static final float COUNTS_PER_MOTOR_REV = 56F;
+    protected static final float COUNTS_PER_MOTOR_REV = 1440;
     protected static final int ARM_MAX = 1900;
     protected static final int ARM_SLIDE_MAX = 600;
     protected static final byte MAX_SPEED = 1;
