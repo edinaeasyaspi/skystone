@@ -188,7 +188,7 @@ public class Mecanum extends JuanBody {
         Stop();
     }
 
-    public void MoveBackwardsRunToPosition(double power, int distance, SkyStoneAutaunomousBlueDep.SamplePipeline opMode) {
+    public void MoveBackwardsRunToPosition(double power, int distance, LinearOpMode opMode) {
         // run with simple distance encoders as moving forward or backwards
         distance *=Part.COUNTS_PER_INCH;
         SetDistance(-distance, -distance, -distance, -distance);

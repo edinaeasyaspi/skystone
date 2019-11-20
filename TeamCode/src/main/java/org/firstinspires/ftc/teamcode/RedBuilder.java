@@ -6,7 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 public class RedBuilder extends TeleOpSkystone {
 
     JuanBody Part = new JuanBody();
-    protected Mecanum Mecanum;
+    protected Mecanum Mecanum = new Mecanum(hardwareMap.dcMotor.get("LA"),
+            hardwareMap.dcMotor.get("RA"),
+            hardwareMap.dcMotor.get("LB"),
+            hardwareMap.dcMotor.get("RB"), telemetry);
 
 
         public void runOpMode() throws InterruptedException {
@@ -18,10 +21,6 @@ public class RedBuilder extends TeleOpSkystone {
             Reset_Arm_Slide();
 
             waitForStart();
-            while (opModeIsActive()){
 
-
-
-            }
     }
 }
