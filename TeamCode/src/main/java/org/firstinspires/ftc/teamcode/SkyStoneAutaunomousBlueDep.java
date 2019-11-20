@@ -35,7 +35,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@Autonomous(name = "BlueDepo", group = "EAP")
+
 public class SkyStoneAutaunomousBlueDep extends TeleOpSkystone
 {
     protected OpenCvCamera phoneCam;

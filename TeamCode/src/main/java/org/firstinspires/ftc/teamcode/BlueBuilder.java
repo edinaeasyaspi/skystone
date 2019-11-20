@@ -11,12 +11,13 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class BlueBuilder extends TeleOpSkystone {
 
     protected LinearOpMode This ;
-    protected Mecanum Mecanum = new Mecanum(hardwareMap.dcMotor.get("LA"),
-   hardwareMap.dcMotor.get("RA"),
-     hardwareMap.dcMotor.get("LB"),
-     hardwareMap.dcMotor.get("RB"), telemetry);
+
 
         public void runOpMode() throws InterruptedException {
+            Mecanum mecanum = new Mecanum(hardwareMap.dcMotor.get("LA"),
+                    hardwareMap.dcMotor.get("RA"),
+                    hardwareMap.dcMotor.get("LB"),
+                    hardwareMap.dcMotor.get("RB"), telemetry);
             Init_Juan();
 
             Reset_Arm();
@@ -25,7 +26,7 @@ public class BlueBuilder extends TeleOpSkystone {
 
             waitForStart();
 
-            Mecanum.MoveForwardRunToPosition(1,16, This );
+            mecanum.MoveForwardRunToPosition(1,16, This );
 
     }
 }
