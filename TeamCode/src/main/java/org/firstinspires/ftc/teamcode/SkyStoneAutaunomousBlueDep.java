@@ -93,7 +93,6 @@ public class SkyStoneAutaunomousBlueDep extends TeleOpSkystone
         Reset_Arm_Slide();
 
         waitForStart();
-
         while (opModeIsActive())
         {
             /*
@@ -322,6 +321,15 @@ public class SkyStoneAutaunomousBlueDep extends TeleOpSkystone
             Imgproc.circle(frame, new Point(cx0, cy0), r, s0, Core.FILLED);
             Imgproc.circle(frame, new Point(cx1, cy1), r, s1, Core.FILLED);
             Imgproc.circle(frame, new Point(cx2, cy2), r, s2, Core.FILLED);
+
+            switch (location) {
+            case left:
+               encoderDrive(1,5,0,10);
+            case middle:
+                encoderDrive(1,1,1,1);
+            case right:
+                encoderDrive(1,1,1,1);
+        }
 
             /**
              * NOTE: to see how to get data from your pipeline to your OpMode as well as how

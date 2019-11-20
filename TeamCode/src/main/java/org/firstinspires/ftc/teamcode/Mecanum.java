@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.JuanBody;
 
 public class Mecanum extends JuanBody {
 
@@ -187,7 +186,7 @@ public class Mecanum extends JuanBody {
         Stop();
     }
 
-    public void MoveBackwardsRunToPosition(double power, int distance, LinearOpMode opMode) {
+    public void MoveBackwardsRunToPosition(double power, int distance, SkyStoneAutaunomousBlueDep.SamplePipeline opMode) {
         // run with simple distance encoders as moving forward or backwards
         SetDistance(-distance, -distance, -distance, -distance);
         StopResetEncodersAndRunToPosition();

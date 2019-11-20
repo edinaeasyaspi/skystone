@@ -284,19 +284,14 @@ public class SkyStoneAutaunomousRedDepo extends TeleOpSkystone
             }
             //SkyStoneAutonomous
             sleep(1000);
-            /*switch (location) {
+            switch (location) {
             case left:
-                Mecanum.MoveForwardRunToPosition(0.5, 1100, this);
-                break;
-
+                encoderDrive(1,1,1,1);
             case middle:
-                Mecanum.MoveForwardRunToPosition(0.5, 600, this);
-                break;
-
+                encoderDrive(1,1,1,1);
             case right:
-                Mecanum.MoveForwardRunToPosition(0.5, 150, this);
-                break;
-        }*/
+                encoderDrive(1,1,1,1);
+        }
 
 
             Imgproc.line(frame, new Point(0, 275), new Point(300, 275), new Scalar(0, 255, 0));
