@@ -263,10 +263,23 @@ public class Mecanum extends JuanBody {
 
         Stop();
     }
+    public void move_arm_down (double power, int distance, LinearOpMode opmode){
+
+        Part.AndyMark_motor_Lift.setTargetPosition(distance);
+        Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        int error = Math.abs((int)(distance * 0.95 ) );
+        int currentPostion = Math.abs(Part.AndyMark_motor_Lift.getCurrentPosition());
+        Part.AndyMark_motor_Lift.setPower(power);
+        while ((Part.AndyMark_motor_Lift.isBusy()) && (currentPostion < error) && opmode.opModeIsActive()  ){
+           currentPostion = Math.abs(Part.AndyMark_motor_Lift.getCurrentPosition());
+           opmode.idle();
+        }
+        Part.AndyMark_motor_Lift.setPower(0);
+    }
 
     public void SlideLeftRunToPosition(double power, int distance, LinearOpMode opMode) {
         // put the motors into run with encoders so they run with even power
-
+        distance *=Part.COUNTS_PER_INCH;
         SetDistance(-distance, distance, distance, -distance);
         StopResetEncodersAndRunToPosition();
 

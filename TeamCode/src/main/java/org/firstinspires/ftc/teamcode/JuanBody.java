@@ -46,11 +46,8 @@ public class JuanBody extends LinearOpMode {
     protected static final int Tetrix_MAX = 1440;
     public static final int WHEEL_DIAMETER_INCHES = 3;
     public static final double DRIVE_GEAR_REDUCTION = 0.5;
-
-    double servo_to_elbow_ratio = 1/Andmark_MAX_REV;
-
     protected static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
+            (WHEEL_DIAMETER_INCHES * Math.PI);
 
     public double driveStarted;
     public double lastSpeed;

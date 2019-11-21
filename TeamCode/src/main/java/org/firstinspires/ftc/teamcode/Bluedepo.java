@@ -6,27 +6,25 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name = "BlueDepo", group = "EAP")
 public class Bluedepo extends TeleOpSkystone {
 
-
+    SkyStoneAutaunomousBlueDep Camera ;
 
 
 
     @Override
     public void runOpMode(){
+
+    Mecanum mecanum = new Mecanum(hardwareMap.dcMotor.get("LA"),
+                hardwareMap.dcMotor.get("RA"),
+                hardwareMap.dcMotor.get("LB"),
+                hardwareMap.dcMotor.get("RB"), telemetry);
+    Camera = new SkyStoneAutaunomousBlueDep();
     Init_Juan();
     Reset_Arm();
     Reset_Arm_Slide();
     waitForStart();
 
 
-        encoderDrive(1,20,20,20);
 
-        sleep(100);
-
-        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-720,-.1,1.8);
-
-        sleep(100);
-
-        encoderDrive(.5,-5,-5,20);
 
 
 

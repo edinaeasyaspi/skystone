@@ -137,6 +137,7 @@ public class TeleOpSkystone extends LinearOpMode {
     };
             JuanBody Part = new JuanBody();
     // Reset Encoders
+
     public void Reset_Arm_Slide() {
        Part.Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Part.Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

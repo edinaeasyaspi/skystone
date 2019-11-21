@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -24,7 +25,21 @@ public class BlueBuilder extends TeleOpSkystone {
 
             waitForStart();
 
-            mecanum.MoveForwardRunToPosition(.3,1420, this );
+            mecanum.MoveForwardRunToPosition(-.3,-7, this );
 
-    }
+            mecanum.move_arm_down(.3,600, this);
+
+            mecanum.MoveForwardRunToPosition(.3,7, this );
+
+            mecanum.move_arm_down(-.3,-600,this);
+
+            mecanum.SlideLeftRunToPosition(.3, 6,this);
+
+            mecanum.MoveForwardRunToPosition(.3,15,this);
+
+            mecanum.SlideRightRunToPosition(.3,6,this);
+
+            mecanum.MoveForwardRunToPosition(.3, 6,this);
+
+        }
 }
