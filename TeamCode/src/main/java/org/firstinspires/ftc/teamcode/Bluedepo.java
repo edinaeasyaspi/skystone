@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name = "BlueDepo", group = "EAP")
 public class Bluedepo extends TeleOpSkystone {
 
-    SkyStoneAutaunomousBlueDep Camera ;
+    SkyStoneAutaunomousBlueDep Camera;
 
 
 
@@ -17,11 +17,13 @@ public class Bluedepo extends TeleOpSkystone {
                 hardwareMap.dcMotor.get("RA"),
                 hardwareMap.dcMotor.get("LB"),
                 hardwareMap.dcMotor.get("RB"), telemetry);
-    Camera = new SkyStoneAutaunomousBlueDep();
+
     Init_Juan();
     Reset_Arm();
     Reset_Arm_Slide();
     waitForStart();
+
+    mecanum.SlideRightRunToPosition(.3,26,this);
 
 
 

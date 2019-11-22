@@ -247,7 +247,7 @@ public class Mecanum extends JuanBody {
 
     public void SlideRightRunToPosition(double power, int distance, LinearOpMode opMode) {
         // put the motors into run with encoders so they run with even power
-
+        distance *= COUNTS_PER_INCH;
         SetDistance(distance, -distance, -distance, distance);
         StopResetEncodersAndRunToPosition();
 
@@ -380,9 +380,9 @@ public class Mecanum extends JuanBody {
     }
 
     public void Move(double fl, double fr, double bl, double br) {
-        LeftA.setPower(fl);
+        LeftA.setPower(fl*1.3);
         RightA.setPower(fr);
-        LeftB.setPower(bl);
+        LeftB.setPower(bl*1.3);
         RightB.setPower(br);
     }
 

@@ -138,7 +138,8 @@ public class TeleOpSkystone extends LinearOpMode {
             JuanBody Part = new JuanBody();
     // Reset Encoders
 
-    public void Reset_Arm_Slide() {
+    public void
+    Reset_Arm_Slide() {
        Part.Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Part.Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Part.Tetrix_ARMSLIDE_Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -400,9 +401,12 @@ public class TeleOpSkystone extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-
-            Drive(gamepad1.left_stick_x, gamepad1.left_stick_y , gamepad1.right_stick_x);
-
+            if (!gamepad1.a) {
+                Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            }
+            else {
+                Drive(gamepad1.left_stick_x * 0.5, gamepad1.left_stick_y * 0.5, gamepad1.right_stick_x * 0.5);
+            }
 
             ArmCrap(gamepad2.left_stick_y,-gamepad2.right_stick_y);
 
@@ -426,7 +430,10 @@ public class TeleOpSkystone extends LinearOpMode {
             if (gamepad2.dpad_right){
             Part.Rotating_servo.setPosition(1);
             }
+            if(gamepad1.dpad_down){
+                Part.Rotating_servo.setPosition(.8);
 
+            }
             if (gamepad2.a) {
                 Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,500,.1,4);
                 Part.Rotating_servo.setPosition(1);

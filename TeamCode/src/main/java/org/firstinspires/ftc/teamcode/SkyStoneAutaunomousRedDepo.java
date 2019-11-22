@@ -286,11 +286,16 @@ public class SkyStoneAutaunomousRedDepo extends TeleOpSkystone
             sleep(1000);
             switch (location) {
             case left:
-                encoderDrive(1,1,1,1);
+                encoderDrive(1,1,1,10);
+
+                encoderDrive(1,1,1,10);
+
             case middle:
-                encoderDrive(1,1,1,1);
+                encoderDrive(1,1,1,10);
+                encoderDrive(1,1,1,10);
             case right:
-                encoderDrive(1,1,1,1);
+                encoderDrive(1,1,1,10);
+                encoderDrive(1,1,1,10);
         }
 
 
