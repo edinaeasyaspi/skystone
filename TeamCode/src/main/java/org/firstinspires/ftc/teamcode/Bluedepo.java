@@ -13,7 +13,7 @@ public class Bluedepo extends TeleOpSkystone {
     @Override
     public void runOpMode(){
 
-    Mecanum mecanum = new Mecanum(hardwareMap.dcMotor.get("LA"),
+        Mecanum mecanum = new Mecanum(hardwareMap.dcMotor.get("LA"),
                 hardwareMap.dcMotor.get("RA"),
                 hardwareMap.dcMotor.get("LB"),
                 hardwareMap.dcMotor.get("RB"), telemetry);
@@ -23,7 +23,7 @@ public class Bluedepo extends TeleOpSkystone {
     Reset_Arm_Slide();
     waitForStart();
 
-    mecanum.SlideRightRunToPosition(.3,26,this);
+    mecanum.SlideRightRunToPosition(.3,5,this);
 
 
 

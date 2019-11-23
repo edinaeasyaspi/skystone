@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
+@Autonomous(name = "RedDepo", group = "EAP")
 public class RedDepo extends  TeleOpSkystone {
 
 
-    SkyStoneAutaunomousBlueDep Camera;
+
 
 
 
@@ -20,7 +23,7 @@ public class RedDepo extends  TeleOpSkystone {
         Reset_Arm_Slide();
         waitForStart();
 
-        mecanum.SlideRightRunToPosition(-.3,-26,this);
+        mecanum.SlideRightRunToPosition(-.3,-5,this);
 
 
 

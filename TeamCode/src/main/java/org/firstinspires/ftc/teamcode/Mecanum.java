@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Mecanum extends JuanBody {
-    JuanBody Part = new JuanBody();
+public class Mecanum extends TeleOpSkystone {
+
     private Telemetry _telemetry;
 
     private double _currentPower = 1.0;
@@ -33,32 +33,32 @@ public class Mecanum extends JuanBody {
     public Mecanum(DcMotor fl, DcMotor fr, DcMotor bl, DcMotor br,
                    Telemetry telemetry)
     {
-        LeftA = fl;
-        RightA= fr;
-        LeftB = bl;
-        RightB = br;
+        Part.LeftA = fl;
+        Part.RightA= fr;
+        Part.LeftB = bl;
+        Part.RightB = br;
         _telemetry = telemetry;
 
-        LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        LeftB.setDirection(DcMotorSimple.Direction.REVERSE);
-        LeftA.setDirection(DcMotorSimple.Direction.REVERSE);
+        Part.LeftB.setDirection(DcMotorSimple.Direction.REVERSE);
+        Part.LeftA.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void SlideLeftRunWithEncoders(double power, int distance, LinearOpMode opMode) {
         // put the motors into run with encoders so they run with even power
         StopResetEncodersRunWithEncoderAndBrakekOn();
 
-        int currentPosition =  Math.abs(RightB.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightB.getCurrentPosition());
         int error = Math.abs((int)(distance * 0.95));
         Move(-power, power, power, -power);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
         while ((currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightB.getCurrentPosition());
+            currentPosition =  Math.abs(Part.RightB.getCurrentPosition());
             opMode.idle();
         }
 
@@ -69,13 +69,13 @@ public class Mecanum extends JuanBody {
         // put the motors into run with encoders so they run with even power
         StopResetEncodersRunWithEncoderAndBrakekOn();
 
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
         int error = Math.abs((int)(distance * 0.95));
         Move(power, -power, -power, power);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
         while ((currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             opMode.idle();
         }
 
@@ -87,12 +87,12 @@ public class Mecanum extends JuanBody {
         StopResetEncodersRunWithEncoderAndBrakekOn();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
         double currentPower = CalculateRampPower(power, distance, currentPosition);
         Move(currentPower, currentPower, currentPower, currentPower);
 
         while ((currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             currentPower = CalculateRampPower(power, distance, currentPosition);
             Move(currentPower, currentPower, currentPower, currentPower);
             opMode.idle();
@@ -106,7 +106,7 @@ public class Mecanum extends JuanBody {
         StopResetEncodersRunWithEncoderAndBrakekOn();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
 
         // ramp up and down the motor speed based on current position
         double currentPower = CalculateRampPower(power, distance, currentPosition);
@@ -115,7 +115,7 @@ public class Mecanum extends JuanBody {
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
         while ((currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             currentPower = CalculateRampPower(power, distance, currentPosition);
             Move(-currentPower, -currentPower, -currentPower, -currentPower);
             opMode.idle();
@@ -128,7 +128,7 @@ public class Mecanum extends JuanBody {
         StopResetEncodersRunWithEncoderAndBrakekOn();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
 
         // ramp up and down the motor speed based on current position
         double currentPower = CalculateRampPower(power, distance, currentPosition);
@@ -137,7 +137,7 @@ public class Mecanum extends JuanBody {
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
         while ((currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             currentPower = CalculateRampPower(power, distance, currentPosition);
             Move(currentPower, -currentPower, currentPower, -currentPower);
             opMode.idle();
@@ -150,7 +150,7 @@ public class Mecanum extends JuanBody {
         StopResetEncodersRunWithEncoderAndBrakekOn();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
 
         // ramp up and down the motor speed based on current position
         double currentPower = CalculateRampPower(power, distance, currentPosition);
@@ -159,7 +159,7 @@ public class Mecanum extends JuanBody {
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
         while ((currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             currentPower = CalculateRampPower(power, distance, currentPosition);
             Move(-currentPower, currentPower, -currentPower, currentPower);
             opMode.idle();
@@ -170,18 +170,18 @@ public class Mecanum extends JuanBody {
 
     public void MoveForwardRunToPosition(double power, int distance, LinearOpMode opMode) {
         // run with simple distance encoders as moving forward or backwards
-        distance *= COUNTS_PER_INCH;
+        distance *= Part.COUNTS_PER_INCH;
 
         SetDistance(distance, distance, distance, distance);
         StopResetEncodersAndRunToPosition();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
         Move(power, power, power, power);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
-        while (LeftA.isBusy() && RightA.isBusy() && LeftB.isBusy() && RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+        while (Part.LeftA.isBusy() && Part.RightA.isBusy() && Part.LeftB.isBusy() && Part.RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             opMode.idle();
         }
 
@@ -195,12 +195,12 @@ public class Mecanum extends JuanBody {
         StopResetEncodersAndRunToPosition();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
         Move(power, power, power, power);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
-        while (LeftA.isBusy() && RightA.isBusy() && LeftB.isBusy() && RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+        while (Part.LeftA.isBusy() && Part.RightA.isBusy() && Part.LeftB.isBusy() && Part.RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             opMode.idle();
         }
 
@@ -215,12 +215,12 @@ public class Mecanum extends JuanBody {
         StopResetEncodersAndRunToPosition();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
         Move(power, power, power, power);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
-        while (LeftA.isBusy() && RightA.isBusy() && LeftB.isBusy() && RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+        while (Part.LeftA.isBusy() && Part.RightA.isBusy() && Part.LeftB.isBusy() && Part.RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             opMode.idle();
         }
 
@@ -233,49 +233,55 @@ public class Mecanum extends JuanBody {
         StopResetEncodersAndRunToPosition();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
         Move(power, power, power, power);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
-        while (LeftA.isBusy() && RightA.isBusy() && LeftB.isBusy() && RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+        while (Part.LeftA.isBusy() && Part.RightA.isBusy() && Part.LeftB.isBusy() && Part.RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             opMode.idle();
         }
 
         Stop();
     }
 
+    public void LeftSide_Corrections (double speed, int TargetPos, LinearOpMode opMode) {
+
+        Part.LeftA.setTargetPosition(TargetPos);
+        Part.LeftB.setTargetPosition(TargetPos);
+        StopResetEncodersAndRunToPosition();
+        Part.LeftA.setPower(speed);
+        Part.LeftB.setPower(speed);
+
+        int error = Math.abs((int)(TargetPos * 0.95));
+        int currentPosition =  Math.abs(Part.LeftB.getCurrentPosition());
+        while (Part.LeftA.isBusy() && Part.LeftB.isBusy()&& (currentPosition < error) && opMode.opModeIsActive()) {
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
+            opMode.idle();
+        }
+        Stop();
+    }
+
+
     public void SlideRightRunToPosition(double power, int distance, LinearOpMode opMode) {
         // put the motors into run with encoders so they run with even power
-        distance *= COUNTS_PER_INCH;
+        distance *= Part.COUNTS_PER_INCH;
         SetDistance(distance, -distance, -distance, distance);
         StopResetEncodersAndRunToPosition();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
         Move(power, power, power, power);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
-        while (LeftA.isBusy() && RightA.isBusy() && LeftB.isBusy() && RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+        while (Part.LeftA.isBusy() && Part.RightA.isBusy() && Part.LeftB.isBusy() && Part.RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             opMode.idle();
         }
 
         Stop();
     }
-    public void move_arm_down (double power, int distance, LinearOpMode opmode){
 
-        Part.AndyMark_motor_Lift.setTargetPosition(distance);
-        Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        int error = Math.abs((int)(distance * 0.95 ) );
-        int currentPostion = Math.abs(Part.AndyMark_motor_Lift.getCurrentPosition());
-        Part.AndyMark_motor_Lift.setPower(power);
-        while ((Part.AndyMark_motor_Lift.isBusy()) && (currentPostion < error) && opmode.opModeIsActive()  ){
-           currentPostion = Math.abs(Part.AndyMark_motor_Lift.getCurrentPosition());
-           opmode.idle();
-        }
-        Part.AndyMark_motor_Lift.setPower(0);
-    }
 
     public void SlideLeftRunToPosition(double power, int distance, LinearOpMode opMode) {
         // put the motors into run with encoders so they run with even power
@@ -284,12 +290,12 @@ public class Mecanum extends JuanBody {
         StopResetEncodersAndRunToPosition();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
         Move(power, power, power, power);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
-        while (LeftA.isBusy() && RightA.isBusy() && LeftB.isBusy() && RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+        while (Part.LeftA.isBusy() && Part.RightA.isBusy() && Part.LeftB.isBusy() && Part.RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             opMode.idle();
         }
 
@@ -303,12 +309,12 @@ public class Mecanum extends JuanBody {
         StopResetEncodersAndRunToPosition();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(LeftA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.LeftA.getCurrentPosition());
         Move(power, 0, 0, power);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
-        while (LeftA.isBusy() && RightA.isBusy() && LeftB.isBusy() && RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(LeftA.getCurrentPosition());
+        while (Part.LeftA.isBusy() && Part.RightA.isBusy() && Part.LeftB.isBusy() && Part.RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
+            currentPosition =  Math.abs(Part.LeftA.getCurrentPosition());
             opMode.idle();
         }
 
@@ -322,12 +328,12 @@ public class Mecanum extends JuanBody {
         StopResetEncodersAndRunToPosition();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
         Move(0, power, power, 0);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
-        while (LeftA.isBusy() && RightA.isBusy() && LeftB.isBusy() && RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+        while (Part.LeftA.isBusy() && Part.RightA.isBusy() && Part.LeftB.isBusy() && Part.RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             opMode.idle();
         }
 
@@ -341,12 +347,12 @@ public class Mecanum extends JuanBody {
         StopResetEncodersAndRunToPosition();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(LeftA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.LeftA.getCurrentPosition());
         Move(power, 0, 0, power);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
-        while (LeftA.isBusy() && RightA.isBusy() && LeftB.isBusy() && RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(LeftA.getCurrentPosition());
+        while (Part.LeftA.isBusy() && Part.RightA.isBusy() && Part.LeftB.isBusy() && Part.RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
+            currentPosition =  Math.abs(Part.LeftA.getCurrentPosition());
             opMode.idle();
         }
 
@@ -360,12 +366,12 @@ public class Mecanum extends JuanBody {
         StopResetEncodersAndRunToPosition();
 
         int error = Math.abs((int)(distance * 0.95));
-        int currentPosition =  Math.abs(RightA.getCurrentPosition());
+        int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
         Move(0, power, power, 0);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
-        while (LeftA.isBusy() && RightA.isBusy() && LeftB.isBusy() && RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
-            currentPosition =  Math.abs(RightA.getCurrentPosition());
+        while (Part.LeftA.isBusy() && Part.RightA.isBusy() && Part.LeftB.isBusy() && Part.RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
             opMode.idle();
         }
 
@@ -373,24 +379,24 @@ public class Mecanum extends JuanBody {
     }
 
     public void Move(double left, double right){
-        LeftA.setPower(left);
-        RightA.setPower(right);
-        LeftB.setPower(left);
-        RightB.setPower(right);
+        Part.LeftA.setPower(left);
+        Part.RightA.setPower(right);
+        Part.LeftB.setPower(left);
+        Part.RightB.setPower(right);
     }
 
     public void Move(double fl, double fr, double bl, double br) {
-        LeftA.setPower(fl*1.3);
-        RightA.setPower(fr);
-        LeftB.setPower(bl*1.3);
-        RightB.setPower(br);
+        Part.LeftA.setPower(fl*1.3);
+        Part.RightA.setPower(fr);
+        Part.LeftB.setPower(bl*1.3);
+        Part.RightB.setPower(br);
     }
 
     public void Stop() {
-        LeftA.setPower(0);
-        RightA.setPower(0);
-        LeftB.setPower(0);
-        RightB.setPower(0);
+        Part.LeftA.setPower(0);
+        Part.RightA.setPower(0);
+        Part.LeftB.setPower(0);
+        Part.RightB.setPower(0);
     }
 
     public void setCurrentPower(double cp){
@@ -432,11 +438,11 @@ public class Mecanum extends JuanBody {
     // This is our simple drive method that allows us to drive the robot in teleop
     //
     public void Drive(double leftStickX, double leftStickY, double rightStickY) {
-        if (RightA.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
-            LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        if (Part.RightA.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
+            Part.LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Part.RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Part.LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Part.RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
         final double x = Math.pow(-leftStickX, 3.0);
@@ -451,26 +457,26 @@ public class Mecanum extends JuanBody {
         final double bl = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
         final double br = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
 
-        LeftA.setPower(-fl * _currentPower);
-        RightA.setPower(-fr * _currentPower);
-        LeftB.setPower(-bl * _currentPower);
-        RightB.setPower(-br * _currentPower);
+        Part.LeftA.setPower(-fl * _currentPower);
+        Part.RightA.setPower(-fr * _currentPower);
+        Part.LeftB.setPower(-bl * _currentPower);
+        Part.RightB.setPower(-br * _currentPower);
     }
 
     public DcMotor getFL() {
-        return LeftA;
+        return Part.LeftA;
     }
 
     public DcMotor getFR() {
-        return RightA;
+        return Part.RightA;
     }
 
     public DcMotor getBL() {
-        return LeftB;
+        return Part.LeftB;
     }
 
     public DcMotor getBR() {
-        return RightB;
+        return Part.RightB;
     }
 
     public void assistedDrive(double x, double y, double rot, double heading){
@@ -515,10 +521,10 @@ public class Mecanum extends JuanBody {
         bl = bl > 1? 1 : bl < -1? -1 : bl;
         br = br > 1? 1 : br < -1? -1 : br;
 
-        LeftA.setPower(-fl);
-        RightA.setPower(-fr);
-        LeftB.setPower(-bl);
-        RightB.setPower(-br);
+        Part.LeftA.setPower(-fl);
+        Part.RightA.setPower(-fr);
+        Part.LeftB.setPower(-bl);
+        Part.RightB.setPower(-br);
 
     }
 
@@ -527,44 +533,44 @@ public class Mecanum extends JuanBody {
     // They are the three different ways you can run a motor
     //
     public void StopResetEncodersAndRunToPosition() {
-        LeftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LeftA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        RightA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RightA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        LeftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LeftB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        RightB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        RightB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RightB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Part.LeftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Part.LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.LeftA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Part.RightA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Part.RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.RightA.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Part.LeftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Part.LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.LeftB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Part.RightB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Part.RightB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.RightB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void StopResetEncodersRunWithEncoderAndBrakekOn() {
-        LeftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LeftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        RightB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Part.LeftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Part.LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Part.RightA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Part.RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Part.LeftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Part.LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Part.RightB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Part.RightB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.RightB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void StopResetEncodersAndRunWithoutEncoders() {
-        LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LeftA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RightA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LeftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        RightB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RightB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Part.LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.LeftA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Part.RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.RightA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Part.LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.LeftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Part.RightB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.RightB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     //
@@ -572,9 +578,9 @@ public class Mecanum extends JuanBody {
     // moving forward.
     //
     private void SetDistance(int lf, int lb, int rf, int rb) {
-        LeftA.setTargetPosition(lf);
-        RightA.setTargetPosition(rf);
-        LeftB.setTargetPosition(lb);
-        RightB.setTargetPosition(rb);
+        Part.LeftA.setTargetPosition(lf);
+        Part.RightA.setTargetPosition(rf);
+        Part.LeftB.setTargetPosition(lb);
+        Part.RightB.setTargetPosition(rb);
     }
 }

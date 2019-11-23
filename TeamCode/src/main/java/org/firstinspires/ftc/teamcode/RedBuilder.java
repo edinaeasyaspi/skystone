@@ -23,20 +23,38 @@ public class RedBuilder extends TeleOpSkystone {
 
             waitForStart();
 
-            mecanum.MoveForwardRunToPosition(-.3,-16, this );
-            sleep(100);
 
-            //move arm.
-            Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-600,-.3,10);
 
-            mecanum.MoveForwardRunToPosition(.3,16, this );
-            sleep(100);
-            mecanum.SlideLeftRunToPosition(-.3, -8,this);
-            sleep(100);
-            mecanum.MoveForwardRunToPosition(.3,15,this);
-
+           mecanum.SlideRightRunToPosition(-.3,-8,this);
+            sleep(1000);
+            mecanum.LeftSide_Corrections(-.3,-450,this);
+            sleep(1000);
+            mecanum.MoveForwardRunToPosition(-.3,-10, this );
+            sleep(1000);
+            mecanum.LeftSide_Corrections(-.3,-450,this);
+            sleep(1000);
+            Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-600,-1,15);
+            sleep(500);
+            mecanum.MoveForwardRunToPosition(.3,14, this );
+            sleep(1000);
+            mecanum.LeftSide_Corrections(0.3,450,this);
+            sleep(1000);
+            Part.AndyMark_motor_Lift.setPower(.3);
+            sleep(1000);
+            mecanum.SlideLeftRunToPosition(-.3, -31,this);
+            mecanum.LeftSide_Corrections(0.3,900,this);
+           /* sleep(1000);
+            mecanum.LeftSide_Corrections(-.3,-450,this);
+            sleep(1000);
+            mecanum.MoveForwardRunToPosition(-.3,-15,this);
+            mecanum.LeftSide_Corrections(.3,450,this);
+            sleep(1000);
             mecanum.SlideRightRunToPosition(-.3,-6,this);
 
             mecanum.MoveForwardRunToPosition(.3, 6,this);
+
+            */
+
+
     }
 }

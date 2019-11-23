@@ -362,6 +362,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
     protected void Move_Motor_WithEncoder(DcMotor Motor, int TargetPos , double speed ,double timeout ) {
+       // Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Motor.setTargetPosition(TargetPos);
         Motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Motor.setPower(speed);
@@ -435,8 +436,8 @@ public class TeleOpSkystone extends LinearOpMode {
 
             }
             if (gamepad2.a) {
-                Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,500,.1,4);
-                Part.Rotating_servo.setPosition(1);
+                Part.AndyMark_motor.setPower(1);
+
 
             }
 

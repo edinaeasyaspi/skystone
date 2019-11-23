@@ -38,7 +38,10 @@ import org.openftc.easyopencv.OpenCvPipeline;
 public class SkyStoneAutaunomousRedDepo extends TeleOpSkystone
 {
     OpenCvCamera phoneCam;
-    Mecanum Mecanum;
+    Mecanum mecanum = new Mecanum(hardwareMap.dcMotor.get("LA"),
+            hardwareMap.dcMotor.get("RA"),
+            hardwareMap.dcMotor.get("LB"),
+            hardwareMap.dcMotor.get("RB"), telemetry);
     @Override
     public void runOpMode()
     {
