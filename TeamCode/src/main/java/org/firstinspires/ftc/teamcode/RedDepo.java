@@ -23,8 +23,6 @@ public class RedDepo extends  TeleOpSkystone {
         Reset_Arm_Slide();
         waitForStart();
 
-        mecanum.SlideRightRunToPosition(-.3,-5,this);
-
 
 
 

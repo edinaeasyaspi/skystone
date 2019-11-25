@@ -48,8 +48,7 @@ public class JuanBody extends LinearOpMode {
     public static final double DRIVE_GEAR_REDUCTION = 0.5;
     protected static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * Math.PI);
-
-    public double driveStarted;
+    public int driveStarted = 0;
     public double lastSpeed;
     protected static final double DRIVE_SPEED_PRECISE = 0.6;
     protected static final double TURN_SPEED_PRECISE = 0.4;

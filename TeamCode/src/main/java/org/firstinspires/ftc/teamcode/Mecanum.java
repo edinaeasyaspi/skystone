@@ -44,8 +44,8 @@ public class Mecanum extends TeleOpSkystone {
         Part.RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Part.RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        Part.LeftB.setDirection(DcMotorSimple.Direction.REVERSE);
-        Part.LeftA.setDirection(DcMotorSimple.Direction.REVERSE);
+        Part.RightB.setDirection(DcMotorSimple.Direction.REVERSE);
+        Part.RightA.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void SlideLeftRunWithEncoders(double power, int distance, LinearOpMode opMode) {
@@ -262,7 +262,22 @@ public class Mecanum extends TeleOpSkystone {
         Stop();
     }
 
+    public void RightSide_Corrections (double speed, int TargetPos, LinearOpMode opMode) {
 
+        Part.RightA.setTargetPosition(TargetPos);
+        Part.RightB.setTargetPosition(TargetPos);
+        StopResetEncodersAndRunToPosition();
+        Part.RightA.setPower(speed);
+        Part.RightB.setPower(speed);
+
+        int error = Math.abs((int)(TargetPos * 0.95));
+        int currentPosition =  Math.abs(Part.LeftB.getCurrentPosition());
+        while (Part.RightA.isBusy() && Part.RightB.isBusy()&& (currentPosition < error) && opMode.opModeIsActive()) {
+            currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
+            opMode.idle();
+        }
+        Stop();
+    }
     public void SlideRightRunToPosition(double power, int distance, LinearOpMode opMode) {
         // put the motors into run with encoders so they run with even power
         distance *= Part.COUNTS_PER_INCH;

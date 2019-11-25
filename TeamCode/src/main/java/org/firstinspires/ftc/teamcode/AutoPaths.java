@@ -7,52 +7,55 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class AutoPaths extends TeleOpSkystone  {
 
 
-
-    //BlueBuilder
-    protected void BlueBuilderD1() {
+        protected void BlueBuilderD1() {
 
 
-    }
+        }
 
-    protected void BlueBuilderD2() {
+        protected void BlueBuilderD2() {
 
-    }
+        }
 
-    protected void BlueBuilderD3() {
+        protected void BlueBuilderD3() {
 
-    }
+        }
 
-    protected void BlueBuilderD4() {
+        protected void BlueBuilderD4() {
 
-    }
+        }
 
-    protected void BlueBuilderD5() {
+        protected void BlueBuilderD5() {
 
 
-    }
-    protected void BlueBuilderD6() {
+        }
 
-    }
+        protected void BlueBuilderD6() {
 
-    //BlueDepo
-    public void BlueDepoD1 () {
+        }
 
-    }
-    public void BlueDepoD2 () {
+        public void BlueDepoD1() {
 
-    }
-    public void BlueDepoD3 () {
+        }
 
-    }
-    public void BlueDepoD$ () {
+        public void BlueDepoD2() {
 
-    }
-    public void BlueDepoD5 () {
+        }
 
-    }
-    public void BlueDepoD6 () {
+        public void BlueDepoD3() {
 
-    }
+        }
+
+        public void BlueDepoD$() {
+
+        }
+
+        public void BlueDepoD5() {
+
+        }
+
+        public void BlueDepoD6() {
+
+        }
 
     //RedBuilder
     public void RedBuilderD1 () {
