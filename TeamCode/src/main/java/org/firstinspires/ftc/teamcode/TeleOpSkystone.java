@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -155,7 +156,7 @@ public class TeleOpSkystone extends LinearOpMode {
     //retract arm
 
     public void Latch() {
-        Part.Latch.setPosition(.69);
+        Part.Latch.setPosition(.43);
     }
 
     public void UnLatch() {
@@ -342,6 +343,11 @@ public class TeleOpSkystone extends LinearOpMode {
         Part.Elbow_Check_Up.setMode(DigitalChannel.Mode.INPUT);
         Part.Elbow_check_Down.setMode(DigitalChannel.Mode.INPUT);
 
+        Part.LeftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.LeftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.RightA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.RightB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         Part.LeftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Part.LeftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Part.RightA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -352,12 +358,9 @@ public class TeleOpSkystone extends LinearOpMode {
         Part.LeftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Part.LeftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-
+        Part.AndyMark_motor_Lift.setDirection(DcMotor.Direction.REVERSE);
         Part.LeftA.setDirection(DcMotor.Direction.REVERSE);
         Part.LeftB.setDirection(DcMotor.Direction.REVERSE);
-
-
-        UnLatch();
 
 
     }
@@ -375,6 +378,7 @@ public class TeleOpSkystone extends LinearOpMode {
         while((Motor.isBusy())&& (currentPosition < error) && opMode.opModeIsActive() ) {
             telemetry.addData("Motor Postion", "Position at %7d", Motor.getCurrentPosition());
             currentPosition =   Math.abs(Motor.getCurrentPosition());
+            opMode.idle();
 
         }
         Motor.setPower(0);
@@ -382,24 +386,19 @@ public class TeleOpSkystone extends LinearOpMode {
         Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
-    public void ArmCrap (float ArmPow, float ElPow){
-        if ( (-ElPow > 0) && (Part.AndyMark_motor_Lift.getCurrentPosition() < MaxArmLimit  ) ){
-            n+=ArmSensitivity;
+    public void ArmCrap ( float ArmPow, double ElPow){
 
-        }
-
-        if ( (-ElPow < 0) && (Part.AndyMark_motor_Lift.getCurrentPosition() > 0) ){
-            n-= ArmSensitivity;
-
-        }
-        int TargetPos = n + 0;
-        Part.AndyMark_motor_Lift.setTargetPosition(TargetPos);
-        Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Part.AndyMark_motor_Lift.setPower(ElPow);
-
-        while( (Part.AndyMark_motor_Lift.isBusy() )){
-
-        }
+        ElPow*=1;
+       if (Part.AndyMark_motor_Lift.getCurrentPosition() > 520) {
+           if (gamepad2.right_stick_y < 0) {
+               Part.AndyMark_motor_Lift.setPower(0);
+           } else if (gamepad2.right_stick_y > 0) {
+               Part.AndyMark_motor_Lift.setPower(ElPow);
+           }
+       }
+       else {
+           Part.AndyMark_motor_Lift.setPower(ElPow);
+       }
     }
 
     @Override
@@ -459,8 +458,8 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
             }
-            if (Part.AndyMark_motor_Lift.getCurrentPosition() == 520 ) {
-                Part.AndyMark_motor_Lift.setPower(.1);
+            if (Part.AndyMark_motor_Lift.getCurrentPosition() > 520 ) {
+
 
             }
 

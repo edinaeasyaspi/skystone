@@ -22,6 +22,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.opencv.core.Core;
@@ -34,14 +35,13 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
 
+import static java.lang.Thread.sleep;
 
-public class SkyStoneAutaunomousRedDepo extends TeleOpSkystone
+
+public class Skystonelocator extends LinearOpMode
 {
-    OpenCvCamera phoneCam;
-    Mecanum mecanum = new Mecanum(hardwareMap.dcMotor.get("LA"),
-            hardwareMap.dcMotor.get("RA"),
-            hardwareMap.dcMotor.get("LB"),
-            hardwareMap.dcMotor.get("RB"), telemetry);
+    protected OpenCvCamera phoneCam;
+
     @Override
     public void runOpMode()
     {
@@ -88,16 +88,10 @@ public class SkyStoneAutaunomousRedDepo extends TeleOpSkystone
         /*
          * Wait for the user to press start on the Driver Station
          */
-        Init_Juan();
 
-        Reset_Arm();
-
-        Reset_Arm_Slide();
 
         waitForStart();
 
-        while (opModeIsActive())
-        {
             /*
              * Send some stats to the telemetry
              */
@@ -286,26 +280,28 @@ public class SkyStoneAutaunomousRedDepo extends TeleOpSkystone
                 s1 = RED;
             }
             //SkyStoneAutonomous
-            sleep(1000);
-            switch (location) {
-            case left:
-                encoderDrive(1,1,1,10);
 
-                encoderDrive(1,1,1,10);
+            if (s0 == RED){
 
-            case middle:
-                encoderDrive(1,1,1,10);
-                encoderDrive(1,1,1,10);
-            case right:
-                encoderDrive(1,1,1,10);
-                encoderDrive(1,1,1,10);
-        }
+            }else if (s2 == RED){
 
+            }else{
+
+            }
 
             Imgproc.line(frame, new Point(0, 275), new Point(300, 275), new Scalar(0, 255, 0));
             Imgproc.circle(frame, new Point(cx0, cy0), r, s0, Core.FILLED);
             Imgproc.circle(frame, new Point(cx1, cy1), r, s1, Core.FILLED);
             Imgproc.circle(frame, new Point(cx2, cy2), r, s2, Core.FILLED);
+
+            switch (location) {
+            case left:
+
+            case middle:
+
+            case right:
+
+        }
 
             /**
              * NOTE: to see how to get data from your pipeline to your OpMode as well as how
@@ -316,4 +312,4 @@ public class SkyStoneAutaunomousRedDepo extends TeleOpSkystone
             return frame;
         }
     }
-}
+
