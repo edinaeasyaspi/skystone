@@ -28,7 +28,8 @@ public class JuanBody extends LinearOpMode {
     //end effector
     protected Servo Rotating_servo;
     protected Servo Latch;
-
+    protected Servo FoundationLatchL;
+    protected Servo FoundationLactchR;
 
     // reed switch
     public DigitalChannel ARM_SLID_CHECK_Front;

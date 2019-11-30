@@ -332,6 +332,8 @@ public class TeleOpSkystone extends LinearOpMode {
         Part.Tetrix_ARMSLIDE_Motor = hardwareMap.get(DcMotor.class, "AS");
         Part.Rotating_servo = hardwareMap.get(Servo.class, "RS");
         Part.Latch = hardwareMap.get(Servo.class, "L");
+        Part.FoundationLactchR = hardwareMap.get(Servo.class,"FLR");
+        Part.FoundationLatchL= hardwareMap.get(Servo.class,"FLL");
 //Arm reed switches
         Part.ARM_SLID_CHECK_Front = hardwareMap.get(DigitalChannel.class, "ASC-F");
         Part.ARM_SLID_CHECK_Back = hardwareMap.get(DigitalChannel.class, "ASC-B");
@@ -365,6 +367,15 @@ public class TeleOpSkystone extends LinearOpMode {
 
     }
 
+
+    public void LatchFoundation () {
+        Part.FoundationLatchL.setPosition(.5);
+        Part.FoundationLactchR.setPosition(.5);
+    }
+    public void UnLatchFoundation () {
+        Part.FoundationLatchL.setPosition(0);
+        Part.FoundationLactchR.setPosition(0);
+    }
 
     protected void Move_Motor_WithEncoder(DcMotor Motor, int distance , double speed, LinearOpMode opMode  ) {
        // Motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
