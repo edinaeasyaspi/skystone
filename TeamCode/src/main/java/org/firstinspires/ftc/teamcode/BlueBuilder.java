@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class RedBuilder extends TeleOpSkystone {
+public class BlueBuilder extends TeleOpSkystone {
 
     String Park;
     public enum RedBuildStates {

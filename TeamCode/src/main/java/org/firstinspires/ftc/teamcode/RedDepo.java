@@ -11,7 +11,8 @@ public class RedDepo extends TeleOpSkystone {
     String Park;
     protected OpenCvCamera phoneCam;
     String DrivetoSkystone;
-    Mecanum mecanum = new Mecanum(Part.LeftA = hardwareMap.get(DcMotor.class, "LA"),
+    Mecanum mecanum = new Mecanum(
+            Part.LeftA = hardwareMap.get(DcMotor.class, "LA"),
             Part.LeftB = hardwareMap.get(DcMotor.class, "LB"),
             Part.RightA = hardwareMap.get(DcMotor.class, "RA"),
             Part.RightB = hardwareMap.get(DcMotor.class, "RB"), telemetry);
@@ -21,6 +22,10 @@ public class RedDepo extends TeleOpSkystone {
 
     }
     public void Drive_1st_skystone () {
+        mecanum.SlideLeftRunToPosition(.3,8,this);
+        mecanum.MoveForwardRunToPosition(.3,5,this);
+        Latch();
+        mecanum.MoveBackwardsRunToPosition(.3,10,this);
 
 
 
@@ -34,6 +39,9 @@ public class RedDepo extends TeleOpSkystone {
     public void Drive_3st_skystone () {
         mecanum.SlideRightRunToPosition(.3,8,this);
         mecanum.MoveForwardRunToPosition(.3,5,this);
+        Latch();
+        mecanum.MoveBackwardsRunToPosition(.3,10,this);
+        mecanum.SlideLeftRunToPosition(.3,8,this);
 
 
 
@@ -81,7 +89,7 @@ public class RedDepo extends TeleOpSkystone {
         while (!opModeIsActive()){
 
             telemetry.addData("Park Location %7d", Park);
-
+            telemetry.addData("Skystone location : %7d",DrivetoSkystone);
 
             if (gamepad1.dpad_left){
                 Park = "Outer";
@@ -101,7 +109,7 @@ public class RedDepo extends TeleOpSkystone {
                 DrivetoSkystone = "Right";
             }
 
-
+            telemetry.update();
 
         }
         waitForStart();
