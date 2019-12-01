@@ -177,8 +177,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
     }
     protected  void encoderDrive(double speed,
-                                 double leftInches, double rightInches,
-                                 double timeoutS) {
+                                 double leftInches, double rightInches) {
         int newLeftBTarget;
         int newLeftATarget;
         int  newRightATarget;
@@ -217,7 +216,7 @@ public class TeleOpSkystone extends LinearOpMode {
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
-                    (Part.runtime.seconds() < timeoutS) &&
+                    ( (newLeftATarget > Part.LeftA.getCurrentPosition()) && (newRightATarget > Part.RightA.getCurrentPosition()) ) &&
                     (Part.LeftA.isBusy() && Part.LeftB.isBusy() && Part.RightA.isBusy() && Part.RightB.isBusy())) {
 
                 // Display it for the driver.
@@ -363,14 +362,18 @@ public class TeleOpSkystone extends LinearOpMode {
         Part.AndyMark_motor_Lift.setDirection(DcMotor.Direction.REVERSE);
         Part.LeftA.setDirection(DcMotor.Direction.REVERSE);
         Part.LeftB.setDirection(DcMotor.Direction.REVERSE);
-
+        UnLatchFoundation();
 
     }
-
+    public void Reverse_wheels () {
+        Part.LeftA.setDirection(DcMotorSimple.Direction.REVERSE);
+        Part.LeftB.setDirection(DcMotorSimple.Direction.REVERSE);
+        Part.RightA.setDirection(DcMotorSimple.Direction.REVERSE);
+    }
 
     public void LatchFoundation () {
-        Part.FoundationLatchL.setPosition(.5);
-        Part.FoundationLactchR.setPosition(.3);
+        Part.FoundationLatchL.setPosition(.2);
+        Part.FoundationLactchR.setPosition(.5);
     }
     public void UnLatchFoundation () {
         Part.FoundationLatchL.setPosition(1);
@@ -469,11 +472,14 @@ public class TeleOpSkystone extends LinearOpMode {
 
 
             }
-            if (Part.AndyMark_motor_Lift.getCurrentPosition() > 520 ) {
+            if (gamepad1.right_bumper ) {
+                LatchFoundation();
 
 
             }
-
+            if (gamepad1.left_bumper){
+                UnLatchFoundation();
+            }
 
 
 
