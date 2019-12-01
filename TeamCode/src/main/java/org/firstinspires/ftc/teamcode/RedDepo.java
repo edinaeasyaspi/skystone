@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
-@Autonomous(name = "Blue Depo", group = "EAP")
-public class BlueDepo extends TeleOpSkystone {
+@Autonomous(name = "Red Depo", group = "EAP")
+public class RedDepo extends TeleOpSkystone {
     String Park;
     protected OpenCvCamera phoneCam;
     String DrivetoSkystone;
@@ -26,11 +26,14 @@ public class BlueDepo extends TeleOpSkystone {
 
     }
     public void Drive_2st_skystone () {
-
+        mecanum.MoveForwardRunToPosition(.3,5,this);
+        Latch();
 
 
     }
     public void Drive_3st_skystone () {
+        mecanum.SlideRightRunToPosition(.3,8,this);
+        mecanum.MoveForwardRunToPosition(.3,5,this);
 
 
 
@@ -102,15 +105,19 @@ public class BlueDepo extends TeleOpSkystone {
 
         }
         waitForStart();
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,800,.3,this);
+        mecanum.MoveForwardRunToPosition(.3,25,this);
 
         switch(DrivetoSkystone){
             case "Left":
                 Drive_1st_skystone();
-
+                break;
             case "Middle":
                 Drive_2st_skystone();
+                break;
             case "Right":
                 Drive_3st_skystone();
+                break;
         }
 
 

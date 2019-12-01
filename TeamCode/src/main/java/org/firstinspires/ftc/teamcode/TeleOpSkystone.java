@@ -370,10 +370,10 @@ public class TeleOpSkystone extends LinearOpMode {
 
     public void LatchFoundation () {
         Part.FoundationLatchL.setPosition(.5);
-        Part.FoundationLactchR.setPosition(.5);
+        Part.FoundationLactchR.setPosition(.3);
     }
     public void UnLatchFoundation () {
-        Part.FoundationLatchL.setPosition(0);
+        Part.FoundationLatchL.setPosition(1);
         Part.FoundationLactchR.setPosition(0);
     }
 
