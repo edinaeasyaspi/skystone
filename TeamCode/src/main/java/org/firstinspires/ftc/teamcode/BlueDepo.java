@@ -12,6 +12,9 @@ public class BlueDepo extends TeleOpSkystone {
     protected OpenCvCamera phoneCam;
     String DrivetoSkystone;
 
+    public void Sleep () {
+        sleep(500);
+    }
     public void runOpMode() {
         Init_Juan();
         Reset_Arm();
@@ -74,9 +77,11 @@ public class BlueDepo extends TeleOpSkystone {
 
 
         //D1
+            Sleep();
             Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,800,.3,this);
+            Sleep();
             mecanum.MoveForwardRunToPosition(.3,25,this);
-
+        Sleep();
 
             switch(DrivetoSkystone){
                 case "Left":
@@ -93,28 +98,40 @@ public class BlueDepo extends TeleOpSkystone {
                     break;
                 case "Right":
                     mecanum.SlideRightRunToPosition(.3,8,this);
+                    Sleep();
                     mecanum.MoveForwardRunToPosition(.3,5,this);
+                    Sleep();
                     Latch();
+                    Sleep();
                     mecanum.MoveBackwardsRunToPosition(.3,10,this);
+                    Sleep();
                     mecanum.SlideLeftRunToPosition(.3,8,this);
 
                     break;
             }
             //D2
+        Sleep();
             mecanum.MoveBackwardsRunToPosition(.3,8,this);
 
             //D3
+        Sleep();
             encoderDrive(.3,2,6);
+        Sleep();
             mecanum.MoveForwardRunToPosition(.3,22,this);
+        Sleep();
             UnLatch();
 
             //D4
+        Sleep();
             mecanum.MoveBackwardsRunToPosition(.3,22,this);
+        Sleep();
             encoderDrive(.3,6,2);
+        Sleep();
             mecanum.MoveForwardRunToPosition(.3,8,this);
             switch(DrivetoSkystone){
                 case "Left":
                     mecanum.SlideLeftRunToPosition(.3,8,this);
+                    Sleep();
                     mecanum.MoveForwardRunToPosition(.3,5,this);
                     Latch();
                     mecanum.MoveBackwardsRunToPosition(.3,10,this);

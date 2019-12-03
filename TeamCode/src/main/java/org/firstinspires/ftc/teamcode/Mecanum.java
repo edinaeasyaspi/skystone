@@ -401,9 +401,9 @@ public class Mecanum extends TeleOpSkystone {
     }
 
     public void Move(double fl, double fr, double bl, double br) {
-        Part.LeftA.setPower(fl*1.3);
-        Part.RightA.setPower(fr);
-        Part.LeftB.setPower(bl*1.3);
+        Part.LeftA.setPower(-fl);
+        Part.LeftB.setPower(-bl);
+        Part.RightA.setPower(-fr);
         Part.RightB.setPower(br);
     }
 
@@ -593,9 +593,9 @@ public class Mecanum extends TeleOpSkystone {
     // moving forward.
     //
     private void SetDistance(int lf, int lb, int rf, int rb) {
-        Part.LeftA.setTargetPosition(lf);
-        Part.RightA.setTargetPosition(rf);
-        Part.LeftB.setTargetPosition(lb);
+        Part.LeftA.setTargetPosition(-lf);
+        Part.LeftB.setTargetPosition(-lb);
+        Part.RightA.setTargetPosition(-rf);
         Part.RightB.setTargetPosition(rb);
     }
 }

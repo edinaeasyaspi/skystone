@@ -359,15 +359,15 @@ public class TeleOpSkystone extends LinearOpMode {
         Part.LeftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Part.LeftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        Part.AndyMark_motor_Lift.setDirection(DcMotor.Direction.REVERSE);
         Part.LeftA.setDirection(DcMotor.Direction.REVERSE);
         Part.LeftB.setDirection(DcMotor.Direction.REVERSE);
+        Part.AndyMark_motor_Lift.setDirection(DcMotor.Direction.REVERSE);
         UnLatchFoundation();
 
     }
     public void Reverse_wheels () {
-        Part.LeftA.setDirection(DcMotorSimple.Direction.REVERSE);
-        Part.LeftB.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        Part.LeftB.setDirection(DcMotorSimple.Direction.FORWARD);
         Part.RightA.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 

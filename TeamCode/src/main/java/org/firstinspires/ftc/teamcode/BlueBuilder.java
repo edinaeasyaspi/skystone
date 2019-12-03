@@ -7,7 +7,9 @@ public class BlueBuilder extends TeleOpSkystone {
 
     String Park = "Inner" ;
 
-
+    public void Sleep () {
+        sleep(1000);
+    }
 
     public void runOpMode() throws InterruptedException {
         Init_Juan();
@@ -17,7 +19,7 @@ public class BlueBuilder extends TeleOpSkystone {
                 Part.RightB = hardwareMap.get(DcMotor.class, "RB"), telemetry);
 
         Reset_Arm_Slide();
-        Reverse_wheels();
+
         Reset_Arm();
         while (!opModeIsActive()) {
             teleme1try.addData("Park Location",Park);
@@ -38,35 +40,36 @@ public class BlueBuilder extends TeleOpSkystone {
 
         mecanum.MoveBackwardsRunToPosition(.3,35,this);
 
-
+        Sleep();
 
 
         LatchFoundation();
-
+        Sleep();
         mecanum.MoveForwardRunToPosition(.3,5,this);
 
-
+        Sleep();
 
 
 
         UnLatchFoundation();
-
+        Sleep();
         mecanum.SlideLeftRunToPosition(.3,16,this);
 
-
+        Sleep();
 
         mecanum.MoveBackwardsRunToPosition(.3,36,this);
+        Sleep();
         mecanum.SlideRightRunToPosition(.3,16,this);
 
-
+        Sleep();
 
         mecanum.MoveForwardRunToPosition(.3,8,this);
 
 
-
+        Sleep();
         mecanum.SlideLeftRunToPosition(.3,14,this);
 
-
+        Sleep();
         switch (Park){
             case "Inner":
                 mecanum.MoveForwardRunToPosition(.3,22,this);
