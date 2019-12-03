@@ -115,7 +115,7 @@ public class BlueDepo extends TeleOpSkystone {
 
             //D3
         Sleep();
-            encoderDrive(.3,2,6);
+            mecanum.TurnLeftRunToPosition(.3,15,this);
         Sleep();
             mecanum.MoveForwardRunToPosition(.3,22,this);
         Sleep();

@@ -21,9 +21,9 @@ public class Test_Encoders extends TeleOpSkystone {
                 Part.RightA = hardwareMap.get(DcMotor.class, "RA"),
                 Part.RightB = hardwareMap.get(DcMotor.class, "RB"), telemetry);
 
-
-        mecanum.MoveForwardRunToPosition(.3,44,this);
-        mecanum.SlideLeftRunToPosition(.3,44,this);
+        mecanum.TurnRightRunToPosition(.3,30,this);
+        // mecanum.MoveForwardRunToPosition(.3,44,this);
+        //mecanum.SlideLeftRunToPosition(.3,44,this);
         // Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,200,.3,this);
         //Move_Motor_WithEncoder(Part.AndyMark_motor,200,.3,this);\
         //Move_Motor_WithEncoder(Part.Tetrix_ARMSLIDE_Motor,200,.3,this);

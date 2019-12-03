@@ -210,7 +210,7 @@ public class Mecanum extends TeleOpSkystone {
     public void TurnRightRunToPosition(double power, int distance, LinearOpMode opMode) {
         // run with simple distance encoders as moving forward or backwards
         distance *=Part.COUNTS_PER_INCH;
-        SetDistance(distance, distance, -distance, -distance);
+        SetDistance(-distance, -distance, distance, -distance);
 
         StopResetEncodersAndRunToPosition();
 
@@ -229,7 +229,9 @@ public class Mecanum extends TeleOpSkystone {
 
     public void TurnLeftRunToPosition(double power, int distance, LinearOpMode opMode) {
         // run with simple distance encoders as moving forward or backwards
-        SetDistance(-distance, -distance, distance, distance);
+        distance *= Part.COUNTS_PER_INCH;
+
+        SetDistance(distance, distance, -distance, distance);
         StopResetEncodersAndRunToPosition();
 
         int error = Math.abs((int)(distance * 0.95));

@@ -2,8 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
-@Autonomous(name = "Blue Builder",group = "EAP")
-public class BlueBuilder extends TeleOpSkystone {
+
+@Autonomous(name = "Red Builder",group = "EAP")
+public class RedBuilder extends TeleOpSkystone {
 
     String Park = "Inner" ;
 
@@ -39,7 +40,7 @@ public class BlueBuilder extends TeleOpSkystone {
 
 
 
-        mecanum.MoveBackwardsRunToPosition(.3,30,this);
+        mecanum.MoveBackwardsRunToPosition(.3,25,this);
 
         Sleep();
 
@@ -50,7 +51,8 @@ public class BlueBuilder extends TeleOpSkystone {
 
         Sleep();
 
-        mecanum.TurnRightRunToPosition(.3,16,this);
+        mecanum.TurnLeftRunToPosition(.3,20,this);
+        mecanum.RightSide_Corrections(.3,400,this);
 
         UnLatchFoundation();
         Sleep();
@@ -58,14 +60,16 @@ public class BlueBuilder extends TeleOpSkystone {
         Sleep();
         switch (Park){
             case "Inner":
-                mecanum.SlideRightRunToPosition(.3,10,this);
+                mecanum.SlideLeftRunToPosition(.3,20,this);
                 Sleep();
-                mecanum.MoveForwardRunToPosition(.3,5,this);
+                mecanum.LeftSide_Corrections(.3,20,this);
+                Sleep();
+                mecanum.MoveForwardRunToPosition(.3,10,this);
                 break;
             case "Outer":
-                mecanum.SlideLeftRunToPosition(.3,10,this);
+                mecanum.SlideRightRunToPosition(.3,10,this);
                 Sleep();
-                mecanum.SlideLeftRunToPosition(.3,7,this);
+                mecanum.MoveForwardRunToPosition(.3,7,this);
                     break;
 
 
