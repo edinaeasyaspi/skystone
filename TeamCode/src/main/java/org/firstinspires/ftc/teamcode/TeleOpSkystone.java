@@ -372,12 +372,12 @@ public class TeleOpSkystone extends LinearOpMode {
     }
 
     public void LatchFoundation () {
-        Part.FoundationLatchL.setPosition(.2);
-        Part.FoundationLactchR.setPosition(.5);
+        Part.FoundationLatchL.setPosition(.8);
+        Part.FoundationLactchR.setPosition(.7);
     }
     public void UnLatchFoundation () {
-        Part.FoundationLatchL.setPosition(1);
-        Part.FoundationLactchR.setPosition(0);
+        Part.FoundationLatchL.setPosition(0);
+        Part.FoundationLactchR.setPosition(1);
     }
 
     protected void Move_Motor_WithEncoder(DcMotor Motor, int distance , double speed, LinearOpMode opMode  ) {

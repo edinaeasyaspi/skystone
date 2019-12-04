@@ -96,6 +96,7 @@ public class BlueDepo extends TeleOpSkystone {
                 case "Middle":
                     mecanum.MoveForwardRunToPosition(.3,5,this);
                     Latch();
+
                     break;
                 case "Right":
                     mecanum.SlideRightRunToPosition(.3,8,this);

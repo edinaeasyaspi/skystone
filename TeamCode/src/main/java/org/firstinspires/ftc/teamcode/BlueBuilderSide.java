@@ -40,24 +40,28 @@ public class BlueBuilderSide extends TeleOpSkystone {
 
 
 
-        mecanum.MoveBackwardsRunToPosition(.3,25,this);
+        mecanum.SlideRightRunToPosition(.3,5,this);
+        mecanum.MoveBackwardsRunToPosition(.3,23,this);
 
         Sleep();
 
 
         LatchFoundation();
         Sleep();
-        mecanum.MoveForwardRunToPosition(.3,18,this);
+        mecanum.MoveForwardRunToPosition(.3,25,this);
 
         Sleep();
-
-        mecanum.TurnLeftRunToPosition(.3,20,this);
-        mecanum.RightSide_Corrections(.3,400,this);
-
         UnLatchFoundation();
         Sleep();
-        mecanum.MoveForwardRunToPosition(.3,20,this);
+        mecanum.SlideLeftRunToPosition(.3,18,this);
         Sleep();
+        mecanum.MoveBackwardsRunToPosition(.3,18,this);
+        Sleep();
+        mecanum.SlideRightRunToPosition(.3,7,this);
+        Sleep();
+        mecanum.SlideLeftRunToPosition(.3,10,this);
+        Sleep();
+        mecanum.TurnLeftRunToPosition(.3,15,this);
         switch (Park){
             case "Inner":
                 mecanum.SlideLeftRunToPosition(.3,20,this);

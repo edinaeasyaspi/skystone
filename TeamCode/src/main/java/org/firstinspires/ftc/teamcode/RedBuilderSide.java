@@ -23,7 +23,7 @@ public class RedBuilderSide extends TeleOpSkystone {
         Reset_Arm();
 
         while (!opModeIsActive()) {
-            teleme1try.addData("Park Location : %7d",Park);
+            teleme1try.addData("Park Location : %7d", Park);
 
             if (gamepad1.dpad_right){
                 Park = "Outer";
@@ -40,24 +40,28 @@ public class RedBuilderSide extends TeleOpSkystone {
 
 
 
-
-        mecanum.MoveBackwardsRunToPosition(.3,30,this);
+        mecanum.SlideLeftRunToPosition(.3,5,this);
+        mecanum.MoveBackwardsRunToPosition(.3,23,this);
 
         Sleep();
 
 
         LatchFoundation();
         Sleep();
-        mecanum.MoveForwardRunToPosition(.3,18,this);
+        mecanum.MoveForwardRunToPosition(.3,25,this);
 
         Sleep();
-
-        mecanum.TurnRightRunToPosition(.3,16,this);
-
         UnLatchFoundation();
         Sleep();
-        mecanum.MoveForwardRunToPosition(.3,20,this);
+        mecanum.SlideRightRunToPosition(.3,18,this);
         Sleep();
+        mecanum.MoveBackwardsRunToPosition(.3,18,this);
+        Sleep();
+        mecanum.SlideLeftRunToPosition(.3,7,this);
+        Sleep();
+        mecanum.SlideRightRunToPosition(.3,12,this);
+        Sleep();
+        mecanum.TurnRightRunToPosition(.3,15,this);
         switch (Park){
             case "Inner":
                 mecanum.SlideRightRunToPosition(.3,10,this);
