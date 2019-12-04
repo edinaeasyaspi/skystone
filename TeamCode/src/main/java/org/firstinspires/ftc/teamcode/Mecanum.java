@@ -327,7 +327,7 @@ public class Mecanum extends TeleOpSkystone {
 
         int error = Math.abs((int)(distance * 0.95));
         int currentPosition =  Math.abs(Part.LeftA.getCurrentPosition());
-        Move(power, 0, 0, power);
+        Move(-power, 0, 0, power);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
         while (Part.LeftA.isBusy() && Part.RightA.isBusy() && Part.LeftB.isBusy() && Part.RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {
@@ -346,7 +346,7 @@ public class Mecanum extends TeleOpSkystone {
 
         int error = Math.abs((int)(distance * 0.95));
         int currentPosition =  Math.abs(Part.RightA.getCurrentPosition());
-        Move(0, power, power, 0);
+        Move(0, -power, -power, 0);
 
         // keep moving until we get close and the op mode is active.  close is 95% of what we want to get to
         while (Part.LeftA.isBusy() && Part.RightA.isBusy() && Part.LeftB.isBusy() && Part.RightB.isBusy() && (currentPosition < error) && opMode.opModeIsActive()) {

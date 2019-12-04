@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
-@Autonomous(name = "Blue Builder",group = "EAP")
-public class BlueBuilder extends TeleOpSkystone {
+@Autonomous(name = "Red Builder",group = "EAP")
+public class RedBuilderSide extends TeleOpSkystone {
 
     String Park = "Inner" ;
 
@@ -21,6 +21,7 @@ public class BlueBuilder extends TeleOpSkystone {
         Reset_Arm_Slide();
 
         Reset_Arm();
+
         while (!opModeIsActive()) {
             teleme1try.addData("Park Location : %7d",Park);
 
@@ -33,6 +34,7 @@ public class BlueBuilder extends TeleOpSkystone {
 
             telemetry.update();
         }
+
 
         waitForStart();
 

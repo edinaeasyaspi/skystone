@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name = "Red Builder",group = "EAP")
-public class RedBuilder extends TeleOpSkystone {
+public class BlueBuilderSide extends TeleOpSkystone {
 
     String Park = "Inner" ;
 
