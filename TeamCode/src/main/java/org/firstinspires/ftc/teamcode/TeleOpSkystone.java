@@ -24,9 +24,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @TeleOp(name = "Zoom Zoom Time", group = "EAP")
 public class TeleOpSkystone extends LinearOpMode {
-    int ArmSensitivity = 30;
+    int ArmSensitivity = 2;
     int n ;
     int MaxArmLimit = 520 ;
+    int _90Degree_turn = 14 ;
+    int _180Degree_turn= 28 ;
+    int Armheight = 0;
     Telemetry teleme1try = new Telemetry() {
         @Override
         public Item addData(String caption, String format, Object... args) {
@@ -363,6 +366,7 @@ public class TeleOpSkystone extends LinearOpMode {
         Part.LeftB.setDirection(DcMotor.Direction.REVERSE);
         Part.AndyMark_motor_Lift.setDirection(DcMotor.Direction.REVERSE);
         UnLatchFoundation();
+        UnLatch();
 
     }
     public void Reverse_wheels () {
@@ -372,12 +376,12 @@ public class TeleOpSkystone extends LinearOpMode {
     }
 
     public void LatchFoundation () {
-        Part.FoundationLatchL.setPosition(.8);
-        Part.FoundationLactchR.setPosition(.7);
+        Part.FoundationLatchL.setPosition(1);
+        Part.FoundationLactchR.setPosition(0);
     }
     public void UnLatchFoundation () {
-        Part.FoundationLatchL.setPosition(0);
-        Part.FoundationLactchR.setPosition(1);
+        Part.FoundationLatchL.setPosition(.4);
+        Part.FoundationLactchR.setPosition(.6);
     }
 
     protected void Move_Motor_WithEncoder(DcMotor Motor, int distance , double speed, LinearOpMode opMode  ) {
@@ -400,20 +404,15 @@ public class TeleOpSkystone extends LinearOpMode {
         Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
-    public void ArmCrap ( float ArmPow, double ElPow){
+    public void ArmCrap ( float ArmPower) {
+        ArmPower *= .3;
 
-        ElPow*=1;
-       if (Part.AndyMark_motor_Lift.getCurrentPosition() > 520) {
-           if (gamepad2.right_stick_y < 0) {
-               Part.AndyMark_motor_Lift.setPower(0);
-           } else if (gamepad2.right_stick_y > 0) {
-               Part.AndyMark_motor_Lift.setPower(ElPow);
-           }
-       }
-       else {
-           Part.AndyMark_motor_Lift.setPower(ElPow);
-       }
-    }
+            Part.AndyMark_motor_Lift.setPower(ArmPower);
+
+
+
+        }
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -432,7 +431,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
 //Drive chain
         while (opModeIsActive()) {
-
+            telemetry.addData("Arm at",Part.AndyMark_motor_Lift.getCurrentPosition());
 
             if (!gamepad1.a) {
                 Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
@@ -441,7 +440,7 @@ public class TeleOpSkystone extends LinearOpMode {
                 Drive(gamepad1.left_stick_x * 0.5, gamepad1.left_stick_y * 0.5, gamepad1.right_stick_x * 0.5);
             }
 
-            ArmCrap(gamepad2.left_stick_y,gamepad2.right_stick_y);
+            ArmCrap(gamepad2.right_stick_y);
 
             //Arm Elbow
 //hell
@@ -468,9 +467,12 @@ public class TeleOpSkystone extends LinearOpMode {
 
             }
             if (gamepad2.a) {
-                Part.AndyMark_motor.setPower(1);
+                Armheight++;
 
 
+            }
+            if (gamepad2.b){
+                Armheight = 1;
             }
             if (gamepad1.right_bumper ) {
                 LatchFoundation();
@@ -481,7 +483,7 @@ public class TeleOpSkystone extends LinearOpMode {
                 UnLatchFoundation();
             }
 
-
+            telemetry.update();
 
             idle();
         }

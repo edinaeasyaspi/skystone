@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name = "Red Builder",group = "EAP")
+@Autonomous(name = "Blue Builder",group = "EAP")
 public class BlueBuilderSide extends TeleOpSkystone {
 
-    String Park = "Inner" ;
+    String Park = "Outer" ;
 
     public void Sleep () {
         sleep(1000);
@@ -41,7 +41,7 @@ public class BlueBuilderSide extends TeleOpSkystone {
 
 
         mecanum.SlideRightRunToPosition(.3,5,this);
-        mecanum.MoveBackwardsRunToPosition(.3,23,this);
+        mecanum.MoveBackwardsRunToPosition(.3,24,this);
 
         Sleep();
 
@@ -53,27 +53,27 @@ public class BlueBuilderSide extends TeleOpSkystone {
         Sleep();
         UnLatchFoundation();
         Sleep();
-        mecanum.SlideLeftRunToPosition(.3,18,this);
+        mecanum.SlideLeftRunToPosition(.3,23,this);
         Sleep();
-        mecanum.MoveBackwardsRunToPosition(.3,18,this);
+        mecanum.MoveBackwardsRunToPosition(.3,13,this);
         Sleep();
-        mecanum.SlideRightRunToPosition(.3,7,this);
+        mecanum.SlideRightRunToPosition(.3,14,this);
         Sleep();
-        mecanum.SlideLeftRunToPosition(.3,10,this);
+        mecanum.SlideLeftRunToPosition(.3,14,this);
         Sleep();
-        mecanum.TurnLeftRunToPosition(.3,15,this);
+        mecanum.MoveBackwardsRunToPosition(.3,5,this);
+        Sleep();
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1758,.3,this);
+        Sleep();
+        mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
         switch (Park){
             case "Inner":
-                mecanum.SlideLeftRunToPosition(.3,20,this);
-                Sleep();
-                mecanum.LeftSide_Corrections(.3,20,this);
-                Sleep();
                 mecanum.MoveForwardRunToPosition(.3,10,this);
                 break;
             case "Outer":
-                mecanum.SlideRightRunToPosition(.3,10,this);
+                mecanum.SlideRightRunToPosition(.3,25,this);
                 Sleep();
-                mecanum.MoveForwardRunToPosition(.3,7,this);
+                mecanum.MoveForwardRunToPosition(.3,5,this);
                     break;
 
 

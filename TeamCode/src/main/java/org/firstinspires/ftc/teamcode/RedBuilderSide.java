@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name = "Red Builder",group = "EAP")
 public class RedBuilderSide extends TeleOpSkystone {
 
-    String Park = "Inner" ;
+    String Park = "Outer" ;
 
     public void Sleep () {
         sleep(1000);
@@ -53,25 +53,32 @@ public class RedBuilderSide extends TeleOpSkystone {
         Sleep();
         UnLatchFoundation();
         Sleep();
-        mecanum.SlideRightRunToPosition(.3,18,this);
+        mecanum.SlideRightRunToPosition(.3,23,this);
         Sleep();
-        mecanum.MoveBackwardsRunToPosition(.3,18,this);
+        mecanum.MoveBackwardsRunToPosition(.3,13,this);
         Sleep();
-        mecanum.SlideLeftRunToPosition(.3,7,this);
+        mecanum.SlideLeftRunToPosition(.3,14,this);
         Sleep();
-        mecanum.SlideRightRunToPosition(.3,12,this);
+        mecanum.SlideRightRunToPosition(.3,14,this);
         Sleep();
-        mecanum.TurnRightRunToPosition(.3,15,this);
+
+        mecanum.MoveBackwardsRunToPosition(.3,5,this);
+        Sleep();
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1758,.3,this);
+
+        Sleep();
+        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
         switch (Park){
             case "Inner":
-                mecanum.SlideRightRunToPosition(.3,10,this);
+
                 Sleep();
-                mecanum.MoveForwardRunToPosition(.3,5,this);
+                mecanum.MoveForwardRunToPosition(.3,10,this);
                 break;
             case "Outer":
-                mecanum.SlideLeftRunToPosition(.3,10,this);
+                mecanum.SlideLeftRunToPosition(.3,25,this);
                 Sleep();
-                mecanum.SlideLeftRunToPosition(.3,7,this);
+                mecanum.MoveForwardRunToPosition(.3,5,this);
+                Sleep();
                     break;
 
 

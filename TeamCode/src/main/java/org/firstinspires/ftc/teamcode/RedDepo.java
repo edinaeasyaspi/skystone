@@ -12,62 +12,87 @@ public class RedDepo extends TeleOpSkystone {
     String Park;
     protected OpenCvCamera phoneCam;
     String DrivetoSkystone;
-    Mecanum mecanum = new Mecanum(
-            Part.LeftA = hardwareMap.get(DcMotor.class, "LA"),
-            Part.LeftB = hardwareMap.get(DcMotor.class, "LB"),
-            Part.RightA = hardwareMap.get(DcMotor.class, "RA"),
-            Part.RightB = hardwareMap.get(DcMotor.class, "RB"), telemetry);
+    Mecanum mecanum;
+
+    public void Sleep () {
+        sleep(500);
+    }
     private enum Automous_states {
         DRIVED_TO_SKYSTONE,PICKUP,DRIVED_UNDER_BRIGE,DROPED,DRIVED_TO_SECOND_SKYSTONE,PICKUP2,DRIVED_UNDER_BRIGE2,DROPED2
 
 
     }
     private void Drive_1st_skystone () {
-        mecanum.SlideRightRunToPosition(.3,8,this);
-        mecanum.MoveForwardRunToPosition(.3,5,this);
+        mecanum.SlideLeftRunToPosition(.3,5,this);
+        Sleep();
+        mecanum.RightSide_Corrections(3,2,this);
+        Sleep();
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1650,.3,this);
+        Sleep();
+        mecanum.MoveForwardRunToPosition(.3,15,this);
+        Sleep();
         Latch();
-        mecanum.MoveBackwardsRunToPosition(.3,10,this);
-
+        Sleep();
+        mecanum.MoveBackwardsRunToPosition(.3,15,this);
+        mecanum.SlideRightRunToPosition(.3,5,this);
 
 
     }
     private void Drive_2st_skystone () {
-        mecanum.MoveForwardRunToPosition(.3,5,this);
+        mecanum.SlideLeftRunToPosition(.3,10,this);
+        Sleep();
+        mecanum.RightSide_Corrections(3,2,this);
+        Sleep();
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1650,.3,this);
+        Sleep();
+        mecanum.MoveForwardRunToPosition(.3,15,this);
+        Sleep();
         Latch();
+        Sleep();
+        mecanum.MoveBackwardsRunToPosition(.3,15,this);
+        mecanum.SlideRightRunToPosition(.3,10,this);
 
 
     }
     private void Drive_3st_skystone () {
-        mecanum.SlideRightRunToPosition(.3,8,this);
-        mecanum.MoveForwardRunToPosition(.3,5,this);
+        mecanum.SlideLeftRunToPosition(.3,15,this);
+        Sleep();
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1650,.3,this);
+        Sleep();
+        mecanum.MoveForwardRunToPosition(.3,15,this);
+        Sleep();
         Latch();
-        mecanum.MoveBackwardsRunToPosition(.3,10,this);
-        mecanum.SlideLeftRunToPosition(.3,8,this);
-
+        Sleep();
+        mecanum.MoveBackwardsRunToPosition(.3,15,this);
+        mecanum.SlideRightRunToPosition(.3,15,this);
 
 
     }
     private  void ParkInner () {
         mecanum.MoveForwardRunToPosition(.3,5 ,this);
+        Sleep();
         mecanum.SlideRightRunToPosition(.3,5,this);
+        Sleep();
     }
     private  void ParkOuter () {
         mecanum.MoveBackwardsRunToPosition(.3,5,this);
+        Sleep();
         mecanum.SlideRightRunToPosition(.3,5,this);
+        Sleep();
     }
     private void D1 () {
-        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,800,.3,this);
-        mecanum.MoveForwardRunToPosition(.3,25,this);
+
+
     }
     private void D2 (){
         switch(DrivetoSkystone){
-            case "Left":
+            case "Right":
                 Drive_1st_skystone();
                 break;
             case "Middle":
                 Drive_2st_skystone();
                 break;
-            case "Right":
+            case "Left":
                 Drive_3st_skystone();
                 break;
         }
@@ -76,14 +101,20 @@ public class RedDepo extends TeleOpSkystone {
         mecanum.MoveBackwardsRunToPosition(.3,8,this);
     }
     private void D4 () {
-        encoderDrive(.3,2,6);
+        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
+        Sleep();
         mecanum.MoveForwardRunToPosition(.3,22,this);
+        Sleep();
         UnLatch();
+        Sleep();
     }
     private void D5 () {
         mecanum.MoveBackwardsRunToPosition(.3,22,this);
+        Sleep();
         encoderDrive(.3,6,2);
+        Sleep();
         mecanum.MoveForwardRunToPosition(.3,8,this);
+        Sleep();
         switch(DrivetoSkystone){
             case "Left":
                 Drive_1st_skystone();
@@ -99,14 +130,18 @@ public class RedDepo extends TeleOpSkystone {
     }
     private  void D6 () {
         mecanum.MoveBackwardsRunToPosition(.3,8,this);
-        encoderDrive(.3,2,6);
+        Sleep();
+        mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
+        Sleep();
         mecanum.MoveForwardRunToPosition(.3,22,this);
+        Sleep();
         UnLatch();
 
     }
     private void D7 () {
         mecanum.MoveBackwardsRunToPosition(.3,8,this);
-        encoderDrive(.3,6,2);
+        Sleep();
+        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
         switch (Park){
             case "Inner":
                 ParkInner();
@@ -118,6 +153,11 @@ public class RedDepo extends TeleOpSkystone {
     public void runOpMode() {
         Init_Juan();
         Reset_Arm();
+        mecanum = new Mecanum(
+                Part.LeftA = hardwareMap.get(DcMotor.class, "LA"),
+                Part.LeftB = hardwareMap.get(DcMotor.class, "LB"),
+                Part.RightA = hardwareMap.get(DcMotor.class, "RA"),
+                Part.RightB = hardwareMap.get(DcMotor.class, "RB"), telemetry);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = new OpenCvInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
 
@@ -150,14 +190,14 @@ public class RedDepo extends TeleOpSkystone {
             }
 
             if (pipline.location == SkystoneLocation.left) {
-                DrivetoSkystone = "Left";
+                DrivetoSkystone = "Right";
 
             }
             else if (pipline.location == SkystoneLocation.middle) {
                 DrivetoSkystone = "Middle";
             }
             else if (pipline.location ==  SkystoneLocation.right) {
-                DrivetoSkystone = "Right";
+                DrivetoSkystone = "Left";
             }
 
             telemetry.update();
