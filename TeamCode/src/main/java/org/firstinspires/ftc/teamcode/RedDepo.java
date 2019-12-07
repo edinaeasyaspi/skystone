@@ -68,7 +68,7 @@ public class RedDepo extends TeleOpSkystone {
 
     }
     private  void Drive_again () {
-        mecanum.TurnLeftRunToPosition(.3,6,this);
+        mecanum.TurnLeftRunToPosition(.3,4,this);
         Sleep();
         CLaw_180();
 
@@ -113,21 +113,26 @@ public class RedDepo extends TeleOpSkystone {
     private void D4 () {
         mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
         Sleep();
-        mecanum.MoveForwardRunToPosition(.3,22,this);
-        Sleep();
-        UnLatch();
-        Sleep();
+        switch (Park){
+            case "Inner":
+                mecanum.MoveForwardRunToPosition(.3,22,this);
+                Sleep();
+                UnLatch();
+                Sleep();
+            case "Outer":
+                mecanum.SlideRightRunToPosition(.3,22,this);
+                mecanum.MoveForwardRunToPosition(.3,22,this);
+        }
+
     }
     private void D5 () {
         mecanum.MoveBackwardsRunToPosition(.3,22,this);
         Sleep();
-        encoderDrive(.3,6,2);
-        Sleep();
-        mecanum.MoveForwardRunToPosition(.3,8,this);
+        mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
         Sleep();
         switch(DrivetoSkystone){
             case "Left":
-                Drive_1st_skystone();
+                Drive_again();
                 break;
             case "Middle":
                 Drive_2st_skystone();
@@ -143,7 +148,20 @@ public class RedDepo extends TeleOpSkystone {
         Sleep();
         mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
         Sleep();
-        mecanum.MoveForwardRunToPosition(.3,22,this);
+        switch (Park){
+            case "Inner":
+                mecanum.MoveForwardRunToPosition(.3,40,this);
+                Sleep();
+                UnLatch();
+                Sleep();
+            case "Outer":
+                mecanum.SlideRightRunToPosition(.3,22,this);
+                Sleep();
+                mecanum.MoveForwardRunToPosition(.3,40,this);
+                Sleep();
+                UnLatch();
+        }
+
         Sleep();
         UnLatch();
 
