@@ -23,7 +23,7 @@ public class RedBuilderSide extends TeleOpSkystone {
         Reset_Arm();
 
         while (!opModeIsActive()) {
-            teleme1try.addData("Park Location : %7d", Park);
+            teleme1try.addData("Park Location %7d", Park);
 
             if (gamepad1.dpad_right){
                 Park = "Outer";

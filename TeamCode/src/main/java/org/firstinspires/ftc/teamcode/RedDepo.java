@@ -68,6 +68,16 @@ public class RedDepo extends TeleOpSkystone {
 
 
     }
+    private  void Drive_again () {
+        mecanum.TurnLeftRunToPosition(.3,6,this);
+        Sleep();
+        CLaw_180();
+
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1650,.3,this);
+        Sleep();
+        mecanum.MoveForwardRunToPosition(.3,15,this);
+
+    }
     private  void ParkInner () {
         mecanum.MoveForwardRunToPosition(.3,5 ,this);
         Sleep();
@@ -86,13 +96,14 @@ public class RedDepo extends TeleOpSkystone {
     }
     private void D2 (){
         switch(DrivetoSkystone){
-            case "Right":
+            case "Left":
+
                 Drive_1st_skystone();
                 break;
             case "Middle":
                 Drive_2st_skystone();
                 break;
-            case "Left":
+            case "Right":
                 Drive_3st_skystone();
                 break;
         }

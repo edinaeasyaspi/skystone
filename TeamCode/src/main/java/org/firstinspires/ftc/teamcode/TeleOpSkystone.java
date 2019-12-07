@@ -404,16 +404,24 @@ public class TeleOpSkystone extends LinearOpMode {
         Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
-    public void ArmCrap ( float ArmPower) {
+    public void ArmCrap ( float ArmPower, float Secondlevel) {
         ArmPower *= .3;
 
             Part.AndyMark_motor_Lift.setPower(ArmPower);
-
+            Part.AndyMark_motor.setPower(Secondlevel);
 
 
         }
+    public void CLaw_180 () {
+        Part.Rotating_servo.setPosition(1);
+    }
+    public void Claw_130 () {
+        Part.Rotating_servo.setPosition(.8);
 
-
+    }
+    public void Claw_100 () {
+        Part.Rotating_servo.setPosition(.3);
+    }
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -433,17 +441,17 @@ public class TeleOpSkystone extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.addData("Arm at",Part.AndyMark_motor_Lift.getCurrentPosition());
 
-            if (!gamepad1.a) {
-                Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-            }
-            else {
+            if (gamepad1.right_trigger > 0) {
                 Drive(gamepad1.left_stick_x * 0.5, gamepad1.left_stick_y * 0.5, gamepad1.right_stick_x * 0.5);
             }
+            else {
+                Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            }
 
-            ArmCrap(gamepad2.right_stick_y);
+            ArmCrap(gamepad2.right_stick_y,gamepad2.left_stick_y);
 
             //Arm Elbow
-//hell
+
 
 
             //Arm
