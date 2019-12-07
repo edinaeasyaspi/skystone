@@ -9,7 +9,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 @Autonomous(name = "Red Depo", group = "EAP")
 public class RedDepo extends TeleOpSkystone {
-    String Park;
+    String Park = "Inner";
     protected OpenCvCamera phoneCam;
     String DrivetoSkystone;
     Mecanum mecanum;
@@ -23,39 +23,38 @@ public class RedDepo extends TeleOpSkystone {
 
     }
     private void Drive_1st_skystone () {
-        mecanum.SlideLeftRunToPosition(.3,5,this);
+        mecanum.SlideLeftRunToPosition(.3,19,this);
+        mecanum.MoveBackwardsRunToPosition(.3,5,this);
         Sleep();
-        mecanum.RightSide_Corrections(3,2,this);
-        Sleep();
-        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1650,.3,this);
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
         Sleep();
         mecanum.MoveForwardRunToPosition(.3,15,this);
-        Sleep();
+
         Latch();
         Sleep();
-        mecanum.MoveBackwardsRunToPosition(.3,15,this);
-        mecanum.SlideRightRunToPosition(.3,5,this);
+        mecanum.MoveBackwardsRunToPosition(.3,17,this);
+        mecanum.SlideRightRunToPosition(.3,17,this);
+        mecanum.MoveBackwardsRunToPosition(.3,5,this);
 
 
     }
-    private void Drive_2st_skystone () {
-        mecanum.SlideLeftRunToPosition(.3,10,this);
+    private void Drive_2st_skystone () {mecanum.SlideLeftRunToPosition(.3,19,this);
+        mecanum.MoveBackwardsRunToPosition(.3,5,this);
         Sleep();
-        mecanum.RightSide_Corrections(3,2,this);
-        Sleep();
-        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1650,.3,this);
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
         Sleep();
         mecanum.MoveForwardRunToPosition(.3,15,this);
-        Sleep();
+
         Latch();
         Sleep();
-        mecanum.MoveBackwardsRunToPosition(.3,15,this);
-        mecanum.SlideRightRunToPosition(.3,10,this);
-
+        mecanum.MoveBackwardsRunToPosition(.3,17,this);
+        mecanum.SlideRightRunToPosition(.3,17,this);
+        mecanum.MoveBackwardsRunToPosition(.3,5,this);
 
     }
     private void Drive_3st_skystone () {
-        mecanum.SlideLeftRunToPosition(.3,15,this);
+        mecanum.SlideLeftRunToPosition(.3,5,this);
+        mecanum.MoveBackwardsRunToPosition(.3,5,this);
         Sleep();
         Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1650,.3,this);
         Sleep();
@@ -109,7 +108,7 @@ public class RedDepo extends TeleOpSkystone {
         }
     }
     private void D3 () {
-        mecanum.MoveBackwardsRunToPosition(.3,8,this);
+        mecanum.MoveForwardRunToPosition(.3,8,this);
     }
     private void D4 () {
         mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);

@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name = "Test", group = "EAP")
 public class Test_Encoders extends TeleOpSkystone {
 
+    public void Sleep () {
+        sleep(500);
+    }
 
     @Override
     public void runOpMode() {
@@ -21,7 +24,25 @@ public class Test_Encoders extends TeleOpSkystone {
                 Part.RightA = hardwareMap.get(DcMotor.class, "RA"),
                 Part.RightB = hardwareMap.get(DcMotor.class, "RB"), telemetry);
 
-        mecanum.SlideLeftRunToPosition(.3,14,this);
+        mecanum.TurnLeftRunToPosition(.3,19,this);
+        Sleep();
+        CLaw_180();
+
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
+        Sleep();
+        mecanum.MoveForwardRunToPosition(.3,17,this);
+      /*  Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
+        Claw_130();
+        Sleep();
+        mecanum.MoveForwardRunToPosition(.3,15,this);
+        Sleep();
+
+        Latch();
+        Sleep();
+        mecanum.MoveBackwardsRunToPosition(.3,17,this);
+
+       */
+       // mecanum.SlideLeftRunToPosition(.3,14,this);
         //mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
        // mecanum.TurnRightRunToPosition(.3,14,this);
         //Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1758,.3,this);
