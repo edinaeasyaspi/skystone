@@ -30,6 +30,17 @@ public class TeleOpSkystone extends LinearOpMode {
     int _90Degree_turn = 14 ;
     int _180Degree_turn= 28 ;
     int Armheight = 0;
+    public void SleepY () {
+        sleep(500);
+    }
+
+    public void If_Your_happy_and_you_know_it_clap_your_hands (){
+        Latch();
+        SleepY();
+        UnLatch();
+        SleepY();
+        Latch();
+    }
     Telemetry teleme1try = new Telemetry() {
         @Override
         public Item addData(String caption, String format, Object... args) {

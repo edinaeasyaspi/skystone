@@ -30,7 +30,7 @@ public class RedDepo extends TeleOpSkystone {
         Sleep();
         mecanum.MoveForwardRunToPosition(.3,16,this);
         Sleep();
-        Latch();
+        If_Your_happy_and_you_know_it_clap_your_hands();
         Sleep();
         Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1300,.3,this);
         mecanum.MoveBackwardsRunToPosition(.3,15,this);
@@ -44,11 +44,11 @@ public class RedDepo extends TeleOpSkystone {
         mecanum.SlideLeftRunToPosition(.3,10,this);
         mecanum.MoveBackwardsRunToPosition(.3,3,this);
         Sleep();
-        CLaw_180();
         Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
+        CLaw_180();
         mecanum.MoveForwardRunToPosition(.3,17,this);
         Sleep();
-        Latch();
+        If_Your_happy_and_you_know_it_clap_your_hands();
         Sleep();
         mecanum.MoveBackwardsRunToPosition(.3,17,this);
         Claw_100();
@@ -57,7 +57,6 @@ public class RedDepo extends TeleOpSkystone {
         mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
         mecanum.MoveForwardRunToPosition(.3,22,this);
         UnLatch();
-        CLaw_180();
         mecanum.MoveBackwardsRunToPosition(.3,10,this);
 
     }
