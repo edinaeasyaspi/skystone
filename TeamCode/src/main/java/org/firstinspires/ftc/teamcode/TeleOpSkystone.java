@@ -420,7 +420,7 @@ public class TeleOpSkystone extends LinearOpMode {
 
     }
     public void Claw_100 () {
-        Part.Rotating_servo.setPosition(.3);
+        Part.Rotating_servo.setPosition(.5);
     }
     @Override
     public void runOpMode() throws InterruptedException {
@@ -442,7 +442,7 @@ public class TeleOpSkystone extends LinearOpMode {
             telemetry.addData("Arm at",Part.AndyMark_motor_Lift.getCurrentPosition());
 
             if (gamepad1.right_trigger > 0) {
-                Drive(gamepad1.left_stick_x * 0.5, gamepad1.left_stick_y * 0.5, gamepad1.right_stick_x * 0.5);
+                Drive(gamepad1.left_stick_x * 0.8, gamepad1.left_stick_y * 0.8, gamepad1.right_stick_x * 0.8);
             }
             else {
                 Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
@@ -468,10 +468,10 @@ public class TeleOpSkystone extends LinearOpMode {
                 Part.Rotating_servo.setPosition(.5);
             }
             if (gamepad2.dpad_right){
-            Part.Rotating_servo.setPosition(1);
+            CLaw_180();
             }
             if(gamepad1.dpad_down){
-                Part.Rotating_servo.setPosition(.8);
+                Claw_100();
 
             }
             if (gamepad2.a) {

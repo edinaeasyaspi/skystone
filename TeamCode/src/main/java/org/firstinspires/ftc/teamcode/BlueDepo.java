@@ -7,17 +7,188 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 @Autonomous(name = "Blue Depo", group = "EAP")
-public class BlueDepo extends TeleOpSkystone {
-    String Park;
+public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
     protected OpenCvCamera phoneCam;
-    String DrivetoSkystone;
+    String DrivetoSkystone = "Inner";
+    Mecanum mecanum;
 
     public void Sleep () {
         sleep(500);
     }
+    private enum Automous_states {
+        DRIVED_TO_SKYSTONE,PICKUP,DRIVED_UNDER_BRIGE,DROPED,DRIVED_TO_SECOND_SKYSTONE,PICKUP2,DRIVED_UNDER_BRIGE2,DROPED2
+
+
+    }
+    private void Drive_1st_skystone () {
+        mecanum.SlideRightRunToPosition(.3,21,this);
+        mecanum.MoveBackwardsRunToPosition(.3,5,this);
+        Sleep();
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
+        Sleep();
+        mecanum.MoveForwardRunToPosition(.3,16,this);
+        Sleep();
+        Latch();
+        Sleep();
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1300,.3,this);
+        mecanum.MoveBackwardsRunToPosition(.3,15,this);
+        mecanum.SlideLeftRunToPosition(.3,50,this);
+        mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
+        UnLatch();
+
+
+    }
+    private void Drive_2st_skystone () {
+        mecanum.SlideRightRunToPosition(.3,10,this);
+        mecanum.MoveBackwardsRunToPosition(.3,3,this);
+        Sleep();
+        CLaw_180();
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
+        mecanum.MoveForwardRunToPosition(.3,17,this);
+        Sleep();
+        Latch();
+        Sleep();
+        mecanum.MoveBackwardsRunToPosition(.3,17,this);
+        Claw_100();
+        mecanum.SlideLeftRunToPosition(.3,22,this);
+        mecanum.MoveBackwardsRunToPosition(.3,5,this);
+        mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
+        mecanum.MoveForwardRunToPosition(.3,22,this);
+        UnLatch();
+        CLaw_180();
+        mecanum.MoveBackwardsRunToPosition(.3,10,this);
+
+    }
+    private void Drive_3st_skystone () {
+        mecanum.SlideRightRunToPosition(.3,5,this);
+        mecanum.MoveBackwardsRunToPosition(.3,5,this);
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
+        mecanum.MoveForwardRunToPosition(.3,17,this);
+        Sleep();
+        Latch();
+        Sleep();
+        mecanum.MoveBackwardsRunToPosition(.3,15,this);
+        mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
+        mecanum.MoveForwardRunToPosition(.3,35,this);
+        UnLatch();
+        mecanum.SlideLeftRunToPosition(.3,5,this);
+        mecanum.MoveBackwardsRunToPosition(.3,10,this);
+
+
+    }
+    private  void Drive_again () {
+        Claw_130();
+        mecanum.TurnLeftRunToPosition(.3,4,this);
+        CLaw_180();
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1650,.3,this);
+        Sleep();
+        UnLatch();
+        mecanum.MoveForwardRunToPosition(.3,15,this);
+
+    }
+    private  void ParkInner () {
+        mecanum.MoveForwardRunToPosition(.3,5 ,this);
+        Sleep();
+        mecanum.SlideRightRunToPosition(.3,5,this);
+        Sleep();
+    }
+    private  void ParkOuter () {
+        mecanum.MoveBackwardsRunToPosition(.3,5,this);
+        Sleep();
+        mecanum.SlideRightRunToPosition(.3,5,this);
+        Sleep();
+    }
+    private void D1 () {
+
+
+    }
+    private void DRIve_toSkYstone (){
+        switch(DrivetoSkystone){
+            case "Left":
+
+                Drive_1st_skystone();
+                break;
+            case "Middle":
+                Drive_2st_skystone();
+                break;
+            case "Right":
+                Drive_3st_skystone();
+                break;
+        }
+    }
+    private void D3 () {
+
+        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
+    }
+    private void D4 () {
+        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
+        Sleep();
+
+
+    }
+    private void D5 () {
+
+
+        switch(DrivetoSkystone){
+            case "Left":
+                Drive_again();
+                break;
+            case "Middle":
+                Drive_2st_skystone();
+                break;
+            case "Right":
+                Drive_3st_skystone();
+                break;
+        }
+
+    }
+    private  void D6 () {
+        mecanum.MoveBackwardsRunToPosition(.3,8,this);
+        Sleep();
+        mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
+        Sleep();
+        switch (Park){
+            case "Inner":
+                mecanum.MoveForwardRunToPosition(.3,40,this);
+                Sleep();
+                UnLatch();
+                Sleep();
+                break;
+            case "Outer":
+                mecanum.SlideLeftRunToPosition(.3,22,this);
+                Sleep();
+                mecanum.MoveForwardRunToPosition(.3,40,this);
+                Sleep();
+                UnLatch();
+                break;
+        }
+
+        Sleep();
+        UnLatch();
+
+    }
+    private void D7 () {
+        mecanum.MoveBackwardsRunToPosition(.3,8,this);
+        Sleep();
+        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
+        switch (Park){
+            case "Inner":
+                ParkInner();
+                break;
+            case "Outer":
+                ParkOuter();
+                break;
+        }
+
+    }
     public void runOpMode() {
         Init_Juan();
         Reset_Arm();
+        mecanum = new Mecanum(
+                Part.LeftA = hardwareMap.get(DcMotor.class, "LA"),
+                Part.LeftB = hardwareMap.get(DcMotor.class, "LB"),
+                Part.RightA = hardwareMap.get(DcMotor.class, "RA"),
+                Part.RightB = hardwareMap.get(DcMotor.class, "RB"), telemetry);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = new OpenCvInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
 
@@ -65,115 +236,21 @@ public class BlueDepo extends TeleOpSkystone {
         }
         phoneCam.stopStreaming();
         waitForStart();
-        Mecanum mecanum = new Mecanum(
-                Part.LeftA = hardwareMap.get(DcMotor.class, "LA"),
-                Part.LeftB = hardwareMap.get(DcMotor.class, "LB"),
-                Part.RightA = hardwareMap.get(DcMotor.class, "RA"),
-                Part.RightB = hardwareMap.get(DcMotor.class, "RB"), telemetry);
 
+        switch (DrivetoSkystone){
 
+            case "Left":
+                DRIve_toSkYstone();
+                mecanum.TurnLeftRunToPosition(.3,5,this);
+                mecanum.SlideLeftRunToPosition(.3,5,this);
+            case "Middle":
+                DRIve_toSkYstone();
 
-
-
-
-        //D1
-            Sleep();
-            Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,800,.3,this);
-            Sleep();
-            mecanum.MoveForwardRunToPosition(.3,25,this);
-        Sleep();
-
-            switch(DrivetoSkystone){
-                case "Left":
-                    mecanum.SlideLeftRunToPosition(.3,8,this);
-                    mecanum.MoveForwardRunToPosition(.3,5,this);
-                    Latch();
-                    mecanum.MoveBackwardsRunToPosition(.3,10,this);
-                    mecanum.SlideRightRunToPosition(.3,8,this);
-
-
-                    break;
-                case "Middle":
-                    mecanum.MoveForwardRunToPosition(.3,5,this);
-                    Latch();
-
-                    break;
-                case "Right":
-                    mecanum.SlideRightRunToPosition(.3,8,this);
-                    Sleep();
-                    mecanum.MoveForwardRunToPosition(.3,5,this);
-                    Sleep();
-                    Latch();
-                    Sleep();
-                    mecanum.MoveBackwardsRunToPosition(.3,10,this);
-                    Sleep();
-                    mecanum.SlideLeftRunToPosition(.3,8,this);
-
-                    break;
-            }
-            //D2
-        Sleep();
-            mecanum.MoveBackwardsRunToPosition(.3,8,this);
-
-            //D3
-        Sleep();
-            mecanum.TurnLeftRunToPosition(.3,15,this);
-        Sleep();
-            mecanum.MoveForwardRunToPosition(.3,22,this);
-        Sleep();
-            UnLatch();
-
-            //D4
-        Sleep();
-            mecanum.MoveBackwardsRunToPosition(.3,22,this);
-        Sleep();
-            encoderDrive(.3,6,2);
-        Sleep();
-            mecanum.MoveForwardRunToPosition(.3,8,this);
-            switch(DrivetoSkystone){
-                case "Left":
-                    mecanum.SlideLeftRunToPosition(.3,8,this);
-                    Sleep();
-                    mecanum.MoveForwardRunToPosition(.3,5,this);
-                    Latch();
-                    mecanum.MoveBackwardsRunToPosition(.3,10,this);
-
-                    break;
-                case "Middle":
-                    mecanum.MoveForwardRunToPosition(.3,5,this);
-                    Latch();
-                    mecanum.MoveBackwardsRunToPosition(.3,10,this);
-                    break;
-                case "Right":
-                    mecanum.SlideRightRunToPosition(.3,8,this);
-                    mecanum.MoveForwardRunToPosition(.3,5,this);
-                    Latch();
-                    mecanum.MoveBackwardsRunToPosition(.3,10,this);
-                    mecanum.SlideLeftRunToPosition(.3,8,this);
-                    break;
-            }
-
-
-            //D5
-            mecanum.MoveBackwardsRunToPosition(.3,8,this);
-            encoderDrive(.3,2,6);
-            mecanum.MoveForwardRunToPosition(.3,22,this);
-            UnLatch();
-
-
-            //D6
-            mecanum.MoveBackwardsRunToPosition(.3,8,this);
-            encoderDrive(.3,6,2);
-            switch (Park){
-                case "Inner":
-                    mecanum.MoveForwardRunToPosition(.3,5 ,this);
-                    mecanum.SlideLeftRunToPosition(.3,5,this);
-                case "Outer":
-                    mecanum.MoveBackwardsRunToPosition(.3,5,this);
-                    mecanum.SlideLeftRunToPosition(.3,5,this);
-
+            case "Right":
+                DRIve_toSkYstone();
 
         }
+
 
 
 

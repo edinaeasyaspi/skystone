@@ -11,7 +11,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 public class RedDepo extends TeleOpSkystone {
     String Park = "Inner";
     protected OpenCvCamera phoneCam;
-    String DrivetoSkystone;
+    String DrivetoSkystone = "Inner";
     Mecanum mecanum;
 
     public void Sleep () {
@@ -23,57 +23,68 @@ public class RedDepo extends TeleOpSkystone {
 
     }
     private void Drive_1st_skystone () {
-        mecanum.SlideLeftRunToPosition(.3,19,this);
+        mecanum.SlideLeftRunToPosition(.3,21,this);
         mecanum.MoveBackwardsRunToPosition(.3,5,this);
         Sleep();
         Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
         Sleep();
-        mecanum.MoveForwardRunToPosition(.3,15,this);
-
+        mecanum.MoveForwardRunToPosition(.3,16,this);
+        Sleep();
         Latch();
         Sleep();
-        mecanum.MoveBackwardsRunToPosition(.3,17,this);
-        mecanum.SlideRightRunToPosition(.3,17,this);
-        mecanum.MoveBackwardsRunToPosition(.3,5,this);
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1300,.3,this);
+        mecanum.MoveBackwardsRunToPosition(.3,15,this);
+        mecanum.SlideRightRunToPosition(.3,50,this);
+        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
+        UnLatch();
 
 
     }
-    private void Drive_2st_skystone () {mecanum.SlideLeftRunToPosition(.3,19,this);
-        mecanum.MoveBackwardsRunToPosition(.3,5,this);
+    private void Drive_2st_skystone () {
+        mecanum.SlideLeftRunToPosition(.3,10,this);
+        mecanum.MoveBackwardsRunToPosition(.3,3,this);
         Sleep();
+        CLaw_180();
         Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
+        mecanum.MoveForwardRunToPosition(.3,17,this);
         Sleep();
-        mecanum.MoveForwardRunToPosition(.3,15,this);
-
         Latch();
         Sleep();
         mecanum.MoveBackwardsRunToPosition(.3,17,this);
-        mecanum.SlideRightRunToPosition(.3,17,this);
+        Claw_100();
+        mecanum.SlideRightRunToPosition(.3,22,this);
         mecanum.MoveBackwardsRunToPosition(.3,5,this);
+        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
+        mecanum.MoveForwardRunToPosition(.3,22,this);
+        UnLatch();
+        CLaw_180();
+        mecanum.MoveBackwardsRunToPosition(.3,10,this);
 
     }
     private void Drive_3st_skystone () {
         mecanum.SlideLeftRunToPosition(.3,5,this);
         mecanum.MoveBackwardsRunToPosition(.3,5,this);
-        Sleep();
-        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1650,.3,this);
-        Sleep();
-        mecanum.MoveForwardRunToPosition(.3,15,this);
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
+        mecanum.MoveForwardRunToPosition(.3,17,this);
         Sleep();
         Latch();
         Sleep();
         mecanum.MoveBackwardsRunToPosition(.3,15,this);
-        mecanum.SlideRightRunToPosition(.3,15,this);
+        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
+        mecanum.MoveForwardRunToPosition(.3,35,this);
+        UnLatch();
+        mecanum.SlideRightRunToPosition(.3,5,this);
+        mecanum.MoveBackwardsRunToPosition(.3,10,this);
 
 
     }
     private  void Drive_again () {
+        Claw_130();
         mecanum.TurnLeftRunToPosition(.3,4,this);
-        Sleep();
         CLaw_180();
-
         Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1650,.3,this);
         Sleep();
+        UnLatch();
         mecanum.MoveForwardRunToPosition(.3,15,this);
 
     }
@@ -93,7 +104,7 @@ public class RedDepo extends TeleOpSkystone {
 
 
     }
-    private void D2 (){
+    private void DRIve_toSkYstone (){
         switch(DrivetoSkystone){
             case "Left":
 
@@ -108,28 +119,18 @@ public class RedDepo extends TeleOpSkystone {
         }
     }
     private void D3 () {
-        mecanum.MoveForwardRunToPosition(.3,8,this);
+
+        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
     }
     private void D4 () {
         mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
         Sleep();
-        switch (Park){
-            case "Inner":
-                mecanum.MoveForwardRunToPosition(.3,22,this);
-                Sleep();
-                UnLatch();
-                Sleep();
-            case "Outer":
-                mecanum.SlideRightRunToPosition(.3,22,this);
-                mecanum.MoveForwardRunToPosition(.3,22,this);
-        }
+
 
     }
     private void D5 () {
-        mecanum.MoveBackwardsRunToPosition(.3,22,this);
-        Sleep();
-        mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
-        Sleep();
+
+
         switch(DrivetoSkystone){
             case "Left":
                 Drive_again();
@@ -154,12 +155,14 @@ public class RedDepo extends TeleOpSkystone {
                 Sleep();
                 UnLatch();
                 Sleep();
+                break;
             case "Outer":
                 mecanum.SlideRightRunToPosition(.3,22,this);
                 Sleep();
                 mecanum.MoveForwardRunToPosition(.3,40,this);
                 Sleep();
                 UnLatch();
+                break;
         }
 
         Sleep();
@@ -173,8 +176,10 @@ public class RedDepo extends TeleOpSkystone {
         switch (Park){
             case "Inner":
                 ParkInner();
+                break;
             case "Outer":
                 ParkOuter();
+                break;
         }
 
     }
@@ -233,19 +238,21 @@ public class RedDepo extends TeleOpSkystone {
         }
         phoneCam.stopStreaming();
         waitForStart();
-        D1();
-        sleep(500);
-        D2();
-        sleep(500);
-        D3();
-        sleep(500);
-        D4();
-        sleep(500);
-        D5();
-        sleep(500);
-        D6();
-        sleep(500);
-        D7();
+
+        switch (DrivetoSkystone){
+
+            case "Left":
+                DRIve_toSkYstone();
+                mecanum.TurnRightRunToPosition(.3,5,this);
+                mecanum.SlideRightRunToPosition(.3,5,this);
+            case "Middle":
+                DRIve_toSkYstone();
+
+            case "Right":
+                DRIve_toSkYstone();
+
+        }
+
 
 
 
