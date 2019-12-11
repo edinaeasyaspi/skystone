@@ -55,11 +55,7 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
     public void Sleep () {
         sleep(500);
     }
-    private enum Automous_states {
-        DRIVED_TO_SKYSTONE,PICKUP,DRIVED_UNDER_BRIGE,DROPED,DRIVED_TO_SECOND_SKYSTONE,PICKUP2,DRIVED_UNDER_BRIGE2,DROPED2
 
-
-    }
     private void Drive_1st_skystone () {
         mecanum.SlideLeftRunToPosition(.3,15,this);
         mecanum.MoveBackwardsRunToPosition(.3,5,this);
@@ -77,7 +73,7 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
 
     }
     private void Drive_2st_skystone () {
-        mecanum.SlideLeftRunToPosition(.3,10,this);
+        mecanum.SlideLeftRunToPosition(.3,7,this);
         mecanum.MoveBackwardsRunToPosition(.3,3,this);
         Sleep();
         CLaw_180();
@@ -104,32 +100,7 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
 
 
     }
-    private  void Drive_again () {
-        Claw_130();
-        mecanum.TurnLeftRunToPosition(.3,4,this);
-        CLaw_180();
-        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1650,.3,this);
-        Sleep();
-        UnLatch();
-        mecanum.MoveForwardRunToPosition(.3,15,this);
 
-    }
-    private  void ParkInner () {
-        mecanum.MoveForwardRunToPosition(.3,5 ,this);
-        Sleep();
-        mecanum.SlideRightRunToPosition(.3,5,this);
-        Sleep();
-    }
-    private  void ParkOuter () {
-        mecanum.MoveBackwardsRunToPosition(.3,5,this);
-        Sleep();
-        mecanum.SlideRightRunToPosition(.3,5,this);
-        Sleep();
-    }
-    private void D1 () {
-
-
-    }
     private void DRIve_toSkYstone (){
         switch(DrivetoSkystone){
             case "Left":
@@ -144,71 +115,8 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
                 break;
         }
     }
-    private void D3 () {
-
-        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
-    }
-    private void D4 () {
-        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
-        Sleep();
 
 
-    }
-    private void D5 () {
-
-
-        switch(DrivetoSkystone){
-            case "Left":
-                Drive_again();
-                break;
-            case "Middle":
-                Drive_2st_skystone();
-                break;
-            case "Right":
-                Drive_3st_skystone();
-                break;
-        }
-
-    }
-    private  void D6 () {
-        mecanum.MoveBackwardsRunToPosition(.3,8,this);
-        Sleep();
-        mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
-        Sleep();
-        switch (Park){
-            case "Inner":
-                mecanum.MoveForwardRunToPosition(.3,40,this);
-                Sleep();
-                UnLatch();
-                Sleep();
-                break;
-            case "Outer":
-                mecanum.SlideLeftRunToPosition(.3,22,this);
-                Sleep();
-                mecanum.MoveForwardRunToPosition(.3,40,this);
-                Sleep();
-                UnLatch();
-                break;
-        }
-
-        Sleep();
-        UnLatch();
-
-    }
-    private void D7 () {
-        mecanum.MoveBackwardsRunToPosition(.3,8,this);
-        Sleep();
-        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
-        switch (Park){
-            case "Inner":
-                ParkInner();
-                break;
-            case "Outer":
-                ParkOuter();
-                break;
-        }
-
-    }
     public void runOpMode() {
         Init_Juan();
         Reset_Arm();
@@ -271,23 +179,16 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
         phoneCam.stopStreaming();
         waitForStart();
 
-        mecanum.TurnLeftRunToPosition(.3,1,this);
-        switch (DrivetoSkystone){
+        mecanum.TurnLeftRunToPosition(.3,2,this);
 
-            case "Left":
-                DRIve_toSkYstone();
-                break;
-            case "Middle":
-                DRIve_toSkYstone();
-                break;
+        DRIve_toSkYstone();
 
-            case "Right":
-                DRIve_toSkYstone();
-                break;
+
+
+        if (Park.equals("Outer") ){
+            mecanum.SlideRightRunToPosition(.3,10,this);
 
         }
-
-
 
 
 
