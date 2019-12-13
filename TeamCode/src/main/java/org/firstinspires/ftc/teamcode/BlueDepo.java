@@ -13,39 +13,38 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
     Mecanum mecanum;
     String Place = "How Bout No";
 
-    public void Place_skystone_and_Park2 () {
+    public void Place_skystone_and_Park () {
         mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
         mecanum.TurnLeftRunToPosition(.3,3,this);
         mecanum.SlideLeftRunToPosition(.3,5,this);
+
+        Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-400,-.3,this);
         switch (DrivetoSkystone) {
             case "Left":
-                mecanum.MoveForwardRunToPosition(.3,28,this);
+                mecanum.MoveForwardRunToPosition(.6,12,this);
+
+                Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-100,-.3,this);
+                mecanum.MoveForwardRunToPosition(.6,10,this);
                 break;
             case "Middle":
-                mecanum.MoveForwardRunToPosition(.3,35,this);
+                mecanum.MoveForwardRunToPosition(.6,20,this);
+                Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-100,-.3,this);
+                mecanum.MoveForwardRunToPosition(.6,20,this);
                 break;
             case "Right":
-                mecanum.MoveForwardRunToPosition(.3,45,this);
-                break;
-        }
-        switch (Place){
-            case "Yes":
+                mecanum.MoveForwardRunToPosition(.6,20,this);
                 Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-400,-.3,this);
-                mecanum.MoveForwardRunToPosition(.3,10,this);
-                UnLatch();
-                Sleep();
-                mecanum.MoveBackwardsRunToPosition(.3,10,this);
-                break;
-            case "How Bout No":
-                Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-400,-.3,this);
-                UnLatch();
+                Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-100,-.3,this);
+                mecanum.MoveForwardRunToPosition(.6,25,this);
                 break;
         }
-
         UnLatch();
         mecanum.MoveBackwardsRunToPosition(.3,15,this);
 
@@ -57,7 +56,7 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
     }
 
     private void Drive_1st_skystone () {
-        mecanum.SlideLeftRunToPosition(.3,15,this);
+        mecanum.SlideLeftRunToPosition(.3,13,this);
         mecanum.MoveBackwardsRunToPosition(.3,5,this);
         Sleep();
         Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
@@ -66,14 +65,14 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
         Sleep();
         If_Your_happy_and_you_know_it_clap_your_hands();
         Sleep();
-        mecanum.MoveBackwardsRunToPosition(.3,15,this);
-        Place_skystone_and_Park2();
-        UnLatch();
+        mecanum.MoveBackwardsRunToPosition(.3,14,this);
+
+
 
 
     }
     private void Drive_2st_skystone () {
-        mecanum.SlideLeftRunToPosition(.3,7,this);
+        mecanum.SlideLeftRunToPosition(.3,5,this);
         mecanum.MoveBackwardsRunToPosition(.3,3,this);
         Sleep();
         CLaw_180();
@@ -84,19 +83,17 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
         If_Your_happy_and_you_know_it_clap_your_hands();
         mecanum.MoveBackwardsRunToPosition(.3,15,this);
         Sleep();
-        Place_skystone_and_Park2();
+
     }
     private void Drive_3st_skystone () {
+        mecanum.MoveBackwardsRunToPosition(.3,4,this);
         Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1500,.3,this);
         mecanum.MoveForwardRunToPosition(.3,17,this);
         Sleep();
         If_Your_happy_and_you_know_it_clap_your_hands();
         mecanum.MoveBackwardsRunToPosition(.3,15,this);
-        mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
-        mecanum.MoveForwardRunToPosition(.3,45,this);
-        UnLatch();
-        mecanum.SlideLeftRunToPosition(.3,10,this);
-        mecanum.MoveBackwardsRunToPosition(.3,20,this);
+
+
 
 
     }
@@ -146,8 +143,8 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
 
         while (!opModeIsActive()){
 
-            telemetry.addData("Park Location %7d", Park);
-            telemetry.addData("Skystone location : %7d",DrivetoSkystone);
+            telemetry.addData("Park Location", Park);
+            telemetry.addData("Skystone location ",DrivetoSkystone);
             telemetry.addData("Should we Place....", Place);
 
             if (gamepad2.dpad_up)
@@ -182,15 +179,20 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
         mecanum.TurnLeftRunToPosition(.3,2,this);
 
         DRIve_toSkYstone();
+        Place_skystone_and_Park();
+        Claw_100();
+
+            switch (Park){
+                case"Inner":
+                    mecanum.SlideRightRunToPosition(.3, 24, this);
+                    break;
+                case"Outer":
+                    mecanum.SlideLeftRunToPosition(.3,4,this);
+
+                    break;
 
 
-
-        if (Park.equals("Outer") ){
-            mecanum.SlideRightRunToPosition(.3,10,this);
-
-        }
-
-
+            }
 
 
 

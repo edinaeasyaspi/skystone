@@ -13,18 +13,16 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
+
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
 
 
 @TeleOp(name = "Zoom Zoom Time", group = "EAP")
 public class TeleOpSkystone extends LinearOpMode {
-    int ArmSensitivity = 2;
-    int n ;
-    int MaxArmLimit = 520 ;
     int _90Degree_turn = 14 ;
     int _180Degree_turn= 28 ;
     int Armheight = 0;
@@ -305,6 +303,31 @@ public class TeleOpSkystone extends LinearOpMode {
     }
 
 
+    public void DriveSlow(double leftStickX, double leftStickY, double rightStickY) {
+        final double x = Math.pow(-leftStickX, 3.0);
+        final double y = Math.pow(leftStickY, 3.0);
+
+        final double rotation = Math.pow(-rightStickY, 3.0);
+        final double direction = Math.atan2(x, y);
+        final double speed = Math.min(1.0, Math.sqrt(x * x + y * y));
+
+        double fl = speed * Math.sin(direction + Math.PI / 4.0) + rotation;
+        double fr = speed * Math.cos(direction + Math.PI / 4.0) - rotation;
+        double bl = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
+        double br = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
+
+        fl *= .3;
+        fr *=.3;
+        bl *= .3;
+        br *=.3;
+
+
+        Part.LeftA.setPower(fl);
+        Part.RightA.setPower(fr);
+        Part.LeftB.setPower(br);
+        Part.RightB.setPower(bl);
+
+    }
     public void Drive(double leftStickX, double leftStickY, double rightStickY) {
         final double x = Math.pow(-leftStickX, 3.0);
         final double y = Math.pow(leftStickY, 3.0);
@@ -318,16 +341,38 @@ public class TeleOpSkystone extends LinearOpMode {
          double bl = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
          double br = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
 
-         fl *= .5;
-        fr *= .5;
-        br *= .5;
-        bl *= .5;
+            fl *= .5;
+            fr *=.5;
+            bl *= .5;
+            br *=.5;
 
 
             Part.LeftA.setPower(fl);
             Part.RightA.setPower(fr);
             Part.LeftB.setPower(br);
             Part.RightB.setPower(bl);
+
+    }
+    public void DriveFast(double leftStickX, double leftStickY, double rightStickY) {
+        final double x = Math.pow(-leftStickX, 3.0);
+        final double y = Math.pow(leftStickY, 3.0);
+
+        final double rotation = Math.pow(-rightStickY, 3.0);
+        final double direction = Math.atan2(x, y);
+        final double speed = Math.min(1.0, Math.sqrt(x * x + y * y));
+
+        double fl = speed * Math.sin(direction + Math.PI / 4.0) + rotation;
+        double fr = speed * Math.cos(direction + Math.PI / 4.0) - rotation;
+        double bl = speed * Math.cos(direction + Math.PI / 4.0) + rotation;
+        double br = speed * Math.sin(direction + Math.PI / 4.0) - rotation;
+
+
+
+
+        Part.LeftA.setPower(fl);
+        Part.RightA.setPower(fr);
+        Part.LeftB.setPower(br);
+        Part.RightB.setPower(bl);
 
     }
 
@@ -389,8 +434,8 @@ public class TeleOpSkystone extends LinearOpMode {
         Part.FoundationLactchR.setPosition(0);
     }
     public void UnLatchFoundation () {
-        Part.FoundationLatchL.setPosition(.4);
-        Part.FoundationLactchR.setPosition(.6);
+        Part.FoundationLatchL.setPosition(.0);
+        Part.FoundationLactchR.setPosition(1);
     }
 
     protected void Move_Motor_WithEncoder(DcMotor Motor, int distance , double speed, LinearOpMode opMode  ) {
@@ -413,11 +458,11 @@ public class TeleOpSkystone extends LinearOpMode {
         Motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
-    public void ArmCrap ( float ArmPower, float Secondlevel) {
+    public void ArmCrap ( float ArmPower) {
         ArmPower *= .3;
 
             Part.AndyMark_motor_Lift.setPower(ArmPower);
-            Part.AndyMark_motor.setPower(Secondlevel);
+
 
 
         }
@@ -451,13 +496,17 @@ public class TeleOpSkystone extends LinearOpMode {
             telemetry.addData("Arm at",Part.AndyMark_motor_Lift.getCurrentPosition());
             teleme1try.addData("Drive",gamepad1.right_stick_x);
             if (gamepad1.right_trigger > 0) {
-                Drive(gamepad1.left_stick_x * 0.8, gamepad1.left_stick_y * 0.8, gamepad1.right_stick_x * 0.8);
+                DriveSlow(gamepad1.left_stick_x , gamepad1.left_stick_y , gamepad1.right_stick_x );
+            }
+            else if (gamepad1.left_trigger > 0)
+            {
+                DriveFast(gamepad1.left_stick_x*2, gamepad1.left_stick_y*2, gamepad1.right_stick_x*2);
             }
             else {
-                Drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+                Drive(gamepad1.left_stick_x , gamepad1.left_stick_y , gamepad1.right_stick_x );
             }
 
-            ArmCrap(gamepad2.right_stick_y,gamepad2.left_stick_y);
+            ArmCrap(gamepad2.right_stick_y);
 
             //Arm Elbow
 
@@ -499,6 +548,13 @@ public class TeleOpSkystone extends LinearOpMode {
             if (gamepad1.left_bumper){
                 UnLatchFoundation();
             }
+            if(gamepad2.a){
+                Part.AndyMark_motor.setPower(1);
+            }
+            if (gamepad2.b){
+                Part.AndyMark_motor.setPower(0);
+            }
+
 
             telemetry.update();
 
