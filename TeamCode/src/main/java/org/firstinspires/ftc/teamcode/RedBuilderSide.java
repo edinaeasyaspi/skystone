@@ -5,15 +5,59 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name = "Red Builder",group = "EAP")
 public class RedBuilderSide extends TeleOpSkystone {
 
+    Mecanum mecanum;
     String Park = "Outer" ;
 
     public void Sleep () {
         sleep(1000);
     }
+    private void Drive_to_Foundation () {
+
+        mecanum.SlideLeftRunToPosition(.3,5,this);
+        mecanum.MoveBackwardsRunToPosition(.3,23,this);
+
+        Sleep();
+
+    }
+    private void Latch_and_pull_foundation () {
+        LatchFoundation();
+        Sleep();
+        mecanum.MoveForwardRunToPosition(.3,25,this);
+
+        Sleep();
+
+
+    }
+    private void UnLatch_and_Out_Of_Foundation () {
+        UnLatchFoundation();
+        Sleep();
+        mecanum.SlideRightRunToPosition(.3,23,this);
+        Sleep();
+
+    }
+    private void Push_and_Secure_Foundation (){
+        mecanum.MoveBackwardsRunToPosition(.3,13,this);
+        Sleep();
+        mecanum.SlideLeftRunToPosition(.3,14,this);
+        Sleep();
+        mecanum.SlideRightRunToPosition(.3,14,this);
+        Sleep();
+
+    }
+    private void Extend_for_Parking () {
+        mecanum.MoveBackwardsRunToPosition(.3,5,this);
+        Sleep();
+        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1758,.3,this);
+
+        Sleep();
+        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
+
+
+    }
 
     public void runOpMode() throws InterruptedException {
         Init_Juan();
-        Mecanum mecanum = new Mecanum(Part.LeftA = hardwareMap.get(DcMotor.class, "LA"),
+         mecanum = new Mecanum(Part.LeftA = hardwareMap.get(DcMotor.class, "LA"),
                 Part.LeftB = hardwareMap.get(DcMotor.class, "LB"),
                 Part.RightA = hardwareMap.get(DcMotor.class, "RA"),
                 Part.RightB = hardwareMap.get(DcMotor.class, "RB"), telemetry);
@@ -38,36 +82,17 @@ public class RedBuilderSide extends TeleOpSkystone {
 
         waitForStart();
 
+        Drive_to_Foundation();
+
+        Latch_and_pull_foundation();
+
+        UnLatch_and_Out_Of_Foundation();
+
+        Push_and_Secure_Foundation();
 
 
-        mecanum.SlideLeftRunToPosition(.3,5,this);
-        mecanum.MoveBackwardsRunToPosition(.3,23,this);
+        Extend_for_Parking();
 
-        Sleep();
-
-
-        LatchFoundation();
-        Sleep();
-        mecanum.MoveForwardRunToPosition(.3,25,this);
-
-        Sleep();
-        UnLatchFoundation();
-        Sleep();
-        mecanum.SlideRightRunToPosition(.3,23,this);
-        Sleep();
-        mecanum.MoveBackwardsRunToPosition(.3,13,this);
-        Sleep();
-        mecanum.SlideLeftRunToPosition(.3,14,this);
-        Sleep();
-        mecanum.SlideRightRunToPosition(.3,14,this);
-        Sleep();
-
-        mecanum.MoveBackwardsRunToPosition(.3,5,this);
-        Sleep();
-        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1758,.3,this);
-
-        Sleep();
-        mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
         switch (Park){
             case "Inner":
 

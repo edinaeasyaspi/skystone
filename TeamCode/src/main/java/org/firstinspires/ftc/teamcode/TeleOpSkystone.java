@@ -354,8 +354,8 @@ public class TeleOpSkystone extends LinearOpMode {
 
     }
     public void DriveFast(double leftStickX, double leftStickY, double rightStickY) {
-        final double x = Math.pow(-leftStickX, 3.0);
-        final double y = Math.pow(leftStickY, 3.0);
+        final double x = Math.pow(- leftStickX , 3.0);
+        final double y = Math.pow(  leftStickY , 3.0);
 
         final double rotation = Math.pow(-rightStickY, 3.0);
         final double direction = Math.atan2(x, y);
@@ -531,14 +531,6 @@ public class TeleOpSkystone extends LinearOpMode {
             if(gamepad1.dpad_down){
                 Claw_100();
 
-            }
-            if (gamepad2.a) {
-                Armheight++;
-
-
-            }
-            if (gamepad2.b){
-                Armheight = 1;
             }
             if (gamepad1.right_bumper ) {
                 LatchFoundation();
