@@ -14,13 +14,28 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
     String Place = "How Bout No";
 
     public void Place_skystone_and_Park () {
+        mecanum.MoveForwardRunToPosition(.3,2,this);
         mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
         mecanum.TurnLeftRunToPosition(.3,3,this);
         mecanum.SlideLeftRunToPosition(.3,5,this);
 
-        Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-400,-.3,this);
+        switch (Park){
+            case"Inner":
+                Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-400,-.3,this);
+                mecanum.SlideRightRunToPosition(.3, 24, this);
+                mecanum.TurnRightRunToPosition(.3,1,this);
+                break;
+            case"Outer":
+                mecanum.SlideLeftRunToPosition(.3,4,this);
+
+                break;
+
+
+        }
+
+
         switch (DrivetoSkystone) {
             case "Left":
                 mecanum.MoveForwardRunToPosition(.6,12,this);
@@ -28,7 +43,7 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
                 Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 Part.AndyMark_motor_Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-100,-.3,this);
-                mecanum.MoveForwardRunToPosition(.6,10,this);
+                mecanum.MoveForwardRunToPosition(.6,15,this);
                 break;
             case "Middle":
                 mecanum.MoveForwardRunToPosition(.6,20,this);
@@ -182,17 +197,7 @@ public class BlueDepo extends TeleOpSkystone { String Park = "Inner";
         Place_skystone_and_Park();
         Claw_100();
 
-            switch (Park){
-                case"Inner":
-                    mecanum.SlideRightRunToPosition(.3, 24, this);
-                    break;
-                case"Outer":
-                    mecanum.SlideLeftRunToPosition(.3,4,this);
 
-                    break;
-
-
-            }
 
 
 

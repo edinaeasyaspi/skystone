@@ -14,7 +14,7 @@ public class RedBuilderSide extends TeleOpSkystone {
     private void Drive_to_Foundation () {
 
         mecanum.SlideLeftRunToPosition(.3,5,this);
-        mecanum.MoveBackwardsRunToPosition(.3,23,this);
+        mecanum.MoveBackwardsRunToPosition(.3,25,this);
 
         Sleep();
 
@@ -50,7 +50,9 @@ public class RedBuilderSide extends TeleOpSkystone {
         Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,1758,.3,this);
 
         Sleep();
+        Claw_100();
         mecanum.TurnRightRunToPosition(.3,_90Degree_turn,this);
+
 
 
     }
@@ -88,12 +90,12 @@ public class RedBuilderSide extends TeleOpSkystone {
 
         UnLatch_and_Out_Of_Foundation();
 
-        Push_and_Secure_Foundation();
+       // Push_and_Secure_Foundation();
 
 
-        Extend_for_Parking();
+       // Extend_for_Parking();
 
-        switch (Park){
+       /* switch (Park){
             case "Inner":
 
                 Sleep();
@@ -105,10 +107,13 @@ public class RedBuilderSide extends TeleOpSkystone {
                 mecanum.MoveForwardRunToPosition(.3,5,this);
                 Sleep();
                     break;
+*/
 
+      //  }
 
-        }
-
+       // mecanum.MoveForwardRunToPosition(.3,20,this);
+        mecanum.MoveBackwardsRunToPosition(.3,2,this);
+        mecanum.SlideRightRunToPosition(.3,11,this);
     }
 
 

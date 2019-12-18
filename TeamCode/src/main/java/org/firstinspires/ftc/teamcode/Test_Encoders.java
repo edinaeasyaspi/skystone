@@ -25,7 +25,7 @@ public class Test_Encoders extends TeleOpSkystone {
                 Part.RightB = hardwareMap.get(DcMotor.class, "RB"), telemetry);
 
         Latch();
-
+        mecanum.SlideRightRunToPosition(.3, 24, this);
 
         /*mecanum.TurnLeftRunToPosition(.3,19,this);
         Sleep();
@@ -35,15 +35,15 @@ public class Test_Encoders extends TeleOpSkystone {
         Sleep();
         mecanum.MoveForwardRunToPosition(.3,17,this);
 
-         *//*
-        Claw_100();
+         */
+      /*  Claw_100();
         Sleep();
         Claw_130();
         Sleep();
         CLaw_180();
         Sleep();
 */
-        Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-450,-.3,this);
+     //   Move_Motor_WithEncoder(Part.AndyMark_motor_Lift,-450,-.3,this);
 
        // mecanum.SlideLeftRunToPosition(.3,14,this);
         //mecanum.TurnLeftRunToPosition(.3,_90Degree_turn,this);
@@ -68,7 +68,7 @@ public class Test_Encoders extends TeleOpSkystone {
 
 
     */
-sleep(15000);
+sleep(30000);
 
 
     }
